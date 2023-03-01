@@ -660,7 +660,7 @@ export default {
         type: "Sword",
 
         
-        effect: 271,
+        effect: 272,
         
         
         configs: [
@@ -1210,7 +1210,7 @@ export default {
         type: "Claymore",
 
         
-        effect: 271,
+        effect: 272,
         
         
         configs: [
@@ -1784,7 +1784,7 @@ export default {
         type: "Polearm",
 
         
-        effect: 272,
+        effect: 271,
         
         
         configs: [
@@ -2272,7 +2272,7 @@ export default {
         type: "Catalyst",
 
         
-        effect: 272,
+        effect: 271,
         
         
         configs: [
@@ -2868,7 +2868,7 @@ export default {
         type: "Bow",
 
         
-        effect: 272,
+        effect: 271,
         
         
         configs: [

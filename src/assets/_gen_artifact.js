@@ -224,7 +224,7 @@ export default {
         maxStar: 5,
     
     
-        effect2: 1493,
+        effect2: 1494,
     
     
     
@@ -387,7 +387,7 @@ export default {
     
     
     
-        effect4: 191,
+        effect4: 190,
     
     
 
@@ -1327,7 +1327,7 @@ export default {
         maxStar: 5,
     
     
-        effect2: 1494,
+        effect2: 1493,
     
     
     
