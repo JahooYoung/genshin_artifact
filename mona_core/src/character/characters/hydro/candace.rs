@@ -17,6 +17,7 @@ use crate::target_functions::TargetFunction;
 use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use crate::character::macros::{skill_type, damage_enum, skill_map, damage_ratio};
+use crate::common::i18n::{locale, hit_n_dmg, charged_dmg, plunging_dmg};
 
 pub struct CandaceSkillType {
     pub normal_dmg1: [f64; 15],
@@ -120,7 +121,6 @@ impl CharacterTrait for Candace {
     const STATIC_DATA: CharacterStaticData = CharacterStaticData {
         name: CharacterName::Candace,
         internal_name: "Candace",
-        chs: "",
         element: Element::Hydro,
         hp: [912, 2342, 3024, 4529, 5013, 5766, 6411, 7164, 7648, 8401, 8885, 9638, 10122, 10875],
         atk: [18, 46, 59, 88, 98, 113, 125, 140, 149, 164, 174, 188, 198, 212],
@@ -128,9 +128,22 @@ impl CharacterTrait for Candace {
         sub_stat: CharacterSubStatFamily::HP240,
         weapon_type: WeaponType::Polearm,
         star: 4,
-        skill_name1: "",
-        skill_name2: "",
-        skill_name3: ""
+        skill_name1: locale!(
+            zh_cn: "普通攻击·流耀枪术·守势",
+            en: "Normal Attack: Gleaming Spear – Guardian Stance",
+        ),
+        skill_name2: locale!(
+            zh_cn: "圣仪·苍鹭庇卫",
+            en: "Sacred Rite: Heron’s Sanctum",
+        ),
+        skill_name3: locale!(
+            zh_cn: "圣仪·灰鸰衒潮",
+            en: "Sacred Rite: Wagtail’s Tide",
+        ),
+        name_locale: locale!(
+            zh_cn: "坎蒂丝",
+            en: "Candace",
+        )
     };
     type SkillType = CandaceSkillType;
     const SKILL: Self::SkillType = CANDACE_SKILL;
@@ -141,25 +154,25 @@ impl CharacterTrait for Candace {
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: skill_map!(
             CandaceDamageEnum
-            Normal1 "一段伤害"
-            Normal2 "二段伤害"
-            Normal31 "三段伤害-1"
-            Normal32 "三段伤害-2"
-            Normal4 "四段伤害"
-            Charged "重击伤害"
-            Plunging1 "下坠期间伤害"
-            Plunging2 "低空坠地冲击伤害"
-            Plunging3 "高空坠地冲击伤害"
+            Normal1 hit_n_dmg!(1)
+            Normal2 hit_n_dmg!(2)
+            Normal31 hit_n_dmg!(3, 1)
+            Normal32 hit_n_dmg!(3, 2)
+            Normal4 hit_n_dmg!(4)
+            Charged charged_dmg!()
+            Plunging1 plunging_dmg!(1)
+            Plunging2 plunging_dmg!(2)
+            Plunging3 plunging_dmg!(3)
         ),
         skill2: skill_map!(
             CandaceDamageEnum
-            E1 "基础伤害"
-            E2 "蓄力完成伤害"
+            E1 locale!(zh_cn: "基础伤害", en: "Basic DMG")
+            E2 locale!(zh_cn: "蓄力完成伤害", en: "Charged Up DMG")
         ),
         skill3: skill_map!(
             CandaceDamageEnum
-            Q1 "技能伤害"
-            Q2 "水波冲击伤害"
+            Q1 locale!(zh_cn: "技能伤害", en: "Skill DMG")
+            Q2 locale!(zh_cn: "水波冲击伤害", en: "Wave Impact DMG")
         )
     };
 
@@ -167,7 +180,10 @@ impl CharacterTrait for Candace {
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "c2_rate",
-            title: "c42",
+            title: locale!(
+                zh_cn: "命座2「贯月的耀锋」比例",
+                en: "C2 Ratio",
+            ),
             config: ItemConfigType::Float { min: 0.0, max: 1.0, default: 0.0 }
         }
     ]);
@@ -176,7 +192,10 @@ impl CharacterTrait for Candace {
     const CONFIG_SKILL: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "crown",
-            title: "c43",
+            title: locale!(
+                zh_cn: "赤冕祝祷",
+                en: "Prayer of the Crimson Crown"
+            ),
             config: ItemConfigType::Bool { default: true },
         }
     ]);

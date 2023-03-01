@@ -1,5 +1,6 @@
 use crate::attribute::{Attribute, AttributeCommon, AttributeName};
 use crate::character::character_common_data::CharacterCommonData;
+use crate::common::i18n::locale;
 use crate::common::item_config_type::{ItemConfig, ItemConfigType};
 use crate::common::WeaponType;
 use crate::weapon::weapon_base_atk::WeaponBaseATKFamily;
@@ -50,26 +51,41 @@ impl WeaponTrait for TheWidsith {
         weapon_base: WeaponBaseATKFamily::ATK510,
         star: 4,
         #[cfg(not(target_family = "wasm"))]
-        effect: Some("登场乐：角色登场时，随机获得一个主题曲，持续10秒。每30秒只能触发一次。宣叙调：攻击力提升60%/75%/90%/105%/120%；咏叹调：全元素伤害提升48%/60％/72%/84%/96%；间奏曲：元素精通提升240/300/360/420/480。"),
+        effect: Some(crate::common::i18n::locale!(
+            zh_cn: "角色登场时，随机获得一个主题曲，持续10秒。每30秒只能触发一次。宣叙调：攻击力提升<span style=\"color: #409EFF;\">60%-75%-90%-105%-120%</span>；咏叹调：全元素伤害提升<span style=\"color: #409EFF;\">48%-60%-72%-84%-96%</span>;间奏曲：元素精通提升<span style=\"color: #409EFF;\">240-300-360-420-480</span>。",
+            en: "When the character takes the field, they will gain a random theme song for 10s. This can only occur once every 30s. Recitative: ATK is increased by <span style=\"color: #409EFF;\">60%-75%-90%-105%-120%</span>. Aria: Increases all Elemental DMG by <span style=\"color: #409EFF;\">48%-60%-72%-84%-96%</span>. Interlude: Elemental Mastery is increased by <span style=\"color: #409EFF;\">240-300-360-420-480</span>."
+        )),
         #[cfg(not(target_family = "wasm"))]
-        chs: "流浪乐章"
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "流浪乐章",
+            en: "The Widsith"
+        )
     };
 
     #[cfg(not(target_family = "wasm"))]
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "t1_rate",
-            title: "w16",
+            title: locale!(
+                zh_cn: "宣叙调比例",
+                en: "「Recitative」Ratio",
+            ),
             config: ItemConfig::RATE01_TYPE
         },
         ItemConfig {
             name: "t2_rate",
-            title: "w17",
+            title: locale!(
+                zh_cn: "咏叹调比例",
+                en: "「Aria」Ratio"
+            ),
             config: ItemConfig::RATE01_TYPE
         },
         ItemConfig {
             name: "t3_rate",
-            title: "w18",
+            title: locale!(
+                zh_cn: "间奏曲比例",
+                en: "「Interlude」Ratio",
+            ),
             config: ItemConfig::RATE01_TYPE
         },
     ]);

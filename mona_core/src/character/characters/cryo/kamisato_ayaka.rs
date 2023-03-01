@@ -15,6 +15,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{hit_n_dmg, locale, plunging_dmg};
 
 pub struct KamisatoAyakaSkillType {
     pub normal_dmg1: [f64; 15],
@@ -51,7 +52,6 @@ pub const KAMISATO_AYAKA_SKILL: KamisatoAyakaSkillType = KamisatoAyakaSkillType 
 pub const KAMISATO_AYAKA_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::KamisatoAyaka,
     internal_name: "Ayaka",
-    chs: "神里绫华",
     element: Element::Cryo,
     hp: [1011, 2597, 3455, 5170, 5779, 6649, 7462, 8341, 8951, 9838, 10448, 11345, 11954, 12858],
     atk: [27, 69, 92, 138, 154, 177, 198, 222, 238, 262, 278, 302, 318, 342],
@@ -59,9 +59,22 @@ pub const KAMISATO_AYAKA_STATIC_DATA: CharacterStaticData = CharacterStaticData 
     sub_stat: CharacterSubStatFamily::CriticalDamage384,
     weapon_type: WeaponType::Sword,
     star: 5,
-    skill_name1: "普通攻击·神里流·倾",
-    skill_name2: "神里流·冰华",
-    skill_name3: "神里流·霜灭"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·神里流·倾",
+        en: "Normal Attack: Kamisato Art - Kabuki",
+    ),
+    skill_name2: locale!(
+        zh_cn: "神里流·冰华",
+        en: "Kamisato Art: Hyouka",
+    ),
+    skill_name3: locale!(
+        zh_cn: "神里流·霜灭",
+        en: "Kamisato Art: Soumetsu",
+    ),
+    name_locale: locale!(
+        zh_cn: "神里绫华",
+        en: "Kamisato Ayaka",
+    )
 };
 
 pub struct KamisatoAyakaEffect {
@@ -164,22 +177,22 @@ impl CharacterTrait for KamisatoAyaka {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Normal4 as usize, chs: "四段伤害/3" },
-            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Normal5 as usize, chs: "五段伤害" },
-            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Charged as usize, chs: "重击伤害/3" },
-            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Normal4 as usize, text: locale!(zh_cn: "四段伤害/3", en: "4-Hit DMG/3") },
+            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Normal5 as usize, text: hit_n_dmg!(5) },
+            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Charged as usize, text: locale!(zh_cn: "重击伤害/3", en: "Charged Attack DMG/3") },
+            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::E1 as usize, chs: "技能伤害" }
+            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::E1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") }
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Q1 as usize, chs: "切割伤害" },
-            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Q2 as usize, chs: "绽放伤害" },
+            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Q1 as usize, text: locale!(zh_cn: "切割伤害", en: "Cutting DMG") },
+            CharacterSkillMapItem { index: KamisatoAyakaDamageEnum::Q2 as usize, text: locale!(zh_cn: "绽放伤害", en: "Bloom DMG") },
         ])
     };
 
@@ -187,12 +200,18 @@ impl CharacterTrait for KamisatoAyaka {
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "talent1_rate",
-            title: "c5",
+            title: locale!(
+                zh_cn: "天赋「天罪国罪镇词」应用比例",
+                en: "Talent「Amatsumi Kunitsumi Sanctification」Apply Ratio",
+            ),
             config: ItemConfig::RATE01_TYPE
         },
         ItemConfig {
             name: "talent2_rate",
-            title: "c6",
+            title: locale!(
+                zh_cn: "天赋「寒天宣命祝词」应用比例",
+                en: "Talent「Kanten Senmyou Blessing」Apply Ratio",
+            ),
             config: ItemConfig::RATE01_TYPE
         }
     ]);
@@ -201,12 +220,18 @@ impl CharacterTrait for KamisatoAyaka {
     const CONFIG_SKILL: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "after_dash",
-            title: "c7",
+            title: locale!(
+                zh_cn: "神里流·霰步",
+                en: "Kamisato Art: Senho",
+            ),
             config: ItemConfigType::Bool { default: true }
         },
         ItemConfig {
             name: "use_c6",
-            title: "c8",
+            title: locale!(
+                zh_cn: "六命效果",
+                en: "C6 Effect",
+            ),
             config: ItemConfigType::Bool { default: false }
         }
     ]);

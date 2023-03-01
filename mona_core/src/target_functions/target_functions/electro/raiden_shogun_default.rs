@@ -26,8 +26,14 @@ impl TargetFunctionMetaTrait for RaidenShogunDefaultTargetFunction {
     #[cfg(not(target_family = "wasm"))]
     const META_DATA: TargetFunctionMeta = TargetFunctionMeta {
         name: TargetFunctionName::RaidenShogunDefault,
-        chs: "雷电将军-一心净土",
-        description: "普通输出雷军",
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "雷电将军-一心净土",
+            en: "Raiden Shogun-Plane of Euthymia"
+        ),
+        description: crate::common::i18n::locale!(
+            zh_cn: "普通输出雷军",
+            en: "DPS Shogun"
+        ),
         tags: "输出",
         four: TargetFunctionFor::SomeWho(CharacterName::RaidenShogun),
         image: TargetFunctionMetaImage::Avatar
@@ -37,7 +43,10 @@ impl TargetFunctionMetaTrait for RaidenShogunDefaultTargetFunction {
     const CONFIG: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "recharge_demand",
-            title: "t4",
+            title: crate::common::i18n::locale!(
+                zh_cn: "充能需求",
+                en: "Recharge Requirement",
+            ),
             config: ItemConfigType::Float { min: 1.0, max: 4.0, default: 2.6 },
         }
     ]);

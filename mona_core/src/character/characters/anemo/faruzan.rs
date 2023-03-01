@@ -6,6 +6,7 @@ use crate::character::macros::{damage_enum, damage_ratio, skill_map, skill_type}
 use crate::character::skill_config::CharacterSkillConfig;
 use crate::character::traits::{CharacterSkillMap, CharacterSkillMapItem, CharacterTrait};
 use crate::common::{ChangeAttribute, Element, SkillType, WeaponType};
+use crate::common::i18n::locale;
 use crate::common::item_config_type::{ItemConfig, ItemConfigType};
 use crate::damage::damage_builder::DamageBuilder;
 use crate::damage::DamageContext;
@@ -102,7 +103,6 @@ impl CharacterTrait for Faruzan {
     const STATIC_DATA: CharacterStaticData = CharacterStaticData {
         name: CharacterName::Faruzan,
         internal_name: "Faruzan",
-        chs: "珐露珊",
         element: Element::Anemo,
         hp: [802, 2061, 2661, 3985, 4411, 5074, 5642, 6305, 6731, 7393, 7819, 8481, 8907, 9570],
         atk: [16, 42, 55, 82, 91, 104, 116, 129, 138, 152, 161, 174, 183, 196],
@@ -110,9 +110,22 @@ impl CharacterTrait for Faruzan {
         sub_stat: CharacterSubStatFamily::ATK240,
         weapon_type: WeaponType::Bow,
         star: 4,
-        skill_name1: "普通攻击·迴身箭术",
-        skill_name2: "非想风天",
-        skill_name3: "抟风秘道",
+        skill_name1: locale!(
+            zh_cn: "普通攻击·迴身箭术",
+            en: "Normal Attack: Turnaround Shooter",
+        ),
+        skill_name2: locale!(
+            zh_cn: "非想风天",
+            en: "Wind Realm of Nasamjnin",
+        ),
+        skill_name3: locale!(
+            zh_cn: "抟风秘道",
+            en: "The Wind’s Secret Ways",
+        ),
+        name_locale: locale!(
+            zh_cn: "珐露珊",
+            en: "Faruzan",
+        )
     };
     type SkillType = FaruzanSkillType;
     const SKILL: Self::SkillType = FARUZAN_SKILL;
@@ -123,24 +136,24 @@ impl CharacterTrait for Faruzan {
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: skill_map!(
             FaruzanDamageEnum
-            Normal1 "一段伤害"
-            Normal2 "二段伤害"
-            Normal3 "三段伤害"
-            Normal4 "四段伤害"
-            Charged1 "重击伤害"
-            Charged1 "满蓄力瞄准射击"
-            Plunging1 "下坠期间伤害"
-            Plunging2 "低空坠地冲击伤害"
-            Plunging3 "高空坠地冲击伤害"
+            Normal1 locale!(zh_cn: "一段伤害", en: "1-Hit DMG")
+            Normal2 locale!(zh_cn: "二段伤害", en: "2-Hit DMG")
+            Normal3 locale!(zh_cn: "三段伤害", en: "3-Hit DMG")
+            Normal4 locale!(zh_cn: "四段伤害", en: "4-Hit DMG")
+            Charged1 locale!(zh_cn: "重击伤害", en: "Charged Attack DMG")
+            Charged1 locale!(zh_cn: "满蓄力瞄准射击", en: "Fully-Charged Aimed Shot")
+            Plunging1 locale!(zh_cn: "下坠期间伤害", en: "Plunge DMG")
+            Plunging2 locale!(zh_cn: "低空坠地冲击伤害", en: "Low Plunge DMG")
+            Plunging3 locale!(zh_cn: "高空坠地冲击伤害", en: "High Plunge DMG")
         ),
         skill2: skill_map!(
             FaruzanDamageEnum
-            E1 "技能伤害"
-            E2 "风压塌陷伤害"
+            E1 locale!(zh_cn: "技能伤害", en: "Skill DMG")
+            E2 locale!(zh_cn: "风压塌陷伤害", en: "Pressurized Collapse Vortex DMG")
         ),
         skill3: skill_map!(
             FaruzanDamageEnum
-            Q1 "技能伤害"
+            Q1 locale!(zh_cn: "技能伤害", en: "Skill DMG")
         ),
     };
 
@@ -148,7 +161,10 @@ impl CharacterTrait for Faruzan {
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "q_ratio",
-            title: "c55",
+            title: locale!(
+                zh_cn: "「祈风之赐」比例",
+                en: "Prayerful Wind’s Benefit Ratio"
+            ),
             config: ItemConfigType::Float { min: 0.0, max: 1.0, default: 1.0 }
         },
     ]);
@@ -157,7 +173,10 @@ impl CharacterTrait for Faruzan {
     const CONFIG_SKILL: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "talent2_ratio",
-            title: "c56",
+            title: locale!(
+                zh_cn: "「烈风护持」比例",
+                en: "Hurricane Guard effect Ratio",
+            ),
             config: ItemConfigType::Float { min: 0.0, max: 1.0, default: 1.0 }
         },
     ]);

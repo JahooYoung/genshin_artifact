@@ -7,6 +7,7 @@ use crate::character::character_common_data::CharacterCommonData;
 use crate::character::characters::Nahida;
 use crate::character::skill_config::CharacterSkillConfig;
 use crate::character::traits::CharacterTrait;
+use crate::common::i18n::locale;
 use crate::common::item_config_type::{ItemConfig, ItemConfigType};
 use crate::damage::{DamageContext, SimpleDamageBuilder};
 use crate::enemies::Enemy;
@@ -63,8 +64,14 @@ impl TargetFunctionMetaTrait for NahidaDefaultTargetFunction {
     #[cfg(not(target_family = "wasm"))]
     const META_DATA: TargetFunctionMeta = TargetFunctionMeta {
         name: TargetFunctionName::NahidaDefault,
-        chs: "纳西妲-白草净华",
-        description: "",
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "纳西妲-白草净华",
+            en: "Nahida-Physic of Purity"
+        ),
+        description: crate::common::i18n::locale!(
+            zh_cn: "使纳西妲灭净三业及反应伤害最大，默认给了饰金套1层攻击2层精通和80%覆盖率，如果你的配队不同，强烈圣遗物设置改成手动，把草套拉满，然后根据实际情况调整饰金套参数",
+            en: "Maximize Nahida's Tri-Karma Purification DMG"
+        ),
         tags: "输出",
         four: TargetFunctionFor::SomeWho(CharacterName::Nahida),
         image: TargetFunctionMetaImage::Avatar,
@@ -74,27 +81,42 @@ impl TargetFunctionMetaTrait for NahidaDefaultTargetFunction {
     const CONFIG: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "em_requirement",
-            title: "t28", //精通需求
+            title: locale!(
+                zh_cn: "精通需求",
+                en: "Elemental Mastery Requirement",
+            ), //精通需求
             config: ItemConfigType::Int { min: 0, max: 1500, default: 0 },
         },
         ItemConfig {
             name: "spread_rate",
-            title: "t16", //蔓激化比例
+            title: locale!(
+                zh_cn: "蔓激化比例",
+                en: "Spread Ratio",
+            ), //蔓激化比例
             config: ItemConfigType::Float { min: 0.0, max: 1.0, default: 0.0 },
         },
         ItemConfig {
             name: "bloom_count",
-            title: "t20", //绽放倍数
+            title: locale!(
+                zh_cn: "绽放倍数",
+                en: "Bloom Times",
+            ), //绽放倍数
             config: ItemConfigType::Float { min: 0.0, max: 4.0, default: 0.0 },
         },
         ItemConfig {
             name: "burn_duration",
-            title: "t29", //燃烧持续秒数
+            title: locale!(
+                zh_cn: "燃烧持续时间（秒）",
+                en: "Buring Duration",
+            ), //燃烧持续秒数
             config: ItemConfigType::Float { min: 0.0, max: 3.0, default: 0.0 },
         },
         ItemConfig {
             name: "pryo_teammate_count",
-            title: "t30", // 火系队友数量
+            title: locale!(
+                zh_cn: "火系队友数量",
+                en: "Pryo Team Member Count",
+            ), // 火系队友数量
             config: ItemConfigType::Int { min: 0, max: 2, default: 0 },
         },
     ]);

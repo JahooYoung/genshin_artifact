@@ -15,6 +15,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, locale, plunging_dmg};
 
 pub struct NingguangSkillType {
     pub normal_dmg1: [f64; 15],
@@ -45,7 +46,6 @@ pub const NINGGUANG_SKILL: NingguangSkillType = NingguangSkillType {
 pub const NINGGUANG_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Ningguang,
     internal_name: "Ningguang",
-    chs: "凝光",
     element: Element::Geo,
     hp: [821, 2108, 2721, 4076, 4512, 5189, 5770, 6448, 6884, 7561, 7996, 8674, 9110, 9787],
     atk: [18, 46, 59, 88, 98, 113, 125, 140, 149, 164, 174, 188, 198, 212],
@@ -53,9 +53,22 @@ pub const NINGGUANG_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::Bonus240(StatName::GeoBonus),
     weapon_type: WeaponType::Catalyst,
     star: 4,
-    skill_name1: "普通攻击·千金掷",
-    skill_name2: "璇玑屏",
-    skill_name3: "天权崩玉"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·千金掷",
+        en: "Normal Attack: Sparkling Scatter",
+    ),
+    skill_name2: locale!(
+        zh_cn: "璇玑屏",
+        en: "Jade Screen",
+    ),
+    skill_name3: locale!(
+        zh_cn: "天权崩玉",
+        en: "Starshatter",
+    ),
+    name_locale: locale!(
+        zh_cn: "凝光",
+        en: "Ningguang",
+    )
 };
 
 pub struct NingguangEffect {
@@ -132,18 +145,18 @@ impl CharacterTrait for Ningguang {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: NingguangDamageEnum::Normal as usize, chs: "普通攻击伤害" },
-            CharacterSkillMapItem { index: NingguangDamageEnum::Charged1 as usize, chs: "重击伤害" },
-            CharacterSkillMapItem { index: NingguangDamageEnum::Charged2 as usize, chs: "星璇伤害" },
-            CharacterSkillMapItem { index: NingguangDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: NingguangDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: NingguangDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: NingguangDamageEnum::Normal as usize, text: locale!(zh_cn: "普通攻击伤害", en: "Normal Attack DMG") },
+            CharacterSkillMapItem { index: NingguangDamageEnum::Charged1 as usize, text: charged_dmg!() },
+            CharacterSkillMapItem { index: NingguangDamageEnum::Charged2 as usize, text: locale!(zh_cn: "星璇伤害", en: "DMG per Star Jade") },
+            CharacterSkillMapItem { index: NingguangDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: NingguangDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: NingguangDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: NingguangDamageEnum::E1 as usize, chs: "技能伤害" }
+            CharacterSkillMapItem { index: NingguangDamageEnum::E1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") }
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: NingguangDamageEnum::Q1 as usize, chs: "每颗宝石伤害" }
+            CharacterSkillMapItem { index: NingguangDamageEnum::Q1 as usize, text: locale!(zh_cn: "每颗宝石伤害", en: "DMG Per Gem") }
         ])
     };
 
@@ -151,7 +164,10 @@ impl CharacterTrait for Ningguang {
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "talent2_rate",
-            title: "c13",
+            title: locale!(
+                zh_cn: "天赋「储之千日，用之一刻」应用比例",
+                en: "Talent「Strategic Reserve」Apply Ratio",
+            ),
             config: ItemConfig::RATE01_TYPE
         }
     ]);

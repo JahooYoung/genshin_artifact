@@ -14,6 +14,7 @@ use crate::target_functions::TargetFunction;
 use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use crate::character::traits::{CharacterSkillMapItem};
+use crate::common::i18n::{locale, hit_n_dmg, charged_dmg, plunging_dmg};
 
 
 pub struct YaoyaoSkillType {
@@ -121,7 +122,6 @@ impl CharacterTrait for Yaoyao {
     const STATIC_DATA: CharacterStaticData = CharacterStaticData {
         name: CharacterName::Yaoyao,
         internal_name: "Yaoyao",
-        chs: "",
         element: Element::Dendro,
         hp: [1030, 2647, 3417, 5118, 5665, 6515, 7245, 8096, 8643, 9493, 10040, 10891, 11438, 12289],
         atk: [18, 46, 59, 88, 98, 113, 125, 140, 149, 164, 174, 188, 198, 212],
@@ -129,9 +129,22 @@ impl CharacterTrait for Yaoyao {
         sub_stat: CharacterSubStatFamily::Bonus240(StatName::HPPercentage),
         weapon_type: WeaponType::Polearm,
         star: 4,
-        skill_name1: "",
-        skill_name2: "",
-        skill_name3: ""
+        skill_name1: locale!(
+            zh_cn: "普通攻击·颠扑连环枪",
+            en: "Normal Attack: Toss ‘N’ Turn Spear",
+        ),
+        skill_name2: locale!(
+            zh_cn: "云台团团降芦菔",
+            en: "Raphanus Sky Cluster",
+        ),
+        skill_name3: locale!(
+            zh_cn: "玉颗珊珊月中落",
+            en: "Moonjade Descent",
+        ),
+        name_locale: locale!(
+            zh_cn: "瑶瑶",
+            en: "Yaoyao",
+        )
     };
     type SkillType = YaoyaoSkillType;
     const SKILL: Self::SkillType = YAOYAO_SKILL;
@@ -142,26 +155,26 @@ impl CharacterTrait for Yaoyao {
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: skill_map!(
             YaoyaoDamageEnum
-            Normal1 "一段伤害"
-            Normal2 "二段伤害"
-            Normal31 "三段伤害-1"
-            Normal32 "三段伤害-2"
-            Normal4 "四段伤害"
-            Charged "重击伤害"
-            Plunging1 "下坠期间伤害"
-            Plunging2 "低空坠地冲击伤害"
-            Plunging3 "高空坠地冲击伤害"
+            Normal1 hit_n_dmg!(1)
+            Normal2 hit_n_dmg!(2)
+            Normal31 hit_n_dmg!(3, 1)
+            Normal32 hit_n_dmg!(3, 2)
+            Normal4 hit_n_dmg!(4)
+            Charged charged_dmg!()
+            Plunging1 plunging_dmg!(1)
+            Plunging2 plunging_dmg!(2)
+            Plunging3 plunging_dmg!(3)
         ),
         skill2: skill_map!(
             YaoyaoDamageEnum
-            E1 "白玉萝卜伤害"
-            EHeal1 "白玉萝卜治疗量"
+            E1 locale!(zh_cn: "白玉萝卜伤害", en: "White Jade Radish DMG")
+            EHeal1 locale!(zh_cn: "白玉萝卜治疗量", en: "White Jade Radish Healing")
         ),
         skill3: skill_map!(
             YaoyaoDamageEnum
-            Q1 "技能伤害"
-            Q2 "桂子仙机白玉萝卜伤害"
-            QHeal1 "桂子仙机白玉萝卜治疗量"
+            Q1 locale!(zh_cn: "技能伤害", en: "Skill DMG")
+            Q2 locale!(zh_cn: "桂子仙机白玉萝卜伤害", en: "Adeptal Legacy White Jade Radish DMG")
+            QHeal1 locale!(zh_cn: "桂子仙机白玉萝卜治疗量", en: "Adeptal Legacy White Jade Radish Healing")
         )
     };
 
@@ -169,7 +182,10 @@ impl CharacterTrait for Yaoyao {
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "c4_rate",
-            title: "c57",
+            title: locale!(
+                zh_cn: "命座4「爰爰可亲」比例",
+                en: "C4「Winsome」Ratio",
+            ),
             config: ItemConfigType::Float { min: 0.0, max: 1.0, default: 0.0 },
         }
     ]);

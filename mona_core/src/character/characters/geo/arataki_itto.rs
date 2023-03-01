@@ -15,6 +15,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{hit_n_dmg, locale, plunging_dmg};
 
 pub struct AratakiIttoSkillType {
     pub normal_dmg1: [f64; 15],
@@ -51,7 +52,6 @@ pub const ARATAKI_ITTO_SKILL: AratakiIttoSkillType = AratakiIttoSkillType {
 const ARATAKI_ITTO_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::AratakiItto,
     internal_name: "Itto",
-    chs: "荒泷一斗",
     element: Element::Geo,
     hp: [1001, 2579, 3455, 5170, 5779, 6649, 7462, 8341, 8951, 9838, 10448, 11345, 11954, 12858],
     atk: [18, 46, 61, 91, 102, 117, 132, 147, 158, 174, 185, 200, 211, 227],
@@ -59,9 +59,22 @@ const ARATAKI_ITTO_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::CriticalRate192,
     weapon_type: WeaponType::Claymore,
     star: 5,
-    skill_name1: "普通攻击•喧哗屋传说",
-    skill_name2: "魔杀绝技•赤牛发破！",
-    skill_name3: "最恶鬼王•一斗轰临！！"
+    skill_name1: locale!(
+        zh_cn: "普通攻击•喧哗屋传说",
+        en: "Normal Attack: Fight Club Legend",
+    ),
+    skill_name2: locale!(
+        zh_cn: "魔杀绝技•赤牛发破！",
+        en: "Masatsu Zetsugi: Akaushi Burst!",
+    ),
+    skill_name3: locale!(
+        zh_cn: "最恶鬼王•一斗轰临！！",
+        en: "Royal Descent: Behold, Itto the Evil!",
+    ),
+    name_locale: locale!(
+        zh_cn: "荒泷一斗",
+        en: "Arataki Itto",
+    )
 };
 
 pub struct AratakiIttoEffect {
@@ -147,19 +160,19 @@ impl CharacterTrait for AratakiItto {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: AratakiIttoDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: AratakiIttoDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: AratakiIttoDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: AratakiIttoDamageEnum::Normal4 as usize, chs: "四段伤害" },
-            CharacterSkillMapItem { index: AratakiIttoDamageEnum::KesagiriCombo as usize, chs: "荒泷逆袈裟连斩伤害" },
-            CharacterSkillMapItem { index: AratakiIttoDamageEnum::KesagiriFinal as usize, chs: "荒泷逆袈裟终结伤害" },
-            CharacterSkillMapItem { index: AratakiIttoDamageEnum::Saichimonji as usize, chs: "左一文字斩伤害" },
-            CharacterSkillMapItem { index: AratakiIttoDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: AratakiIttoDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: AratakiIttoDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: AratakiIttoDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: AratakiIttoDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: AratakiIttoDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: AratakiIttoDamageEnum::Normal4 as usize, text: hit_n_dmg!(4) },
+            CharacterSkillMapItem { index: AratakiIttoDamageEnum::KesagiriCombo as usize, text: locale!(zh_cn: "荒泷逆袈裟连斩伤害", en: "Arataki Kesagiri Combo Slash DMG") },
+            CharacterSkillMapItem { index: AratakiIttoDamageEnum::KesagiriFinal as usize, text: locale!(zh_cn: "荒泷逆袈裟终结伤害", en: "Arataki Kesagiri Final Slash DMG") },
+            CharacterSkillMapItem { index: AratakiIttoDamageEnum::Saichimonji as usize, text: locale!(zh_cn: "左一文字斩伤害", en: "Saichimonji Slash DMG") },
+            CharacterSkillMapItem { index: AratakiIttoDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: AratakiIttoDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: AratakiIttoDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: AratakiIttoDamageEnum::E1 as usize, chs: "技能伤害" }
+            CharacterSkillMapItem { index: AratakiIttoDamageEnum::E1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") }
         ]),
         skill3: None
     };
@@ -168,7 +181,10 @@ impl CharacterTrait for AratakiItto {
     const CONFIG_SKILL: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "after_q",
-            title: "c21",
+            title: locale!(
+                zh_cn: "处于「怒目鬼王」",
+                en: "Under「Raging Oni King」",
+            ),
             config: ItemConfigType::Bool { default: true }
         }
     ]);

@@ -7,6 +7,7 @@ use crate::character::characters::cryo::kamisato_ayaka::KamisatoAyaka;
 use crate::character::skill_config::CharacterSkillConfig;
 use crate::character::traits::CharacterTrait;
 use crate::common::{Element, StatName};
+use crate::common::i18n::locale;
 use crate::common::item_config_type::{ItemConfig, ItemConfigType};
 use crate::damage::{DamageContext, SimpleDamageBuilder};
 use crate::enemies::Enemy;
@@ -26,8 +27,14 @@ impl TargetFunctionMetaTrait for KamisatoAyakaDefaultTargetFunction {
     #[cfg(not(target_family = "wasm"))]
     const META_DATA: TargetFunctionMeta = TargetFunctionMeta {
         name: TargetFunctionName::KamisatoAyakaDefault,
-        chs: "神里绫华-白鹭霜华",
-        description: "普通主C绫华",
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "神里绫华-白鹭霜华",
+            en: "Ayaka-Frostflake Heron"
+        ),
+        description: crate::common::i18n::locale!(
+            zh_cn: "普通主C绫华",
+            en: "Main DPS Ayaka"
+        ),
         tags: "输出",
         four: TargetFunctionFor::SomeWho(CharacterName::KamisatoAyaka),
         image: TargetFunctionMetaImage::Avatar
@@ -37,7 +44,10 @@ impl TargetFunctionMetaTrait for KamisatoAyakaDefaultTargetFunction {
     const CONFIG: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "recharge_demand",
-            title: "t4",
+            title: locale!(
+                zh_cn: "充能需求",
+                en: "Recharge Requirement"
+            ),
             config: ItemConfigType::Float { default: 1.0, min: 1.0, max: 3.0 }
         }
     ]);

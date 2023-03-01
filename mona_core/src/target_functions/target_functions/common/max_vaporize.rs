@@ -4,6 +4,7 @@ use crate::attribute::{Attribute, SimpleAttributeGraph2, AttributeCommon, Attrib
 use crate::character::Character;
 use crate::character::character_common_data::CharacterCommonData;
 use crate::common::{Element, SkillType, StatName};
+use crate::common::i18n::locale;
 use crate::common::item_config_type::{ItemConfig, ItemConfigType};
 use crate::damage::damage_builder::DamageBuilder;
 use crate::damage::SimpleDamageBuilder;
@@ -25,8 +26,14 @@ impl TargetFunctionMetaTrait for MaxVaporizeTargetFunction {
     #[cfg(not(target_family = "wasm"))]
     const META_DATA: TargetFunctionMeta = TargetFunctionMeta {
         name: TargetFunctionName::MaxVaporize,
-        chs: "最大蒸发伤害",
-        description: "使得蒸发反应的伤害最高。<br><b>注意：</b>仅考虑最简单的情况，特殊机制不考虑（例如某些技能的属性转化等）",
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "最大蒸发伤害",
+            en: "Max Vaporize DMG"
+        ),
+        description: crate::common::i18n::locale!(
+            zh_cn: "使得蒸发反应的伤害最高。<br><b>注意：</b>仅考虑最简单的情况，特殊机制不考虑（例如某些技能的属性转化等）",
+            en: "Maximize vaporize DMG<br><b>Attention:</b>This function only calculates the simplest case, some attribute conversions are not considered, you may not use this unless you know what you're doing"
+        ),
         tags: "输出",
         four: TargetFunctionFor::Common,
         image: TargetFunctionMetaImage::Custom("misc/sword")
@@ -36,7 +43,10 @@ impl TargetFunctionMetaTrait for MaxVaporizeTargetFunction {
     const CONFIG: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "t",
-            title: "t2",
+            title: locale!(
+                zh_cn: "触发元素",
+                en: "Trigger Element",
+            ),
             config: ItemConfigType::Option {
                 options: "火,水",
                 default: 0
@@ -44,7 +54,10 @@ impl TargetFunctionMetaTrait for MaxVaporizeTargetFunction {
         },
         ItemConfig {
             name: "skill",
-            title: "t3",
+            title: locale!(
+                zh_cn: "技能",
+                en: "Skill"
+            ),
             config: ItemConfigType::Skill4 { default: SkillType::NormalAttack }
         }
     ]);

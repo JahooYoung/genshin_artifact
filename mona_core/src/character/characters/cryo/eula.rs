@@ -15,6 +15,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct EulaSkillType {
     pub normal_dmg1: [f64; 15],
@@ -69,7 +70,6 @@ pub const EULA_SKILL: EulaSkillType = EulaSkillType {
 pub const EULA_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Eula,
     internal_name: "Eula",
-    chs: "优菈",
     element: Element::Cryo,
     hp: [1030, 2671, 3554, 5317, 5944, 6839, 7675, 8579, 9207, 10119, 10746, 11699, 12296, 13226],
     atk: [27, 69, 92, 138, 154, 177, 198, 222, 238, 262, 278, 302, 318, 342],
@@ -77,9 +77,22 @@ pub const EULA_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::CriticalDamage384,
     weapon_type: WeaponType::Claymore,
     star: 5,
-    skill_name1: "普通攻击·西风剑术·宗室",
-    skill_name2: "冰潮的涡旋",
-    skill_name3: "凝浪之光剑"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·西风剑术·宗室",
+        en: "Normal Attack: Favonius Bladework - Edel",
+    ),
+    skill_name2: locale!(
+        zh_cn: "冰潮的涡旋",
+        en: "Icetide Vortex",
+    ),
+    skill_name3: locale!(
+        zh_cn: "凝浪之光剑",
+        en: "Glacial Illumination",
+    ),
+    name_locale: locale!(
+        zh_cn: "优菈",
+        en: "Eula",
+    )
 };
 
 pub struct Eula;
@@ -149,28 +162,28 @@ impl CharacterTrait for Eula {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: EulaDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: EulaDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: EulaDamageEnum::Normal31 as usize, chs: "三段伤害-1" },
-            CharacterSkillMapItem { index: EulaDamageEnum::Normal32 as usize, chs: "三段伤害-2" },
-            CharacterSkillMapItem { index: EulaDamageEnum::Normal4 as usize, chs: "四段伤害" },
-            CharacterSkillMapItem { index: EulaDamageEnum::Normal51 as usize, chs: "五段伤害-1" },
-            CharacterSkillMapItem { index: EulaDamageEnum::Normal52 as usize, chs: "五段伤害-2" },
-            CharacterSkillMapItem { index: EulaDamageEnum::Charged1 as usize, chs: "重击循环伤害" },
-            CharacterSkillMapItem { index: EulaDamageEnum::Charged2 as usize, chs: "重击终结伤害" },
-            CharacterSkillMapItem { index: EulaDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: EulaDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: EulaDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: EulaDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: EulaDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: EulaDamageEnum::Normal31 as usize, text: hit_n_dmg!(3, 1) },
+            CharacterSkillMapItem { index: EulaDamageEnum::Normal32 as usize, text: hit_n_dmg!(3, 2) },
+            CharacterSkillMapItem { index: EulaDamageEnum::Normal4 as usize, text: hit_n_dmg!(4) },
+            CharacterSkillMapItem { index: EulaDamageEnum::Normal51 as usize, text: hit_n_dmg!(5, 1) },
+            CharacterSkillMapItem { index: EulaDamageEnum::Normal52 as usize, text: hit_n_dmg!(5, 2) },
+            CharacterSkillMapItem { index: EulaDamageEnum::Charged1 as usize, text: charged_dmg!("loop1") },
+            CharacterSkillMapItem { index: EulaDamageEnum::Charged2 as usize, text: charged_dmg!("loop2") },
+            CharacterSkillMapItem { index: EulaDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: EulaDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: EulaDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: EulaDamageEnum::E1 as usize, chs: "点按伤害" },
-            CharacterSkillMapItem { index: EulaDamageEnum::E2 as usize, chs: "长按伤害" },
-            CharacterSkillMapItem { index: EulaDamageEnum::E3 as usize, chs: "冰涡之剑伤害" },
-            CharacterSkillMapItem { index: EulaDamageEnum::EShatteredLightfall as usize, chs: "残缺光降之剑" },
+            CharacterSkillMapItem { index: EulaDamageEnum::E1 as usize, text: locale!(zh_cn: "点按伤害", en: "Tapping DMG") },
+            CharacterSkillMapItem { index: EulaDamageEnum::E2 as usize, text: locale!(zh_cn: "长按伤害", en: "Hold DMG") },
+            CharacterSkillMapItem { index: EulaDamageEnum::E3 as usize, text: locale!(zh_cn: "冰涡之剑伤害", en: "Icewhirl Brand DMG") },
+            CharacterSkillMapItem { index: EulaDamageEnum::EShatteredLightfall as usize, text: locale!(zh_cn: "残缺光降之剑", en: "Shattered Lightfall Sword DMG") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: EulaDamageEnum::Q1 as usize, chs: "技能伤害" },
-            CharacterSkillMapItem { index: EulaDamageEnum::QLightfall as usize, chs: "光降之剑" },
+            CharacterSkillMapItem { index: EulaDamageEnum::Q1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") },
+            CharacterSkillMapItem { index: EulaDamageEnum::QLightfall as usize, text: locale!(zh_cn: "光降之剑", en: "Lightfall Sword DMG") },
         ])
     };
 
@@ -178,7 +191,10 @@ impl CharacterTrait for Eula {
     const CONFIG_SKILL: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "lightfall_stack",
-            title: "c23",
+            title: locale!(
+                zh_cn: "光降之剑能量层数",
+                en: "Lightfall Sword Energy Stack",
+            ),
             config: ItemConfigType::Int { min: 0, max: 30, default: 0 }
         }
     ]);

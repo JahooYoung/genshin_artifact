@@ -15,6 +15,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct KaeyaSkillType {
     pub normal_dmg1: [f64; 15],
@@ -49,7 +50,6 @@ pub const KAEYA_SKILL: KaeyaSkillType = KaeyaSkillType {
 pub const KAEYA_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Kaeya,
     internal_name: "Kaeya",
-    chs: "凯亚",
     element: Element::Cryo,
     hp: [976, 2506, 3235, 4846, 5364, 6170, 6860, 7666, 8184, 8989, 9507, 10312, 10830, 11636],
     atk: [19, 48, 62, 93, 103, 118, 131, 147, 157, 172, 182, 198, 208, 223],
@@ -57,9 +57,22 @@ pub const KAEYA_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::Recharge267,
     weapon_type: WeaponType::Sword,
     star: 4,
-    skill_name1: "普通攻击·仪典剑术",
-    skill_name2: "霜袭",
-    skill_name3: "凛冽轮舞"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·仪典剑术",
+        en: "Normal Attack: Ceremonial Bladework",
+    ),
+    skill_name2: locale!(
+        zh_cn: "霜袭",
+        en: "Frostgnaw",
+    ),
+    skill_name3: locale!(
+        zh_cn: "凛冽轮舞",
+        en: "Glacial Waltz",
+    ),
+    name_locale: locale!(
+        zh_cn: "凯亚",
+        en: "Kaeya",
+    )
 };
 
 pub struct Kaeya;
@@ -122,22 +135,22 @@ impl CharacterTrait for Kaeya {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: KaeyaDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: KaeyaDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: KaeyaDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: KaeyaDamageEnum::Normal4 as usize, chs: "四段伤害" },
-            CharacterSkillMapItem { index: KaeyaDamageEnum::Normal5 as usize, chs: "五段伤害" },
-            CharacterSkillMapItem { index: KaeyaDamageEnum::Charged11 as usize, chs: "重击伤害-1" },
-            CharacterSkillMapItem { index: KaeyaDamageEnum::Charged12 as usize, chs: "重击伤害-2" },
-            CharacterSkillMapItem { index: KaeyaDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: KaeyaDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: KaeyaDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: KaeyaDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: KaeyaDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: KaeyaDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: KaeyaDamageEnum::Normal4 as usize, text: hit_n_dmg!(4) },
+            CharacterSkillMapItem { index: KaeyaDamageEnum::Normal5 as usize, text: hit_n_dmg!(5) },
+            CharacterSkillMapItem { index: KaeyaDamageEnum::Charged11 as usize, text: charged_dmg!(1) },
+            CharacterSkillMapItem { index: KaeyaDamageEnum::Charged12 as usize, text: charged_dmg!(2) },
+            CharacterSkillMapItem { index: KaeyaDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: KaeyaDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: KaeyaDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: KaeyaDamageEnum::E1 as usize, chs: "技能伤害" },
+            CharacterSkillMapItem { index: KaeyaDamageEnum::E1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: KaeyaDamageEnum::Q1 as usize, chs: "技能伤害" }
+            CharacterSkillMapItem { index: KaeyaDamageEnum::Q1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") }
         ])
     };
 

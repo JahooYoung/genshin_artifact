@@ -1,5 +1,6 @@
 use crate::attribute::{Attribute, AttributeName};
 use crate::character::character_common_data::CharacterCommonData;
+use crate::common::i18n::locale;
 use crate::common::item_config_type::ItemConfig;
 use crate::common::WeaponType;
 use crate::weapon::weapon_base_atk::WeaponBaseATKFamily;
@@ -50,21 +51,33 @@ impl WeaponTrait for SolarPearl {
         weapon_base: WeaponBaseATKFamily::ATK510,
         star: 4,
         #[cfg(not(target_family = "wasm"))]
-        effect: Some("日月辉：①普通攻击命中后的6秒内，元素战技与元素爆发的伤害提高20%/25%/30%/35%/40%；②元素战技与元素爆发命中后的6秒内，普通攻击的伤害提高20%/25%/30%/35%/40%。"),
+        effect: Some(crate::common::i18n::locale!(
+            zh_cn: "普通攻击命中后的6秒内，元素战技与元素爆发的伤害提高<span style=\"color: #409EFF;\">20%-25%-30%-35%-40%</span>；元素战技与元素爆发命中后的6秒内，普通攻击的伤害提高<span style=\"color: #409EFF;\">20%-25%-30%-35%-40%</span>。",
+            en: "Normal Attack hits increase Elemental Skill and Elemental Burst DMG by <span style=\"color: #409EFF;\">20%-25%-30%-35%-40%</span> for 6s. Likewise, Elemental Skill or Elemental Burst hits increase Normal Attack DMG by <span style=\"color: #409EFF;\">20%-25%-30%-35%-40%</span> for 6s."
+        )),
         #[cfg(not(target_family = "wasm"))]
-        chs: "匣里日月"
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "匣里日月",
+            en: "Solar Pearl"
+        )
     };
 
     #[cfg(not(target_family = "wasm"))]
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "rate1",
-            title: "w8",
+            title: locale!(
+                zh_cn: "效果1比例",
+                en: "Effect1 Ratio"
+            ),
             config: ItemConfig::RATE01_TYPE
         },
         ItemConfig {
             name: "rate2",
-            title: "w9",
+            title: locale!(
+                zh_cn: "效果2比例",
+                en: "Effect2 Ratio"
+            ),
             config: ItemConfig::RATE01_TYPE
         },
     ]);

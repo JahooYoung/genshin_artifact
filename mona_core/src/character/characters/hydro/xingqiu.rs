@@ -15,6 +15,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct XingqiuSkillType {
     pub normal_dmg1: [f64; 15],
@@ -59,7 +60,6 @@ pub const XINGQIU_SKILL: XingqiuSkillType = XingqiuSkillType {
 pub const XINGQIU_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Xingqiu,
     internal_name: "Xingqiu",
-    chs: "行秋",
     element: Element::Hydro,
     hp: [857, 2202, 2842, 4257, 4712, 5420, 6027, 6735, 7190, 7897, 8352, 9060, 9514, 10222],
     atk: [17, 43, 56, 84, 93, 107, 119, 133, 142, 156, 165, 179, 188, 202],
@@ -67,9 +67,22 @@ pub const XINGQIU_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::ATK240,
     weapon_type: WeaponType::Sword,
     star: 4,
-    skill_name1: "普通攻击·古华剑法",
-    skill_name2: "古华剑·画雨笼山",
-    skill_name3: "古华剑·裁雨留虹"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·古华剑法",
+        en: "Normal Attack: Guhua Style",
+    ),
+    skill_name2: locale!(
+        zh_cn: "古华剑·画雨笼山",
+        en: "Guhua Sword: Fatal Rainscreen",
+    ),
+    skill_name3: locale!(
+        zh_cn: "古华剑·裁雨留虹",
+        en: "Guhua Sword: Raincutter",
+    ),
+    name_locale: locale!(
+        zh_cn: "行秋",
+        en: "Xingqiu",
+    )
 };
 
 pub struct XingqiuEffect {
@@ -158,25 +171,25 @@ impl CharacterTrait for Xingqiu {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: XingqiuDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: XingqiuDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: XingqiuDamageEnum::Normal31 as usize, chs: "三段伤害-1" },
-            CharacterSkillMapItem { index: XingqiuDamageEnum::Normal32 as usize, chs: "三段伤害-2" },
-            CharacterSkillMapItem { index: XingqiuDamageEnum::Normal4 as usize, chs: "四段伤害" },
-            CharacterSkillMapItem { index: XingqiuDamageEnum::Normal51 as usize, chs: "五段伤害-1" },
-            CharacterSkillMapItem { index: XingqiuDamageEnum::Normal52 as usize, chs: "五段伤害-2" },
-            CharacterSkillMapItem { index: XingqiuDamageEnum::Charged11 as usize, chs: "重击伤害-1" },
-            CharacterSkillMapItem { index: XingqiuDamageEnum::Charged12 as usize, chs: "重击伤害-2" },
-            CharacterSkillMapItem { index: XingqiuDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: XingqiuDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: XingqiuDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: XingqiuDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: XingqiuDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: XingqiuDamageEnum::Normal31 as usize, text: hit_n_dmg!(3, 1) },
+            CharacterSkillMapItem { index: XingqiuDamageEnum::Normal32 as usize, text: hit_n_dmg!(3, 2) },
+            CharacterSkillMapItem { index: XingqiuDamageEnum::Normal4 as usize, text: hit_n_dmg!(4) },
+            CharacterSkillMapItem { index: XingqiuDamageEnum::Normal51 as usize, text: hit_n_dmg!(5, 1) },
+            CharacterSkillMapItem { index: XingqiuDamageEnum::Normal52 as usize, text: hit_n_dmg!(5, 2) },
+            CharacterSkillMapItem { index: XingqiuDamageEnum::Charged11 as usize, text: charged_dmg!(1) },
+            CharacterSkillMapItem { index: XingqiuDamageEnum::Charged12 as usize, text: charged_dmg!(2) },
+            CharacterSkillMapItem { index: XingqiuDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: XingqiuDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: XingqiuDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: XingqiuDamageEnum::E11 as usize, chs: "技能伤害-1" },
-            CharacterSkillMapItem { index: XingqiuDamageEnum::E12 as usize, chs: "技能伤害-2" },
+            CharacterSkillMapItem { index: XingqiuDamageEnum::E11 as usize, text: locale!(zh_cn: "技能伤害-1", en: "Skill DMG-1") },
+            CharacterSkillMapItem { index: XingqiuDamageEnum::E12 as usize, text: locale!(zh_cn: "技能伤害-2", en: "Skill DMG-2") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: XingqiuDamageEnum::Q1 as usize, chs: "剑雨伤害" }
+            CharacterSkillMapItem { index: XingqiuDamageEnum::Q1 as usize, text: locale!(zh_cn: "剑雨伤害", en: "Sword Rain DMG") }
         ])
     };
 
@@ -184,7 +197,10 @@ impl CharacterTrait for Xingqiu {
     const CONFIG_SKILL: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "c4",
-            title: "c34",
+            title: locale!(
+                zh_cn: "应用4命效果",
+                en: "Use C4",
+            ),
             config: ItemConfigType::Bool { default: false }
         }
     ]);

@@ -14,6 +14,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct BarbaraSkillType {
     pub normal_dmg1: [f64; 15],
@@ -56,7 +57,6 @@ pub const BARBARA_SKILL: BarbaraSkillType = BarbaraSkillType {
 pub const BARBARA_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Barbara,
     internal_name: "Barbara",
-    chs: "芭芭拉",
     element: Element::Hydro,
     hp: [821, 2108, 2721, 4076, 4512, 5189, 5770, 6448, 6884, 7561, 7996, 8674, 9110, 9787],
     atk: [13, 34, 44, 66, 73, 84, 94, 105, 112, 123, 130, 141, 148, 159],
@@ -64,9 +64,22 @@ pub const BARBARA_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::HP240,
     weapon_type: WeaponType::Catalyst,
     star: 4,
-    skill_name1: "普通攻击·水之浅唱",
-    skill_name2: "演唱，开始♪",
-    skill_name3: "闪耀奇迹♪"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·水之浅唱",
+        en: "Normal Attack: Whisper of Water",
+    ),
+    skill_name2: locale!(
+        zh_cn: "演唱，开始♪",
+        en: "Let the Show Begin♪",
+    ),
+    skill_name3: locale!(
+        zh_cn: "闪耀奇迹♪",
+        en: "Shining Miracle♪",
+    ),
+    name_locale: locale!(
+        zh_cn: "芭芭拉",
+        en: "Barbara",
+    )
 };
 
 pub struct Barbara;
@@ -130,22 +143,22 @@ impl CharacterTrait for Barbara {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: BarbaraDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: BarbaraDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: BarbaraDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: BarbaraDamageEnum::Normal4 as usize, chs: "四段伤害" },
-            CharacterSkillMapItem { index: BarbaraDamageEnum::Charged as usize, chs: "重击伤害" },
-            CharacterSkillMapItem { index: BarbaraDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: BarbaraDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: BarbaraDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: BarbaraDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: BarbaraDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: BarbaraDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: BarbaraDamageEnum::Normal4 as usize, text: hit_n_dmg!(4) },
+            CharacterSkillMapItem { index: BarbaraDamageEnum::Charged as usize, text: charged_dmg!() },
+            CharacterSkillMapItem { index: BarbaraDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: BarbaraDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: BarbaraDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: BarbaraDamageEnum::EHeal1 as usize, chs: "命中治疗量" },
-            CharacterSkillMapItem { index: BarbaraDamageEnum::EHeal2 as usize, chs: "持续治疗量" },
-            CharacterSkillMapItem { index: BarbaraDamageEnum::EDmg as usize, chs: "水珠伤害" },
+            CharacterSkillMapItem { index: BarbaraDamageEnum::EHeal1 as usize, text: locale!(zh_cn: "命中治疗量", en: "HP Regeneration Per Hit") },
+            CharacterSkillMapItem { index: BarbaraDamageEnum::EHeal2 as usize, text: locale!(zh_cn: "持续治疗量", en: "Continuous Regeneration") },
+            CharacterSkillMapItem { index: BarbaraDamageEnum::EDmg as usize, text: locale!(zh_cn: "水珠伤害", en: "Droplet DMG") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: BarbaraDamageEnum::QHeal as usize, chs: "治疗量" },
+            CharacterSkillMapItem { index: BarbaraDamageEnum::QHeal as usize, text: locale!(zh_cn: "治疗量", en: "Regeneration") },
         ])
     };
 

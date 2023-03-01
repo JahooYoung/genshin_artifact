@@ -27,8 +27,14 @@ impl TargetFunctionMetaTrait for YelanDefaultTargetFunction {
     #[cfg(not(target_family = "wasm"))]
     const META_DATA: TargetFunctionMeta = TargetFunctionMeta {
         name: TargetFunctionName::YelanDefault,
-        chs: "夜兰-兰生幽谷",
-        description: "普通输出夜兰。使得Q伤害最大",
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "夜兰-兰生幽谷",
+            en: "Yelan-Valley Orchid"
+        ),
+        description: crate::common::i18n::locale!(
+            zh_cn: "普通输出夜兰。使得Q伤害最大",
+            en: "DPS Yelan, maximizing Q damage"
+        ),
         tags: "输出",
         four: TargetFunctionFor::SomeWho(CharacterName::Yelan),
         image: TargetFunctionMetaImage::Avatar
@@ -38,12 +44,18 @@ impl TargetFunctionMetaTrait for YelanDefaultTargetFunction {
     const CONFIG: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "recharge_demand",
-            title: "t4",
+            title: crate::common::i18n::locale!(
+                zh_cn: "充能需求",
+                en: "Recharge Requirement",
+            ),
             config: ItemConfigType::Float { min: 1.0, max: 3.0, default: 1.0 }
         },
         ItemConfig {
             name: "vaporize_rate",
-            title: "t6",
+            title: crate::common::i18n::locale!(
+                zh_cn: "蒸发占比",
+                en: "Vaporize Ratio",
+            ),
             config: ItemConfigType::Float { min: 0.0, max: 1.0, default: 0.0 }
         }
     ]);

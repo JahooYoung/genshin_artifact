@@ -752,6 +752,7 @@ import {useI18n} from "@/i18n/i18n"
 import {useAccountStore} from "@/store/pinia/account"
 import ApplyPresetDialog from "./ApplyPresetDialog.vue"
 import objectHash from "object-hash"
+import {artifactsData} from "@/assets/artifacts"
 
 import {ElMessage} from "element-plus"
 import "element-plus/es/components/message/style/css"
@@ -770,7 +771,7 @@ const mona = await useMona()
 const route = useRoute()
 
 // i18n
-const { t } = useI18n()
+const { t, ta } = useI18n()
 
 // refs
 const applyPresetDialog = ref()
@@ -824,6 +825,7 @@ const {
     characterNeedConfig,
     characterConfigConfig,
     characterInterface,
+    characterLocale,
 } = useCharacter()
 
 const {
@@ -856,6 +858,7 @@ const {
     weaponNeedConfig,
     weaponConfigConfig,
     weaponInterface,
+    weaponLocale
 } = useWeapon(characterWeaponType)
 
 
@@ -994,10 +997,8 @@ function handleClickArtifactConfig() {
 // save and use presets
 const miscCurrentPresetName = ref<null | string>(null)
 const presetDefaultName = computed((): string => {
-    // const cName = characterData[characterName.value].chs
-    // const wName = weaponData[weaponName.value].chs
-    const cName = t("character", characterName.value)
-    const wName = t("weapon", weaponName.value)
+    const cName = characterLocale.value
+    const wName = weaponLocale.value
     return `${cName}-${wName}`
 })
 const savedPresetHash = ref('')
@@ -1325,12 +1326,10 @@ interface Node {
 }
 
 const kumiDefaultName = computed((): string => {
-    // let name = characterData[characterName.value].chs
-    let name = t("character", characterName.value)
+    let name = characterLocale.value
     for (const setName in artifactSetCount.value) {
         if (artifactSetCount.value[setName] >= 2) {
-            // name += '-' + artifactsData[setName].chs
-            name += '-' + t("artifact", setName, "setName")
+            name += '-' + ta(artifactsData[setName].nameLocale)
         }
     }
     return name

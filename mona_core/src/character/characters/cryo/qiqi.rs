@@ -15,6 +15,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct QiqiSkillType {
     pub normal_dmg1: [f64; 15],
@@ -69,7 +70,6 @@ pub const QIQI_SKILL: QiqiSkillType = QiqiSkillType {
 pub const QIQI_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Qiqi,
     internal_name: "Qiqi",
-    chs: "七七",
     element: Element::Cryo,
     hp: [963, 2498, 3323, 4973, 5559, 6396, 7178, 8023, 8610, 9463, 10050, 10912, 11499, 12368],
     atk: [22, 58, 77, 115, 129, 148, 167, 186, 200, 220, 233, 253, 267, 287],
@@ -77,9 +77,22 @@ pub const QIQI_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::HealingBonus222,
     weapon_type: WeaponType::Sword,
     star: 5,
-    skill_name1: "普通攻击·云来古剑法",
-    skill_name2: "仙法·寒病鬼差",
-    skill_name3: "仙法·救苦度厄"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·云来古剑法",
+        en: "Normal Attack: Ancient Sword Art",
+    ),
+    skill_name2: locale!(
+        zh_cn: "仙法·寒病鬼差",
+        en: "Adeptus Art: Herald of Frost",
+    ),
+    skill_name3: locale!(
+        zh_cn: "仙法·救苦度厄",
+        en: "Adeptus Art: Preserver of Fortune",
+    ),
+    name_locale: locale!(
+        zh_cn: "七七",
+        en: "Qiqi",
+    )
 };
 
 pub struct Qiqi;
@@ -156,28 +169,28 @@ impl CharacterTrait for Qiqi {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: QiqiDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: QiqiDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: QiqiDamageEnum::Normal31 as usize, chs: "三段伤害-1" },
-            CharacterSkillMapItem { index: QiqiDamageEnum::Normal32 as usize, chs: "三段伤害-2" },
-            CharacterSkillMapItem { index: QiqiDamageEnum::Normal41 as usize, chs: "四段伤害-1" },
-            CharacterSkillMapItem { index: QiqiDamageEnum::Normal42 as usize, chs: "四段伤害-2" },
-            CharacterSkillMapItem { index: QiqiDamageEnum::Normal5 as usize, chs: "五段伤害" },
-            CharacterSkillMapItem { index: QiqiDamageEnum::Charged11 as usize, chs: "重击伤害-1" },
-            CharacterSkillMapItem { index: QiqiDamageEnum::Charged12 as usize, chs: "重击伤害-2" },
-            CharacterSkillMapItem { index: QiqiDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: QiqiDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: QiqiDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: QiqiDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: QiqiDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: QiqiDamageEnum::Normal31 as usize, text: hit_n_dmg!(3, 1) },
+            CharacterSkillMapItem { index: QiqiDamageEnum::Normal32 as usize, text: hit_n_dmg!(3, 2) },
+            CharacterSkillMapItem { index: QiqiDamageEnum::Normal41 as usize, text: hit_n_dmg!(4, 1) },
+            CharacterSkillMapItem { index: QiqiDamageEnum::Normal42 as usize, text: hit_n_dmg!(4, 2) },
+            CharacterSkillMapItem { index: QiqiDamageEnum::Normal5 as usize, text: hit_n_dmg!(5) },
+            CharacterSkillMapItem { index: QiqiDamageEnum::Charged11 as usize, text: charged_dmg!(1) },
+            CharacterSkillMapItem { index: QiqiDamageEnum::Charged12 as usize, text: charged_dmg!(2) },
+            CharacterSkillMapItem { index: QiqiDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: QiqiDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: QiqiDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: QiqiDamageEnum::E1 as usize, chs: "技能伤害" },
-            CharacterSkillMapItem { index: QiqiDamageEnum::E2 as usize, chs: "寒病鬼差伤害" },
-            CharacterSkillMapItem { index: QiqiDamageEnum::EHeal1 as usize, chs: "命中治疗量" },
-            CharacterSkillMapItem { index: QiqiDamageEnum::EHeal2 as usize, chs: "持续治疗量" },
+            CharacterSkillMapItem { index: QiqiDamageEnum::E1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") },
+            CharacterSkillMapItem { index: QiqiDamageEnum::E2 as usize, text: locale!(zh_cn: "寒病鬼差伤害", en: "Herald of Frost DMG") },
+            CharacterSkillMapItem { index: QiqiDamageEnum::EHeal1 as usize, text: locale!(zh_cn: "命中治疗量", en: "Regeneration on Hit") },
+            CharacterSkillMapItem { index: QiqiDamageEnum::EHeal2 as usize, text: locale!(zh_cn: "持续治疗量", en: "Continuous Regeneration") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: QiqiDamageEnum::Q1 as usize, chs: "技能伤害" },
-            CharacterSkillMapItem { index: QiqiDamageEnum::QHeal1 as usize, chs: "治疗量" },
+            CharacterSkillMapItem { index: QiqiDamageEnum::Q1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") },
+            CharacterSkillMapItem { index: QiqiDamageEnum::QHeal1 as usize, text: locale!(zh_cn: "治疗量", en: "Healing") },
         ])
     };
 

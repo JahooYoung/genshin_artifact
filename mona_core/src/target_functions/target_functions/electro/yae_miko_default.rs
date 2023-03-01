@@ -134,8 +134,14 @@ impl TargetFunctionMetaTrait for YaeMikoDefaultTargetFunction {
     #[cfg(not(target_family = "wasm"))]
     const META_DATA: TargetFunctionMeta = TargetFunctionMeta {
         name: TargetFunctionName::YaeMikoDefault,
-        chs: "八重神子-浮世笑百姿",
-        description: "按照一轮12s：三阶杀生樱12下、普通攻击6×3下计算。由于杀生樱的激化率为1/3、普通攻击的激化率为1/2，在激元素充足的情况下（超激化比例=1），所以一轮杀生樱最大激化4下、普通攻击期望最大9下。超激化比例是根据激元素的充足与否决定实际激化数占最大激化数的比例。超绽放比例是根据草种子的重组与否决定实际绽放的种子数占最大绽放的种子数（0.5s/2个）的比例。",
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "八重神子-浮世笑百姿",
+            en: "Yae-Astute Amusement"
+        ),
+        description: crate::common::i18n::locale!(
+            zh_cn: "按照一轮12s：三阶杀生樱12下、普通攻击6×3下计算。由于杀生樱的激化率为1/3、普通攻击的激化率为1/2，在激元素充足的情况下（超激化比例=1），所以一轮杀生樱最大激化4下、普通攻击期望最大9下。超激化比例是根据激元素的充足与否决定实际激化数占最大激化数的比例。超绽放比例是根据草种子的重组与否决定实际绽放的种子数占最大绽放的种子数（0.5s/2个）的比例。",
+            en: "DPS Yae Miko"
+        ),
         tags: "输出",
         four: TargetFunctionFor::SomeWho(CharacterName::YaeMiko),
         image: TargetFunctionMetaImage::Avatar,
@@ -150,17 +156,26 @@ impl TargetFunctionMetaTrait for YaeMikoDefaultTargetFunction {
         },
         ItemConfig {
             name: "combo",
-            title: "t23", //连招选择
+            title: crate::common::i18n::locale!(
+                zh_cn: "连招选择",
+                en: "Combo",
+            ), //连招选择
             config: ItemConfigType::Option { options: "不站场平A,站场平A", default: 0 },
         },
         ItemConfig {
             name: "aggravate_rate",
-            title: "t17", //超激化比例
+            title: crate::common::i18n::locale!(
+                zh_cn: "超激化比例",
+                en: "Aggravate Ratio",
+            ), //超激化比例
             config: ItemConfigType::Float { min: 0.0, max: 1.0, default: 1.0 },
         },
         ItemConfig {
             name: "hyperbloom_rate",
-            title: "t27", //超绽放比例
+            title: crate::common::i18n::locale!(
+                zh_cn: "超绽放比例",
+                en: "Hyperbloom Ratio",
+            ), //超绽放比例
             config: ItemConfigType::Float { min: 0.0, max: 4.0, default: 0.0 },
         },
     ]);

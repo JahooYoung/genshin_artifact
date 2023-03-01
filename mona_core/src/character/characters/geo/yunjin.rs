@@ -15,6 +15,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct YunjinSkillType {
     pub normal_dmg1: [f64; 15],
@@ -63,7 +64,6 @@ const YUNJIN_SKILL: YunjinSkillType = YunjinSkillType {
 const YUNJIN_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Yunjin,
     internal_name: "Yunjin",
-    chs: "云堇",
     element: Element::Geo,
     hp: [894, 2296, 2963, 4438, 4913, 5651, 6283, 7021, 7495, 8233, 8707, 9445, 9919, 10657],
     atk: [16, 41, 53, 80, 88, 101, 113, 126, 134, 148, 156, 169, 178, 191],
@@ -71,9 +71,22 @@ const YUNJIN_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::Recharge267,
     weapon_type: WeaponType::Polearm,
     star: 4,
-    skill_name1: "普通攻击·拂云出手",
-    skill_name2: "旋云开相",
-    skill_name3: "破嶂见旌仪"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·拂云出手",
+        en: "Normal Attack: Cloud-Grazing Strike",
+    ),
+    skill_name2: locale!(
+        zh_cn: "旋云开相",
+        en: "Opening Flourish",
+    ),
+    skill_name3: locale!(
+        zh_cn: "破嶂见旌仪",
+        en: "Cliffbreaker's Banner",
+    ),
+    name_locale: locale!(
+        zh_cn: "云堇",
+        en: "Yunjin",
+    )
 };
 
 pub struct Yunjin;
@@ -139,25 +152,25 @@ impl CharacterTrait for Yunjin {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: YunjinDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: YunjinDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: YunjinDamageEnum::Normal31 as usize, chs: "三段伤害-1" },
-            CharacterSkillMapItem { index: YunjinDamageEnum::Normal32 as usize, chs: "三段伤害-2" },
-            CharacterSkillMapItem { index: YunjinDamageEnum::Normal41 as usize, chs: "四段伤害-1" },
-            CharacterSkillMapItem { index: YunjinDamageEnum::Normal42 as usize, chs: "四段伤害-2" },
-            CharacterSkillMapItem { index: YunjinDamageEnum::Normal5 as usize, chs: "五段伤害" },
-            CharacterSkillMapItem { index: YunjinDamageEnum::Charged as usize, chs: "重击伤害" },
-            CharacterSkillMapItem { index: YunjinDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: YunjinDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: YunjinDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: YunjinDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: YunjinDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: YunjinDamageEnum::Normal31 as usize, text: hit_n_dmg!(3, 1) },
+            CharacterSkillMapItem { index: YunjinDamageEnum::Normal32 as usize, text: hit_n_dmg!(3, 2) },
+            CharacterSkillMapItem { index: YunjinDamageEnum::Normal41 as usize, text: hit_n_dmg!(4, 1) },
+            CharacterSkillMapItem { index: YunjinDamageEnum::Normal42 as usize, text: hit_n_dmg!(4, 2) },
+            CharacterSkillMapItem { index: YunjinDamageEnum::Normal5 as usize, text: hit_n_dmg!(5) },
+            CharacterSkillMapItem { index: YunjinDamageEnum::Charged as usize, text: charged_dmg!() },
+            CharacterSkillMapItem { index: YunjinDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: YunjinDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: YunjinDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: YunjinDamageEnum::E1 as usize, chs: "点按伤害" },
-            CharacterSkillMapItem { index: YunjinDamageEnum::E2 as usize, chs: "一段蓄力伤害" },
-            CharacterSkillMapItem { index: YunjinDamageEnum::E3 as usize, chs: "二段蓄力伤害" },
+            CharacterSkillMapItem { index: YunjinDamageEnum::E1 as usize, text: locale!(zh_cn: "点按伤害", en: "Tap DMG") },
+            CharacterSkillMapItem { index: YunjinDamageEnum::E2 as usize, text: locale!(zh_cn: "一段蓄力伤害", en: "Charge Level 1 DMG") },
+            CharacterSkillMapItem { index: YunjinDamageEnum::E3 as usize, text: locale!(zh_cn: "二段蓄力伤害", en: "Charge Level 2 DMG") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: YunjinDamageEnum::Q1 as usize, chs: "技能伤害" }
+            CharacterSkillMapItem { index: YunjinDamageEnum::Q1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") }
         ])
     };
 

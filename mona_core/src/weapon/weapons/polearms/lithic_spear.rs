@@ -1,5 +1,6 @@
 use crate::attribute::{Attribute, AttributeCommon, AttributeName};
 use crate::character::character_common_data::CharacterCommonData;
+use crate::common::i18n::locale;
 use crate::common::item_config_type::{ItemConfig, ItemConfigType};
 use crate::common::WeaponType;
 use crate::weapon::weapon_base_atk::WeaponBaseATKFamily;
@@ -46,16 +47,25 @@ impl WeaponTrait for LithicSpear {
         weapon_base: WeaponBaseATKFamily::ATK565,
         star: 4,
         #[cfg(not(target_family = "wasm"))]
-        effect: Some("千岩诀·同心：队伍中每有一位璃月角色，装备该武器的角色便获得7%/8%/9%/10%/11%攻击力提升与3%/4%/5%/6%/7%暴击率提升。至多获得4层提升效果。"),
+        effect: Some(crate::common::i18n::locale!(
+            zh_cn: "队伍中每有一位璃月角色，装备此武器的角色便获得<span style=\"color: #409EFF;\">7%-8%-9%-10%-11%</span>攻击力提升与<span style=\"color: #409EFF;\">3%-4%-5%-6%-7%</span>暴击率提升。至多获得4层提升效果。",
+            en: "For every character in the party who hails from Liyue, the character who equips this weapon gains a <span style=\"color: #409EFF;\">7%-8%-9%-10%-11%</span> ATK increase and a <span style=\"color: #409EFF;\">3%-4%-5%-6%-7%</span> CRIT Rate increase. This effect stacks up to 4 times."
+        )),
         #[cfg(not(target_family = "wasm"))]
-        chs: "千岩长枪"
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "千岩长枪",
+            en: "Lithic Spear"
+        )
     };
 
     #[cfg(not(target_family = "wasm"))]
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "liyue_count",
-            title: "w19",
+            title: locale!(
+                zh_cn: "队伍璃月角色数量",
+                en: "Team Liyue Character Count",
+            ),
             config: ItemConfigType::Int { min: 0, max: 4, default: 0 }
         }
     ]);

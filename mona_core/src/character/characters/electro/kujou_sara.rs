@@ -15,6 +15,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct KujouSaraSkillType {
     pub normal_dmg1: [f64; 15],
@@ -55,7 +56,6 @@ pub const KUJOU_SARA_SKILL: KujouSaraSkillType = KujouSaraSkillType {
 pub const KUJOU_SARA_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::KujouSara,
     internal_name: "Sara",
-    chs: "九条裟罗",
     element: Element::Electro,
     hp: [802, 2061, 2661, 3985, 4411, 5074, 5642, 6305, 6731, 7393, 7818, 8481, 8907, 9570],
     atk: [16, 42, 54, 81, 90, 104, 115, 129, 137, 151, 160, 173, 182, 195],
@@ -63,9 +63,22 @@ pub const KUJOU_SARA_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::ATK240,
     weapon_type: WeaponType::Bow,
     star: 4,
-    skill_name1: "普通攻击•天狗传弓术",
-    skill_name2: "鸦羽天狗霆雷召咒",
-    skill_name3: "煌煌千道镇式"
+    skill_name1: locale!(
+        zh_cn: "普通攻击•天狗传弓术",
+        en: "Normal Attack: Tengu Bowmanship",
+    ),
+    skill_name2: locale!(
+        zh_cn: "鸦羽天狗霆雷召咒",
+        en: "Tengu Stormcall",
+    ),
+    skill_name3: locale!(
+        zh_cn: "煌煌千道镇式",
+        en: "Subjugation: Koukou Sendou",
+    ),
+    name_locale: locale!(
+        zh_cn: "九条裟罗",
+        en: "Kujou Sara",
+    )
 };
 
 pub struct KujouSara;
@@ -129,23 +142,23 @@ impl CharacterTrait for KujouSara {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: KujouSaraDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: KujouSaraDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: KujouSaraDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: KujouSaraDamageEnum::Normal4 as usize, chs: "四段伤害" },
-            CharacterSkillMapItem { index: KujouSaraDamageEnum::Normal5 as usize, chs: "五段伤害" },
-            CharacterSkillMapItem { index: KujouSaraDamageEnum::Charged1 as usize, chs: "瞄准射击" },
-            CharacterSkillMapItem { index: KujouSaraDamageEnum::Charged2 as usize, chs: "满蓄力瞄准射击" },
-            CharacterSkillMapItem { index: KujouSaraDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: KujouSaraDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: KujouSaraDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: KujouSaraDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: KujouSaraDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: KujouSaraDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: KujouSaraDamageEnum::Normal4 as usize, text: hit_n_dmg!(4) },
+            CharacterSkillMapItem { index: KujouSaraDamageEnum::Normal5 as usize, text: hit_n_dmg!(5) },
+            CharacterSkillMapItem { index: KujouSaraDamageEnum::Charged1 as usize, text: charged_dmg!("shoot1") },
+            CharacterSkillMapItem { index: KujouSaraDamageEnum::Charged2 as usize, text: charged_dmg!("shoot2") },
+            CharacterSkillMapItem { index: KujouSaraDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: KujouSaraDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: KujouSaraDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: KujouSaraDamageEnum::E1 as usize, chs: "天狗咒雷•伏伤害" }
+            CharacterSkillMapItem { index: KujouSaraDamageEnum::E1 as usize, text: locale!(zh_cn: "天狗咒雷•伏伤害", en: "Tengu Juurai: Ambush DMG") }
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: KujouSaraDamageEnum::Q1 as usize, chs: "天狗咒雷•金刚坏伤害" },
-            CharacterSkillMapItem { index: KujouSaraDamageEnum::Q2 as usize, chs: "天狗咒雷•雷砾伤害" },
+            CharacterSkillMapItem { index: KujouSaraDamageEnum::Q1 as usize, text: locale!(zh_cn: "天狗咒雷•金刚坏伤害", en: "Tengu Juurai: Titanbreaker DMG") },
+            CharacterSkillMapItem { index: KujouSaraDamageEnum::Q2 as usize, text: locale!(zh_cn: "天狗咒雷•雷砾伤害", en: "Tengu Juurai: Stormcluster DMG") },
         ])
     };
 

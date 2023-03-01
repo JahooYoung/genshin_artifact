@@ -24,10 +24,16 @@ impl BuffMeta for BuffVentiC2 {
     #[cfg(not(target_family = "wasm"))]
     const META_DATA: BuffMetaData = BuffMetaData {
         name: BuffName::VentiC2,
-        chs: "温迪-「眷恋的泠风」",
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "温迪-「眷恋的泠风」",
+            en: "Venti-「Breeze of Reminiscence」",
+        ),
         image: BuffImage::Avatar(CharacterName::Venti),
         genre: BuffGenre::Character,
-        description: Some("温迪命座2：高天之歌会使敌人的风元素抗性与物理抗性降低12％，持续10秒。被高天之歌击飞的敌人在落地前，风元素抗性与物理抗性额外降低12％。"),
+        description: Some(crate::common::i18n::locale!(
+            zh_cn: "温迪命座2：高天之歌会使敌人的风元素抗性与物理抗性降低12％，持续10秒。被高天之歌击飞的敌人在落地前，风元素抗性与物理抗性额外降低12％。",
+            en: "温迪命座2：高天之歌会使敌人的风元素抗性与物理抗性降低12％，持续10秒。被高天之歌击飞的敌人在落地前，风元素抗性与物理抗性额外降低12％。",
+        )),
         from: BuffFrom::Character(CharacterName::Venti),
     };
 
@@ -35,7 +41,10 @@ impl BuffMeta for BuffVentiC2 {
     const CONFIG: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "levitating",
-            title: "b25",
+            title: crate::common::i18n::locale!(
+                zh_cn: "落地前",
+                en: "Levitating",
+            ),
             config: ItemConfigType::Bool { default: false }
         }
     ]);
@@ -72,10 +81,16 @@ impl BuffMeta for BuffVentiC6 {
     #[cfg(not(target_family = "wasm"))]
     const META_DATA: BuffMetaData = BuffMetaData {
         name: BuffName::VentiC6,
-        chs: "温迪-「抗争的暴风」",
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "温迪-「抗争的暴风」",
+            en: "Venti-「Storm of Defiance」",
+        ),
         image: BuffImage::Avatar(CharacterName::Venti),
         genre: BuffGenre::Character,
-        description: Some("温迪命座6：温迪六命BUFF。受风神之诗伤害的敌人，风元素抗性降低20％。若产生了元素转化，则使转换的元素抗性也降低20％。"),
+        description: Some(crate::common::i18n::locale!(
+            zh_cn: "温迪命座6：温迪六命BUFF。受风神之诗伤害的敌人，风元素抗性降低20％。若产生了元素转化，则使转换的元素抗性也降低20％。",
+            en: "温迪命座6：温迪六命BUFF。受风神之诗伤害的敌人，风元素抗性降低20％。若产生了元素转化，则使转换的元素抗性也降低20％。",
+        )),
         from: BuffFrom::Character(CharacterName::Venti),
     };
 
@@ -83,12 +98,18 @@ impl BuffMeta for BuffVentiC6 {
     const CONFIG: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "is_convert",
-            title: "b26",
+            title: crate::common::i18n::locale!(
+                zh_cn: "发生了元素转化",
+                en: "Element Transform Occurred",
+            ),
             config: ItemConfigType::Bool { default: true },
         },
         ItemConfig {
             name: "element",
-            title: "b27",
+            title: crate::common::i18n::locale!(
+                zh_cn: "转化类型",
+                en: "Transform Type",
+            ),
             config: ItemConfigType::Element4 { default: Element::Electro }
         }
     ]);

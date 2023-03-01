@@ -6,6 +6,7 @@ use crate::character::character_common_data::CharacterCommonData;
 use crate::character::characters::anemo::venti::Venti;
 use crate::character::skill_config::CharacterSkillConfig;
 use crate::character::traits::CharacterTrait;
+use crate::common::i18n::locale;
 use crate::common::item_config_type::{ItemConfig, ItemConfigType};
 use crate::common::StatName;
 use crate::damage::{DamageContext, SimpleDamageBuilder};
@@ -38,8 +39,14 @@ impl TargetFunctionMetaTrait for VentiDefaultTargetFunction {
     #[cfg(not(target_family = "wasm"))]
     const META_DATA: TargetFunctionMeta = TargetFunctionMeta {
         name: TargetFunctionName::VentiDefault,
-        chs: "温迪-风色诗人",
-        description: "普通输出温迪",
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "温迪-风色诗人",
+            en: "Venti-Windborne Bard"
+        ),
+        description: crate::common::i18n::locale!(
+            zh_cn: "普通输出温迪",
+            en: "DPS Venti"
+        ),
         tags: "输出",
         four: TargetFunctionFor::SomeWho(CharacterName::Venti),
         image: TargetFunctionMetaImage::Avatar
@@ -49,7 +56,10 @@ impl TargetFunctionMetaTrait for VentiDefaultTargetFunction {
     const CONFIG: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "swirl_rate",
-            title: "t10",
+            title: locale!(
+                zh_cn: "扩散占比",
+                en: "Swirl Frequency"
+            ),
             config: ItemConfigType::Float { min: 0.0, max: 1.0, default: 0.7 },
         }
     ]);

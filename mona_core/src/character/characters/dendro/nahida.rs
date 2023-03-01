@@ -12,6 +12,7 @@ use crate::target_functions::TargetFunction;
 use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use crate::character::macros::{skill_type, damage_enum, skill_map, damage_ratio};
+use crate::common::i18n::{locale, hit_n_dmg, charged_dmg, plunging_dmg};
 
 
 pub struct NahidaSkillType {
@@ -97,7 +98,6 @@ impl CharacterTrait for Nahida {
     const STATIC_DATA: CharacterStaticData = CharacterStaticData {
         name: CharacterName::Nahida,
         internal_name: "Nahida",
-        chs: "",
         element: Element::Dendro,
         hp: [807, 2092, 2784, 4165, 4656, 5357, 6012, 6721, 7212, 7926, 8418, 9140, 9632, 10360],
         atk: [23, 60, 80, 120, 134, 155, 174, 194, 208, 229, 243, 264, 278, 299],
@@ -105,9 +105,22 @@ impl CharacterTrait for Nahida {
         sub_stat: CharacterSubStatFamily::ElementalMastery115,
         weapon_type: WeaponType::Catalyst,
         star: 5,
-        skill_name1: "",
-        skill_name2: "",
-        skill_name3: ""
+        skill_name1: locale!(
+            zh_cn: "普通攻击·行相",
+            en: "Normal Attack: Akara",
+        ),
+        skill_name2: locale!(
+            zh_cn: "所闻遍计",
+            en: "All Schemes to Know",
+        ),
+        skill_name3: locale!(
+            zh_cn: "心景幻成",
+            en: "Illusory Heart",
+        ),
+        name_locale: locale!(
+            zh_cn: "纳西妲",
+            en: "Nahida",
+        )
     };
     type SkillType = NahidaSkillType;
     const SKILL: Self::SkillType = NAHIDA_SKILL;
@@ -118,20 +131,20 @@ impl CharacterTrait for Nahida {
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: skill_map!(
             NahidaDamageEnum
-            Normal1 "一段伤害"
-            Normal2 "二段伤害"
-            Normal3 "三段伤害"
-            Normal4 "四段伤害"
-            Charged "重击伤害"
-            Plunging1 "下坠期间伤害"
-            Plunging2 "低空坠地冲击伤害"
-            Plunging3 "高空坠地冲击伤害"
+            Normal1 hit_n_dmg!(1)
+            Normal2 hit_n_dmg!(2)
+            Normal3 hit_n_dmg!(3)
+            Normal4 hit_n_dmg!(4)
+            Charged charged_dmg!()
+            Plunging1 plunging_dmg!(1)
+            Plunging2 plunging_dmg!(2)
+            Plunging3 plunging_dmg!(3)
         ),
         skill2: skill_map!(
             NahidaDamageEnum
-            E1 "点按伤害"
-            E2 "长按伤害"
-            E3 "灭净三业伤害"
+            E1 locale!(zh_cn: "点按伤害", en: "Tapping DMG")
+            E2 locale!(zh_cn: "长按伤害", en: "Hold DMG")
+            E3 locale!(zh_cn: "灭净三业伤害", en: "Tri-Karma Purification DMG")
         ),
         skill3: None
     };
@@ -140,7 +153,10 @@ impl CharacterTrait for Nahida {
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "c4_e_count",
-            title: "c49",
+            title: locale!(
+                zh_cn: "（4命）蕴种印状态敌人数量",
+                en: "(C4) Schemes to Know‘s Seeds of Skandha Enemy Count",
+            ),
             config: ItemConfigType::Int { min: 0, max: 4, default: 4 },
         }
     ]);
@@ -149,12 +165,18 @@ impl CharacterTrait for Nahida {
     const CONFIG_SKILL: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "q_bonus",
-            title: "c47",
+            title: locale!(
+                zh_cn: "Q技能火元素加伤",
+                en: "Q Pyro Bonus",
+            ),
             config: ItemConfigType::Bool { default: true }
         },
         ItemConfig {
             name: "q_bonus_count",
-            title: "c48",
+            title: locale!(
+                zh_cn: "Q技能火元素个数",
+                en: "Q Pyro Count",
+            ),
             config: ItemConfigType::Int { min: 1, max: 2, default: 2 }
         }
     ]);

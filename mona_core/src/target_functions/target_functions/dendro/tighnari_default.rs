@@ -6,6 +6,7 @@ use crate::character::character_common_data::CharacterCommonData;
 use crate::character::characters::dendro::tighnari::Tighnari;
 use crate::character::skill_config::CharacterSkillConfig;
 use crate::character::traits::CharacterTrait;
+use crate::common::i18n::locale;
 use crate::common::item_config_type::{ItemConfig, ItemConfigType};
 use crate::damage::{DamageContext, SimpleDamageBuilder};
 use crate::enemies::Enemy;
@@ -50,8 +51,14 @@ impl TargetFunctionMetaTrait for TighnariDefaultTargetFunction {
     #[cfg(not(target_family = "wasm"))]
     const META_DATA: TargetFunctionMeta = TargetFunctionMeta {
         name: TargetFunctionName::TighnariDefault,
-        chs: "",
-        description: "",
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "提纳里-浅蔚轻行",
+            en: "Tighnari-Verdant Strider"
+        ),
+        description: crate::common::i18n::locale!(
+            zh_cn: "使得提纳里的重击伤害最大",
+            en: "Maximize Tighnari Charged Attack"
+        ),
         tags: "",
         four: TargetFunctionFor::SomeWho(CharacterName::Tighnari),
         image: TargetFunctionMetaImage::Avatar
@@ -61,7 +68,10 @@ impl TargetFunctionMetaTrait for TighnariDefaultTargetFunction {
     const CONFIG: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "spread_rate",
-            title: "t16",
+            title: locale!(
+                zh_cn: "蔓激化比例",
+                en: "Spread Ratio",
+            ),
             config: ItemConfigType::Float { min: 0.0, max: 1.0, default: 0.0 }
         }
     ]);

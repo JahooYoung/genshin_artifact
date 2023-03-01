@@ -13,6 +13,7 @@ use crate::weapon::weapon_common_data::WeaponCommonData;
 use num_derive::FromPrimitive;
 use strum::{EnumCount};
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct ShikanoinHeizouSkillType {
     pub normal_dmg1: [f64; 15],
@@ -118,7 +119,6 @@ impl CharacterTrait for ShikanoinHeizou {
     const STATIC_DATA: CharacterStaticData = CharacterStaticData {
         name: CharacterName::ShikanoinHeizou,
         internal_name: "Heizo",
-        chs: "鹿野院平藏",
         element: Element::Anemo,
         hp: [894, 2296, 2963, 4438, 4913, 5651, 6283, 7021, 7495, 8233, 8707, 9445, 9919, 10657],
         atk: [19, 48, 63, 94, 104, 119, 133, 148, 158, 174, 184, 200, 210, 225],
@@ -126,9 +126,22 @@ impl CharacterTrait for ShikanoinHeizou {
         sub_stat: CharacterSubStatFamily::Bonus240(StatName::AnemoBonus),
         weapon_type: WeaponType::Catalyst,
         star: 4,
-        skill_name1: "普通攻击·不动流格斗术",
-        skill_name2: "勠心拳",
-        skill_name3: "聚风蹴"
+        skill_name1: locale!(
+            zh_cn: "普通攻击·不动流格斗术",
+            en: "Normal Attack: Fudou Style Martial Arts",
+        ),
+        skill_name2: locale!(
+            zh_cn: "勠心拳",
+            en: "Heartstopper Strike",
+        ),
+        skill_name3: locale!(
+            zh_cn: "聚风蹴",
+            en: "Windmuster Kick",
+        ),
+        name_locale: locale!(
+            zh_cn: "鹿野院平藏",
+            en: "Shikanoin Heizou",
+        )
     };
     type SkillType = ShikanoinHeizouSkillType;
     const SKILL: Self::SkillType = SHIKANOIN_HEIZOU_SKILL;
@@ -138,32 +151,32 @@ impl CharacterTrait for ShikanoinHeizou {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Normal41 as usize, chs: "四段伤害-1" },
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Normal42 as usize, chs: "四段伤害-2" },
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Normal43 as usize, chs: "四段伤害-3" },
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Normal4 as usize, chs: "四段伤害" },
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Normal5 as usize, chs: "五段伤害" },
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Charged1 as usize, chs: "重击伤害" },
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Normal41 as usize, text: hit_n_dmg!(4, 1) },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Normal42 as usize, text: hit_n_dmg!(4, 2) },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Normal43 as usize, text: hit_n_dmg!(4, 3) },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Normal4 as usize, text: hit_n_dmg!(4) },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Normal5 as usize, text: hit_n_dmg!(5) },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Charged1 as usize, text: charged_dmg!() },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::E0 as usize, chs: "技能伤害-0层" },
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::E1 as usize, chs: "技能伤害-1层" },
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::E2 as usize, chs: "技能伤害-2层" },
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::E3 as usize, chs: "技能伤害-3层" },
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::E4 as usize, chs: "技能伤害-4层" },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::E0 as usize, text: locale!(zh_cn: "技能伤害-0层", en: "Skill DMG-0") },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::E1 as usize, text: locale!(zh_cn: "技能伤害-1层", en: "Skill DMG-1") },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::E2 as usize, text: locale!(zh_cn: "技能伤害-2层", en: "Skill DMG-2") },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::E3 as usize, text: locale!(zh_cn: "技能伤害-3层", en: "Skill DMG-3") },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::E4 as usize, text: locale!(zh_cn: "技能伤害-4层", en: "Skill DMG-4") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Q1 as usize, chs: "不动流·真空弹伤害" },
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Q2Pyro as usize, chs: "聚风真眼伤害-火" },
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Q2Cryo as usize, chs: "聚风真眼伤害-冰" },
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Q2Electro as usize, chs: "聚风真眼伤害-雷" },
-            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Q2Hydro as usize, chs: "聚风真眼伤害-水" },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Q1 as usize, text: locale!(zh_cn: "不动流·真空弹伤害", en: "Fudou Style Vacuum Slugger DMG") },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Q2Pyro as usize, text: locale!(zh_cn: "聚风真眼伤害-火", en: "Windmuster Iris DMG-Pyro") },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Q2Cryo as usize, text: locale!(zh_cn: "聚风真眼伤害-冰", en: "Windmuster Iris DMG-Cryo") },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Q2Electro as usize, text: locale!(zh_cn: "聚风真眼伤害-雷", en: "Windmuster Iris DMG-Electro") },
+            CharacterSkillMapItem { index: ShikanoinHeizouDamageEnum::Q2Hydro as usize, text: locale!(zh_cn: "聚风真眼伤害-水", en: "Windmuster Iris DMG-Hydro") },
         ])
     };
 

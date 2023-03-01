@@ -15,6 +15,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct XiaoSkillType {
     pub normal_dmg11: [f64; 15],
@@ -57,7 +58,6 @@ pub const XIAO_SKILL: XiaoSkillType = XiaoSkillType {
 pub const XIAO_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Xiao,
     internal_name: "Xiao",
-    chs: "魈",
     element: Element::Anemo,
     hp: [991, 2572, 3422, 5120, 5724, 6586, 7391, 8262, 8866, 9744, 10348, 11236, 11840, 12736],
     atk: [27, 71, 94, 140, 157, 181, 203, 227, 243, 267, 284, 308, 325, 349],
@@ -65,9 +65,22 @@ pub const XIAO_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::CriticalRate192,
     weapon_type: WeaponType::Polearm,
     star: 5,
-    skill_name1: "普通攻击·卷积微尘",
-    skill_name2: "风轮两立",
-    skill_name3: "靖妖傩舞"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·卷积微尘",
+        en: "Normal Attack: Whirlwind Thrust",
+    ),
+    skill_name2: locale!(
+        zh_cn: "风轮两立",
+        en: "Lemniscatic Wind Cycling",
+    ),
+    skill_name3: locale!(
+        zh_cn: "靖妖傩舞",
+        en: "Bane of All Evil",
+    ),
+    name_locale: locale!(
+        zh_cn: "魈",
+        en: "Xiao",
+    )
 };
 
 pub struct Xiao;
@@ -140,21 +153,21 @@ impl CharacterTrait for Xiao {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: XiaoDamageEnum::Normal11 as usize, chs: "一段伤害-1" },
-            CharacterSkillMapItem { index: XiaoDamageEnum::Normal12 as usize, chs: "一段伤害-2" },
-            CharacterSkillMapItem { index: XiaoDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: XiaoDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: XiaoDamageEnum::Normal41 as usize, chs: "四段伤害-2" },
-            CharacterSkillMapItem { index: XiaoDamageEnum::Normal42 as usize, chs: "四段伤害-1" },
-            CharacterSkillMapItem { index: XiaoDamageEnum::Normal5 as usize, chs: "五段伤害" },
-            CharacterSkillMapItem { index: XiaoDamageEnum::Normal6 as usize, chs: "六段伤害" },
-            CharacterSkillMapItem { index: XiaoDamageEnum::Charged as usize, chs: "重击伤害" },
-            CharacterSkillMapItem { index: XiaoDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: XiaoDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: XiaoDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: XiaoDamageEnum::Normal11 as usize, text: hit_n_dmg!(1, 1) },
+            CharacterSkillMapItem { index: XiaoDamageEnum::Normal12 as usize, text: hit_n_dmg!(1, 2) },
+            CharacterSkillMapItem { index: XiaoDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: XiaoDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: XiaoDamageEnum::Normal41 as usize, text: hit_n_dmg!(4, 1) },
+            CharacterSkillMapItem { index: XiaoDamageEnum::Normal42 as usize, text: hit_n_dmg!(4, 2) },
+            CharacterSkillMapItem { index: XiaoDamageEnum::Normal5 as usize, text: hit_n_dmg!(5) },
+            CharacterSkillMapItem { index: XiaoDamageEnum::Normal6 as usize, text: hit_n_dmg!(6) },
+            CharacterSkillMapItem { index: XiaoDamageEnum::Charged as usize, text: charged_dmg!() },
+            CharacterSkillMapItem { index: XiaoDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: XiaoDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: XiaoDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: XiaoDamageEnum::E1 as usize, chs: "技能伤害" }
+            CharacterSkillMapItem { index: XiaoDamageEnum::E1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") }
         ]),
         skill3: None
     };
@@ -163,17 +176,26 @@ impl CharacterTrait for Xiao {
     const CONFIG_SKILL: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "after_q",
-            title: "c31",
+            title: locale!(
+                zh_cn: "靖妖傩舞",
+                en: "Bane of All Evil",
+            ),
             config: ItemConfigType::Bool { default: true }
         },
         ItemConfig {
             name: "talent1_stack",
-            title: "c32",
+            title: locale!(
+                zh_cn: "天赋「降魔·平妖大圣」应用层数",
+                en: "Talent「Conqueror of Evil: Tamer of Demons」Apply Stack",
+            ),
             config: ItemConfigType::Float { min: 0.0, max: 4.0, default: 4.0 },
         },
         ItemConfig {
             name: "talent2_stack",
-            title: "c33",
+            title: locale!(
+                zh_cn: "天赋「坏劫·国土碾尘」应用层数",
+                en: "Talent「Dissolution Eon: Heaven Fall」Apply Stack",
+            ),
             config: ItemConfigType::Float { min: 0.0, max: 3.0, default: 0.0 },
         }
     ]);

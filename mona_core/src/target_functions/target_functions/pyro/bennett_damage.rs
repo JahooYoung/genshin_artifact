@@ -27,8 +27,14 @@ impl TargetFunctionMetaTrait for BennettDamageTargetFunction {
     #[cfg(not(target_family = "wasm"))]
     const META_DATA: TargetFunctionMeta = TargetFunctionMeta {
         name: TargetFunctionName::BennettDamage,
-        chs: "班尼特-副C",
-        description: "普通副C班尼特",
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "班尼特-副C",
+            en: "Bennett-Sub DPS"
+        ),
+        description: crate::common::i18n::locale!(
+            zh_cn: "普通副C班尼特",
+            en: "Sub DPS Bennett"
+        ),
         tags: "辅助,输出,副C",
         four: TargetFunctionFor::SomeWho(CharacterName::Bennett),
         image: TargetFunctionMetaImage::Avatar
@@ -38,12 +44,18 @@ impl TargetFunctionMetaTrait for BennettDamageTargetFunction {
     const CONFIG: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "recharge_demand",
-            title: "t4",
+            title: crate::common::i18n::locale!(
+                zh_cn: "充能需求",
+                en: "Recharge Requirement",
+            ),
             config: ItemConfigType::Float { min: 1.0, max: 3.0, default: 1.8 },
         },
         ItemConfig {
             name: "other_dmg_ratio",
-            title: "t9",
+            title: crate::common::i18n::locale!(
+                zh_cn: "他人伤害比例",
+                en: "Other's DMG Ratio",
+            ),
             config: ItemConfigType::Float { min: 0.0, max: 1.0, default: 0.9 },
         }
     ]);

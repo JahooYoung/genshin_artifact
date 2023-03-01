@@ -14,6 +14,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct YaeMikoSkillType {
     pub normal_dmg1: [f64; 15],
@@ -96,7 +97,6 @@ impl CharacterTrait for YaeMiko {
     const STATIC_DATA: CharacterStaticData = CharacterStaticData {
         name: CharacterName::YaeMiko,
         internal_name: "Yae",
-        chs: "八重神子",
         element: Element::Electro,
         hp: [807, 2095, 2787, 4170, 4662, 5364, 6020, 6729, 7220, 7936, 8428, 9151, 9643, 10372],
         atk: [26, 69, 91, 137, 153, 176, 197, 220, 236, 260, 276, 300, 316, 340],
@@ -104,9 +104,22 @@ impl CharacterTrait for YaeMiko {
         sub_stat: CharacterSubStatFamily::CriticalRate192,
         weapon_type: WeaponType::Catalyst,
         star: 5,
-        skill_name1: "普通攻击·狐灵食罪式",
-        skill_name2: "野干役咒·杀生樱",
-        skill_name3: "大密法·天狐显真"
+        skill_name1: locale!(
+            zh_cn: "普通攻击·狐灵食罪式",
+            en: "Normal Attack: Spiritfox Sin-Eater",
+        ),
+        skill_name2: locale!(
+            zh_cn: "野干役咒·杀生樱",
+            en: "Yakan Evocation: Sesshou Sakura",
+        ),
+        skill_name3: locale!(
+            zh_cn: "大密法·天狐显真",
+            en: "Great Secret Art: Tenko Kenshin",
+        ),
+        name_locale: locale!(
+            zh_cn: "八重神子",
+            en: "Yae Miko",
+        )
     };
     type SkillType = YaeMikoSkillType;
     const SKILL: Self::SkillType = YAE_MIKO_SKILL;
@@ -116,23 +129,23 @@ impl CharacterTrait for YaeMiko {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: YaeMikoDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: YaeMikoDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: YaeMikoDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: YaeMikoDamageEnum::Charged as usize, chs: "重击伤害" },
-            CharacterSkillMapItem { index: YaeMikoDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: YaeMikoDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: YaeMikoDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: YaeMikoDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: YaeMikoDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: YaeMikoDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: YaeMikoDamageEnum::Charged as usize, text: charged_dmg!() },
+            CharacterSkillMapItem { index: YaeMikoDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: YaeMikoDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: YaeMikoDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: YaeMikoDamageEnum::E1 as usize, chs: "杀生樱伤害·壹阶" },
-            CharacterSkillMapItem { index: YaeMikoDamageEnum::E2 as usize, chs: "杀生樱伤害·贰阶" },
-            CharacterSkillMapItem { index: YaeMikoDamageEnum::E3 as usize, chs: "杀生樱伤害·叁阶" },
-            CharacterSkillMapItem { index: YaeMikoDamageEnum::E4 as usize, chs: "杀生樱伤害·肆阶" },
+            CharacterSkillMapItem { index: YaeMikoDamageEnum::E1 as usize, text: locale!(zh_cn: "杀生樱伤害·壹阶", en: "Sesshou Sakura DMG: Level 1") },
+            CharacterSkillMapItem { index: YaeMikoDamageEnum::E2 as usize, text: locale!(zh_cn: "杀生樱伤害·贰阶", en: "Sesshou Sakura DMG: Level 2") },
+            CharacterSkillMapItem { index: YaeMikoDamageEnum::E3 as usize, text: locale!(zh_cn: "杀生樱伤害·叁阶", en: "Sesshou Sakura DMG: Level 3") },
+            CharacterSkillMapItem { index: YaeMikoDamageEnum::E4 as usize, text: locale!(zh_cn: "杀生樱伤害·肆阶", en: "Sesshou Sakura DMG: Level 4") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: YaeMikoDamageEnum::Q1 as usize, chs: "技能伤害" },
-            CharacterSkillMapItem { index: YaeMikoDamageEnum::Q2 as usize, chs: "天狐霆雷伤害" },
+            CharacterSkillMapItem { index: YaeMikoDamageEnum::Q1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") },
+            CharacterSkillMapItem { index: YaeMikoDamageEnum::Q2 as usize, text: locale!(zh_cn: "天狐霆雷伤害", en: "Tenko Thunderbolt DMG") },
         ])
     };
 

@@ -1,5 +1,6 @@
 use crate::attribute::{Attribute, AttributeName, AttributeCommon};
 use crate::character::character_common_data::CharacterCommonData;
+use crate::common::i18n::locale;
 use crate::common::item_config_type::{ItemConfig, ItemConfigType};
 use crate::common::WeaponType;
 use crate::weapon::weapon_common_data::WeaponCommonData;
@@ -38,21 +39,33 @@ impl WeaponTrait for AThousandFloatingDreams {
         weapon_base: WeaponBaseATKFamily::ATK542,
         star: 5,
         #[cfg(not(target_family = "wasm"))]
-        effect: Some(""),
+        effect: Some(crate::common::i18n::locale!(
+            zh_cn: "队伍中每个其他角色，都会依据元素类型与装备者相同与否，为装备者提供提升效果。相同：元素精通提升<span style=\"color: #409EFF;\">32-40-48-56-64</span>点；不同：装备者元素类型的元素伤害加成提升<span style=\"color: #409EFF;\">10%-14%-18%-22%-26%</span>。上述提升效果每种至多叠加3层。此外，队伍中装备者以外的附近角色的元素精通提升<span style=\"color: #409EFF;\">40-42-44-46-48</span>点，多件同名武器产生的此效果可以叠加。",
+            en: "Party members other than the equipping character will provide the equipping character with buffs based on whether their Elemental Type is the same as the latter or not. If their Elemental Types are the same, increase Elemental Mastery by <span style=\"color: #409EFF;\">32-40-48-56-64</span>. If not, increase the equipping character’s DMG Bonus from their Elemental Type by <span style=\"color: #409EFF;\">10%-14%-18%-22%-26%</span>. Each of the aforementioned effects can have up to 3 stacks. Additionally, all nearby party members other than the equipping character will have their Elemental Mastery increased by <span style=\"color: #409EFF;\">40-42-44-46-48</span>. Multiple such effects from multiple such weapons can stack."
+        )),
         #[cfg(not(target_family = "wasm"))]
-        chs: ""
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "千夜浮梦",
+            en: "A Thousand Floating Dreams"
+        )
     };
 
     #[cfg(not(target_family = "wasm"))]
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "same_count",
-            title: "w29",
+            title: locale!(
+                zh_cn: "同元素角色数",
+                en: "Same Element Count",
+            ),
             config: ItemConfigType::Int { min: 0, max: 3, default: 1 },
         },
         ItemConfig {
             name: "diff_count",
-            title: "w30",
+            title: locale!(
+                zh_cn: "不同元素角色数",
+                en: "Diff Element Count"
+            ),
             config: ItemConfigType::Int { min: 0, max: 3, default: 2 },
         }
     ]);

@@ -10,6 +10,7 @@ use crate::common::item_config_type::{ItemConfig, ItemConfigType};
 use crate::attribute::{AttributeCommon};
 use crate::character::traits::{CharacterSkillMapItem, CharacterSkillMap};
 use crate::character::macros::{skill_type, skill_map, damage_ratio};
+use crate::common::i18n::{locale, hit_n_dmg, charged_dmg, plunging_dmg};
 
 pub struct AlhaithamSkillType {
     pub normal_dmg1: [f64; 15],
@@ -126,7 +127,6 @@ impl CharacterTrait for Alhaitham {
     const STATIC_DATA: CharacterStaticData = CharacterStaticData {
         name: CharacterName::Alhaitham,
         internal_name: "Alhatham",
-        chs: "",
         element: Element::Dendro,
         hp: [1039, 2695, 3586, 5366, 5999, 6902, 7747, 8659, 9292, 10213, 10846, 11777, 12410, 13348],
         atk: [24, 63, 84, 126, 141, 162, 182, 203, 218, 240, 255, 276, 291, 313],
@@ -134,9 +134,22 @@ impl CharacterTrait for Alhaitham {
         sub_stat: CharacterSubStatFamily::Bonus288(StatName::DendroBonus),
         weapon_type: WeaponType::Sword,
         star: 5,
-        skill_name1: "",
-        skill_name2: "",
-        skill_name3: ""
+        skill_name1: locale!(
+            zh_cn: "普通攻击·溯因反绎法",
+            en: "Normal Attack: Abductive Reasoning",
+        ),
+        skill_name2: locale!(
+            zh_cn: "共相·理式摹写",
+            en: "Universality: An Elaboration on Form",
+        ),
+        skill_name3: locale!(
+            zh_cn: "殊境·显象缚结",
+            en: "Particular Field: Fetters of Phenomena",
+        ),
+        name_locale: locale!(
+            zh_cn: "艾尔海森",
+            en: "Alhaitham",
+        )
     };
     type SkillType = AlhaithamSkillType;
     const SKILL: Self::SkillType = ALHAITHAM_SKILL;
@@ -147,28 +160,28 @@ impl CharacterTrait for Alhaitham {
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: skill_map!(
             AlhaithamDamageEnum
-            Normal1 "一段伤害"
-            Normal2 "二段伤害"
-            Normal31 "三段伤害-1"
-            Normal32 "三段伤害-2"
-            Normal4 "四段伤害"
-            Normal5 "五段伤害"
-            Charged11 "重击伤害-1"
-            Charged12 "重击伤害-2"
-            Plunging1 "下坠期间伤害"
-            Plunging2 "低空坠地冲击伤害"
-            Plunging3 "高空坠地冲击伤害"
+            Normal1 hit_n_dmg!(1)
+            Normal2 hit_n_dmg!(2)
+            Normal31 hit_n_dmg!(3, 1)
+            Normal32 hit_n_dmg!(3, 2)
+            Normal4 hit_n_dmg!(4)
+            Normal5 hit_n_dmg!(5)
+            Charged11 charged_dmg!(1)
+            Charged12 charged_dmg!(2)
+            Plunging1 plunging_dmg!(1)
+            Plunging2 plunging_dmg!(2)
+            Plunging3 plunging_dmg!(3)
         ),
         skill2: skill_map!(
             AlhaithamDamageEnum
-            E1 "突进攻击伤害"
-            E2 "1枚光幕攻击伤害"
-            E3 "2枚光幕攻击伤害"
-            E4 "3枚光幕攻击伤害"
+            E1 locale!(zh_cn: "突进攻击伤害", en: "Rush Attack DMG")
+            E2 locale!(zh_cn: "1枚光幕攻击伤害", en: "1-Mirror Projection Attack DMG")
+            E3 locale!(zh_cn: "2枚光幕攻击伤害", en: "2-Mirror Projection Attack DMG")
+            E4 locale!(zh_cn: "3枚光幕攻击伤害", en: "3-Mirror Projection Attack DMG")
         ),
         skill3: skill_map!(
             AlhaithamDamageEnum
-            Q1 "单次伤害"
+            Q1 locale!(zh_cn: "单次伤害", en: "Single-Instance DMG")
         )
     };
 
@@ -176,17 +189,26 @@ impl CharacterTrait for Alhaitham {
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "c2_stack",
-            title: "c58",
+            title: locale!(
+                zh_cn: "命座2「辩章」层数",
+                en: "C2「Debate」Stack",
+            ),
             config: ItemConfigType::Float { min: 0.0, max: 4.0, default: 0.0 },
         },
         ItemConfig {
             name: "c4_stack",
-            title: "c59",
+            title: locale!(
+                zh_cn: "命座4「义贯」层数",
+                en: "C4「Elucidation」Stack",
+            ),
             config: ItemConfigType::Float { min: 0.0, max: 3.0, default: 0.0 },
         },
         ItemConfig {
             name: "c6_rate",
-            title: "c60",
+            title: locale!(
+                zh_cn: "命座6「正理」比例",
+                en: "C6「Structuration」Ratio",
+            ),
             config: ItemConfigType::Float { min: 0.0, max: 1.0, default: 0.0 },
         }
     ]);
@@ -195,7 +217,10 @@ impl CharacterTrait for Alhaitham {
     const CONFIG_SKILL: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "under_e",
-            title: "c61",
+            title: locale!(
+                zh_cn: "琢光镜",
+                en: "Chisel-Light Mirror",
+            ),
             config: ItemConfigType::Bool { default: true }
         }
     ]);

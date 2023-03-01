@@ -3,6 +3,7 @@ use crate::artifacts::effect_config::ArtifactEffectConfig;
 use crate::attribute::{SimpleAttributeGraph2, AttributeCommon, Attribute, AttributeName};
 use crate::character::Character;
 use crate::character::character_common_data::CharacterCommonData;
+use crate::common::i18n::locale;
 use crate::common::item_config_type::{ItemConfig, ItemConfigType};
 use crate::common::StatName;
 use crate::enemies::Enemy;
@@ -22,8 +23,14 @@ impl TargetFunctionMetaTrait for HydroDamageTargetFunction {
     #[cfg(not(target_family = "wasm"))]
     const META_DATA: TargetFunctionMeta = TargetFunctionMeta {
         name: TargetFunctionName::HydroDamage,
-        chs: "水伤",
-        description: "水元素伤害最大化或最大化期望",
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "水伤",
+            en: "Hydro DMG"
+        ),
+        description: crate::common::i18n::locale!(
+            zh_cn: "水元素伤害最大化或最大化期望",
+            en: "Maximize Crit or Avg Hydro Damage"
+        ),
         tags: "输出",
         four: TargetFunctionFor::Common,
         image: TargetFunctionMetaImage::Custom("misc/water_slime")
@@ -33,7 +40,10 @@ impl TargetFunctionMetaTrait for HydroDamageTargetFunction {
     const CONFIG: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "t",
-            title: "t1",
+            title: locale!(
+                zh_cn: "类型",
+                en: "Type"
+            ),
             config: ItemConfigType::Option {
                 options: "期望,最大值",
                 default: 0

@@ -15,6 +15,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{hit_n_dmg, locale, plunging_dmg};
 
 pub struct SayuSkillType {
     pub normal_dmg1: [f64; 15],
@@ -69,7 +70,6 @@ pub const SAYU_SKILL: SayuSkillType = SayuSkillType {
 pub const SAYU_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Sayu,
     internal_name: "Sayu",
-    chs: "早柚",
     element: Element::Anemo,
     hp: [994, 2553, 3296, 4937, 5464, 6285, 6988, 7809, 8337, 9157, 9684, 10505, 11033, 11854],
     atk: [20, 53, 68, 102, 113, 130, 144, 161, 172, 189, 200, 216, 227, 244],
@@ -77,9 +77,22 @@ pub const SAYU_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::ElementalMastery96,
     weapon_type: WeaponType::Claymore,
     star: 4,
-    skill_name1: "普通攻击·忍刀·终末番",
-    skill_name2: "呜呼流·风隐急进",
-    skill_name3: "呜呼流·影貉缭乱"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·忍刀·终末番",
+        en: "Normal Attack: Shuumatsuban Ninja Blade",
+    ),
+    skill_name2: locale!(
+        zh_cn: "呜呼流·风隐急进",
+        en: "Yoohoo Art: Fuuin Dash",
+    ),
+    skill_name3: locale!(
+        zh_cn: "呜呼流·影貉缭乱",
+        en: "Yoohoo Art: Mujina Flurry",
+    ),
+    name_locale: locale!(
+        zh_cn: "早柚",
+        en: "Sayu",
+    )
 };
 
 pub struct Sayu;
@@ -175,35 +188,35 @@ impl CharacterTrait for Sayu {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: SayuDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: SayuDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: SayuDamageEnum::Normal31 as usize, chs: "三段伤害-1" },
-            CharacterSkillMapItem { index: SayuDamageEnum::Normal32 as usize, chs: "三段伤害-2" },
-            CharacterSkillMapItem { index: SayuDamageEnum::Normal4 as usize, chs: "四段伤害" },
-            CharacterSkillMapItem { index: SayuDamageEnum::Charged1 as usize, chs: "重击循环伤害" },
-            CharacterSkillMapItem { index: SayuDamageEnum::Charged2 as usize, chs: "重击终结伤害" },
-            CharacterSkillMapItem { index: SayuDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: SayuDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: SayuDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: SayuDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: SayuDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: SayuDamageEnum::Normal31 as usize, text: hit_n_dmg!(3, 1) },
+            CharacterSkillMapItem { index: SayuDamageEnum::Normal32 as usize, text: hit_n_dmg!(3, 2) },
+            CharacterSkillMapItem { index: SayuDamageEnum::Normal4 as usize, text: hit_n_dmg!(4) },
+            CharacterSkillMapItem { index: SayuDamageEnum::Charged1 as usize, text: locale!(zh_cn: "重击循环伤害", en: "Charged Attack Spinning DMG") },
+            CharacterSkillMapItem { index: SayuDamageEnum::Charged2 as usize, text: locale!(zh_cn: "重击终结伤害", en: "Charged Attack Final DMG") },
+            CharacterSkillMapItem { index: SayuDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: SayuDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: SayuDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: SayuDamageEnum::E1 as usize, chs: "风风轮伤害" },
-            CharacterSkillMapItem { index: SayuDamageEnum::E2 as usize, chs: "风风轮舞踢点按伤害" },
-            CharacterSkillMapItem { index: SayuDamageEnum::E3 as usize, chs: "风风轮舞踢长按伤害" },
-            CharacterSkillMapItem { index: SayuDamageEnum::E4Pyro as usize, chs: "风风轮附带火元素伤害" },
-            CharacterSkillMapItem { index: SayuDamageEnum::E4Hydro as usize, chs: "风风轮附带水元素伤害" },
-            CharacterSkillMapItem { index: SayuDamageEnum::E4Cryo as usize, chs: "风风轮附带冰元素伤害" },
-            CharacterSkillMapItem { index: SayuDamageEnum::E4Electro as usize, chs: "风风轮附带雷元素伤害" },
-            CharacterSkillMapItem { index: SayuDamageEnum::E5Pyro as usize, chs: "风风轮舞踢长按附带火元素伤害" },
-            CharacterSkillMapItem { index: SayuDamageEnum::E5Hydro as usize, chs: "风风轮舞踢长按附带水元素伤害" },
-            CharacterSkillMapItem { index: SayuDamageEnum::E5Cryo as usize, chs: "风风轮舞踢长按附带冰元素伤害" },
-            CharacterSkillMapItem { index: SayuDamageEnum::E5Electro as usize, chs: "风风轮舞踢长按附带雷元素伤害" },
+            CharacterSkillMapItem { index: SayuDamageEnum::E1 as usize, text: locale!(zh_cn: "风风轮伤害", en: "Fuufuu Windwheel DMG") },
+            CharacterSkillMapItem { index: SayuDamageEnum::E2 as usize, text: locale!(zh_cn: "风风轮舞踢点按伤害", en: "Fuufuu Whirlwind Kick DMG") },
+            CharacterSkillMapItem { index: SayuDamageEnum::E3 as usize, text: locale!(zh_cn: "风风轮舞踢长按伤害", en: "Fuufuu Whirlwind Kick Hold DMG") },
+            CharacterSkillMapItem { index: SayuDamageEnum::E4Pyro as usize, text: locale!(zh_cn: "风风轮附带火元素伤害", en: "Fuufuu Windwheel Pyro DMG") },
+            CharacterSkillMapItem { index: SayuDamageEnum::E4Hydro as usize, text: locale!(zh_cn: "风风轮附带水元素伤害", en: "Fuufuu Windwheel Hydro DMG") },
+            CharacterSkillMapItem { index: SayuDamageEnum::E4Cryo as usize, text: locale!(zh_cn: "风风轮附带冰元素伤害", en: "Fuufuu Windwheel Cryo DMG") },
+            CharacterSkillMapItem { index: SayuDamageEnum::E4Electro as usize, text: locale!(zh_cn: "风风轮附带雷元素伤害", en: "Fuufuu Windwheel Electro DMG") },
+            CharacterSkillMapItem { index: SayuDamageEnum::E5Pyro as usize, text: locale!(zh_cn: "风风轮舞踢长按附带火元素伤害", en: "Fuufuu Whirlwind Kick Pyro DMG") },
+            CharacterSkillMapItem { index: SayuDamageEnum::E5Hydro as usize, text: locale!(zh_cn: "风风轮舞踢长按附带水元素伤害", en: "Fuufuu Whirlwind Kick Hydro DMG") },
+            CharacterSkillMapItem { index: SayuDamageEnum::E5Cryo as usize, text: locale!(zh_cn: "风风轮舞踢长按附带冰元素伤害", en: "Fuufuu Whirlwind Kick Cryo DMG") },
+            CharacterSkillMapItem { index: SayuDamageEnum::E5Electro as usize, text: locale!(zh_cn: "风风轮舞踢长按附带雷元素伤害", en: "Fuufuu Whirlwind Kick Electro DMG") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: SayuDamageEnum::Q1 as usize, chs: "技能发动伤害" },
-            CharacterSkillMapItem { index: SayuDamageEnum::QHeal1 as usize, chs: "技能发动治疗量" },
-            CharacterSkillMapItem { index: SayuDamageEnum::Q2 as usize, chs: "不倒貉貉伤害" },
-            CharacterSkillMapItem { index: SayuDamageEnum::QHeal2 as usize, chs: "不倒貉貉治疗量" },
+            CharacterSkillMapItem { index: SayuDamageEnum::Q1 as usize, text: locale!(zh_cn: "技能发动伤害", en: "Skill Activation DMG") },
+            CharacterSkillMapItem { index: SayuDamageEnum::QHeal1 as usize, text: locale!(zh_cn: "技能发动治疗量", en: "Skill Activation Healing") },
+            CharacterSkillMapItem { index: SayuDamageEnum::Q2 as usize, text: locale!(zh_cn: "不倒貉貉伤害", en: "Muji-Muji Daruma DMG") },
+            CharacterSkillMapItem { index: SayuDamageEnum::QHeal2 as usize, text: locale!(zh_cn: "不倒貉貉治疗量", en: "Muji-Muji Daruma Healing") },
         ])
     };
 

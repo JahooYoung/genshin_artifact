@@ -9,6 +9,7 @@ use crate::character::character_sub_stat::CharacterSubStatFamily;
 use crate::character::skill_config::CharacterSkillConfig;
 use crate::character::traits::{CharacterSkillMap, CharacterSkillMapItem, CharacterTrait};
 use crate::common::{ChangeAttribute, Element, SkillType, WeaponType};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 use crate::common::item_config_type::{ItemConfig, ItemConfigType};
 use crate::damage::damage_builder::DamageBuilder;
 use crate::damage::DamageContext;
@@ -58,7 +59,6 @@ pub const ROSARIA_SKILL: RosariaSkillType = RosariaSkillType {
 pub const ROSARIA_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Rosaria,
     internal_name: "Rosaria",
-    chs: "罗莎莉亚",
     element: Element::Cryo,
     hp: [1030, 2647, 3417, 5118, 5665, 6516, 7245, 8096, 8643, 9493, 10040, 10891, 11438, 12289],
     atk: [20, 52, 67, 100, 111, 127, 141, 158, 169, 185, 196, 213, 223, 240],
@@ -66,9 +66,22 @@ pub const ROSARIA_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::ATK240,
     weapon_type: WeaponType::Polearm,
     star: 4,
-    skill_name1: "普通攻击·教会枪术",
-    skill_name2: "噬罪的告解",
-    skill_name3: "终命的圣礼",
+    skill_name1: locale!(
+        zh_cn: "普通攻击·教会枪术",
+        en: "Normal Attack: Spear of the Church",
+    ),
+    skill_name2: locale!(
+        zh_cn: "噬罪的告解",
+        en: "Ravaging Confession",
+    ),
+    skill_name3: locale!(
+        zh_cn: "终命的圣礼",
+        en: "Rites of Termination",
+    ),
+    name_locale: locale!(
+        zh_cn: "罗莎莉亚",
+        en: "Rosaria",
+    )
 };
 
 pub struct RosariaEffect {
@@ -161,25 +174,25 @@ impl CharacterTrait for Rosaria {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: RosariaDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: RosariaDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: RosariaDamageEnum::Normal3 as usize, chs: "三段伤害/2" },
-            CharacterSkillMapItem { index: RosariaDamageEnum::Normal4 as usize, chs: "四段伤害" },
-            CharacterSkillMapItem { index: RosariaDamageEnum::Normal51 as usize, chs: "五段伤害-1" },
-            CharacterSkillMapItem { index: RosariaDamageEnum::Normal52 as usize, chs: "五段伤害-2" },
-            CharacterSkillMapItem { index: RosariaDamageEnum::Charged as usize, chs: "重击伤害" },
-            CharacterSkillMapItem { index: RosariaDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: RosariaDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: RosariaDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: RosariaDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: RosariaDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: RosariaDamageEnum::Normal3 as usize, text: locale!(zh_cn: "三段伤害/2", en: "3-Hit DMG/2") },
+            CharacterSkillMapItem { index: RosariaDamageEnum::Normal4 as usize, text: hit_n_dmg!(4) },
+            CharacterSkillMapItem { index: RosariaDamageEnum::Normal51 as usize, text: hit_n_dmg!(5, 1) },
+            CharacterSkillMapItem { index: RosariaDamageEnum::Normal52 as usize, text: hit_n_dmg!(5, 2) },
+            CharacterSkillMapItem { index: RosariaDamageEnum::Charged as usize, text: charged_dmg!() },
+            CharacterSkillMapItem { index: RosariaDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: RosariaDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: RosariaDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: RosariaDamageEnum::E11 as usize, chs: "技能伤害-1" },
-            CharacterSkillMapItem { index: RosariaDamageEnum::E12 as usize, chs: "技能伤害-2" },
+            CharacterSkillMapItem { index: RosariaDamageEnum::E11 as usize, text: locale!(zh_cn: "技能伤害-1", en: "Skill DMG-1") },
+            CharacterSkillMapItem { index: RosariaDamageEnum::E12 as usize, text: locale!(zh_cn: "技能伤害-2", en: "Skill DMG-2") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: RosariaDamageEnum::Q11 as usize, chs: "技能伤害-1" },
-            CharacterSkillMapItem { index: RosariaDamageEnum::Q12 as usize, chs: "技能伤害-2" },
-            CharacterSkillMapItem { index: RosariaDamageEnum::Q2 as usize, chs: "冰枪持续伤害" },
+            CharacterSkillMapItem { index: RosariaDamageEnum::Q11 as usize, text: locale!(zh_cn: "技能伤害-1", en: "Skill DMG-1") },
+            CharacterSkillMapItem { index: RosariaDamageEnum::Q12 as usize, text: locale!(zh_cn: "技能伤害-2", en: "Skill DMG-2") },
+            CharacterSkillMapItem { index: RosariaDamageEnum::Q2 as usize, text: locale!(zh_cn: "冰枪持续伤害", en: "Ice Lance DoT") },
         ]),
     };
 
@@ -187,7 +200,10 @@ impl CharacterTrait for Rosaria {
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "e_from_behind",
-            title: "c14",
+            title: locale!(
+                zh_cn: "应用天赋「聆听忏悔的幽影」效果",
+                en: "Use Talent「Regina Probationum」"
+            ),
             config: ItemConfigType::Bool { default: true },
         }
     ]);

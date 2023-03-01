@@ -15,6 +15,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct DilucSkillType {
     pub normal_dmg1: [f64; 15],
@@ -57,7 +58,6 @@ pub const DILUC_SKILL: DilucSkillType = DilucSkillType {
 const DILUC_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Diluc,
     internal_name: "Diluc",
-    chs: "迪卢克",
     element: Element::Pyro,
     hp: [1011, 2621, 3488, 5219, 5834, 6712, 7533, 8421, 9036, 9932, 10547, 11453, 12068, 12981],
     atk: [26, 68, 90, 135, 151, 173, 194, 217, 233, 256, 272, 295, 311, 335],
@@ -65,9 +65,22 @@ const DILUC_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::CriticalRate192,
     weapon_type: WeaponType::Claymore,
     star: 5,
-    skill_name1: "普通攻击·淬炼之剑",
-    skill_name2: "逆焰之刃",
-    skill_name3: "黎明"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·淬炼之剑",
+        en: "Normal Attack: Tempered Sword",
+    ),
+    skill_name2: locale!(
+        zh_cn: "逆焰之刃",
+        en: "Searing Onslaught",
+    ),
+    skill_name3: locale!(
+        zh_cn: "黎明",
+        en: "Dawn",
+    ),
+    name_locale: locale!(
+        zh_cn: "迪卢克",
+        en: "Diluc",
+    )
 };
 
 pub struct Diluc;
@@ -139,25 +152,25 @@ impl CharacterTrait for Diluc {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: DilucDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: DilucDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: DilucDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: DilucDamageEnum::Normal4 as usize, chs: "四段伤害" },
-            CharacterSkillMapItem { index: DilucDamageEnum::Charged1 as usize, chs: "重击循环伤害" },
-            CharacterSkillMapItem { index: DilucDamageEnum::Charged2 as usize, chs: "重击终结伤害" },
-            CharacterSkillMapItem { index: DilucDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: DilucDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: DilucDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: DilucDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: DilucDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: DilucDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: DilucDamageEnum::Normal4 as usize, text: hit_n_dmg!(4) },
+            CharacterSkillMapItem { index: DilucDamageEnum::Charged1 as usize, text: charged_dmg!("loop1") },
+            CharacterSkillMapItem { index: DilucDamageEnum::Charged2 as usize, text: charged_dmg!("loop2") },
+            CharacterSkillMapItem { index: DilucDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: DilucDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: DilucDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: DilucDamageEnum::E1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: DilucDamageEnum::E2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: DilucDamageEnum::E3 as usize, chs: "三段伤害" },
+            CharacterSkillMapItem { index: DilucDamageEnum::E1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: DilucDamageEnum::E2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: DilucDamageEnum::E3 as usize, text: hit_n_dmg!(3) },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: DilucDamageEnum::Q1 as usize, chs: "斩击伤害" },
-            CharacterSkillMapItem { index: DilucDamageEnum::Q2 as usize, chs: "持续伤害" },
-            CharacterSkillMapItem { index: DilucDamageEnum::Q3 as usize, chs: "爆裂伤害" },
+            CharacterSkillMapItem { index: DilucDamageEnum::Q1 as usize, text: locale!(zh_cn: "斩击伤害", en: "Slashing DMG") },
+            CharacterSkillMapItem { index: DilucDamageEnum::Q2 as usize, text: locale!(zh_cn: "持续伤害", en: "DoT") },
+            CharacterSkillMapItem { index: DilucDamageEnum::Q3 as usize, text: locale!(zh_cn: "爆裂伤害", en: "Explosion DMG") },
         ])
     };
 
@@ -165,7 +178,10 @@ impl CharacterTrait for Diluc {
     const CONFIG_SKILL: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "pyro",
-            title: "c22",
+            title: locale!(
+                zh_cn: "是否被大招附魔",
+                en: "是否被大招附魔",
+            ),
             config: ItemConfigType::Bool { default: true }
         }
     ]);

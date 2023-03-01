@@ -14,6 +14,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{locale, plunging_dmg};
 
 pub struct AmberSkillType {
     pub normal_dmg1: [f64; 15],
@@ -54,7 +55,6 @@ pub const AMBER_SKILL: AmberSkillType = AmberSkillType {
 pub const AMBER_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Amber,
     internal_name: "Ambor",
-    chs: "安柏",
     element: Element::Pyro,
     hp: [793, 2038, 2630, 3940, 4361, 5016, 5578, 6233, 6654, 7309, 7730, 8358, 8806, 9461],
     atk: [19, 48, 62, 93, 103, 118, 131, 147, 157, 172, 182, 198, 208, 223],
@@ -62,9 +62,22 @@ pub const AMBER_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::ATK240,
     weapon_type: WeaponType::Bow,
     star: 4,
-    skill_name1: "普通攻击·神射手",
-    skill_name2: "爆弹玩偶",
-    skill_name3: "箭雨"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·神射手",
+        en: "Normal Attack: Sharpshooter",
+    ),
+    skill_name2: locale!(
+        zh_cn: "爆弹玩偶",
+        en: "Explosive Puppet",
+    ),
+    skill_name3: locale!(
+        zh_cn: "箭雨",
+        en: "Fiery Rain",
+    ),
+    name_locale: locale!(
+        zh_cn: "安柏",
+        en: "Amber",
+    )
 };
 
 pub struct AmberEffect {
@@ -151,23 +164,23 @@ impl CharacterTrait for Amber {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: AmberDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: AmberDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: AmberDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: AmberDamageEnum::Normal4 as usize, chs: "四段伤害" },
-            CharacterSkillMapItem { index: AmberDamageEnum::Normal5 as usize, chs: "五段伤害" },
-            CharacterSkillMapItem { index: AmberDamageEnum::Charged1 as usize, chs: "瞄准射击" },
-            CharacterSkillMapItem { index: AmberDamageEnum::Charged2 as usize, chs: "满蓄力瞄准射击" },
-            CharacterSkillMapItem { index: AmberDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: AmberDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: AmberDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: AmberDamageEnum::Normal1 as usize, text: locale!(zh_cn: "一段伤害", en: "1-Hit DMG") },
+            CharacterSkillMapItem { index: AmberDamageEnum::Normal2 as usize, text: locale!(zh_cn: "二段伤害", en: "2-Hit DMG") },
+            CharacterSkillMapItem { index: AmberDamageEnum::Normal3 as usize, text: locale!(zh_cn: "三段伤害", en: "3-Hit DMG") },
+            CharacterSkillMapItem { index: AmberDamageEnum::Normal4 as usize, text: locale!(zh_cn: "四段伤害", en: "4-Hit DMG") },
+            CharacterSkillMapItem { index: AmberDamageEnum::Normal5 as usize, text: locale!(zh_cn: "五段伤害", en: "5-Hit DMG") },
+            CharacterSkillMapItem { index: AmberDamageEnum::Charged1 as usize, text: locale!(zh_cn: "瞄准射击", en: "Aimed Shot") },
+            CharacterSkillMapItem { index: AmberDamageEnum::Charged2 as usize, text: locale!(zh_cn: "满蓄力瞄准射击", en: "Fully-Charged Aimed Shot") },
+            CharacterSkillMapItem { index: AmberDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: AmberDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: AmberDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: AmberDamageEnum::E1 as usize, chs: "爆炸伤害" },
+            CharacterSkillMapItem { index: AmberDamageEnum::E1 as usize, text: locale!(zh_cn: "爆炸伤害", en: "") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: AmberDamageEnum::Q1 as usize, chs: "箭雨单次伤害" },
-            CharacterSkillMapItem { index: AmberDamageEnum::Q2 as usize, chs: "箭雨总伤害" },
+            CharacterSkillMapItem { index: AmberDamageEnum::Q1 as usize, text: locale!(zh_cn: "箭雨单次伤害", en: "") },
+            CharacterSkillMapItem { index: AmberDamageEnum::Q2 as usize, text: locale!(zh_cn: "箭雨总伤害", en: "") },
         ])
     };
 

@@ -1,12 +1,12 @@
 use num_derive::FromPrimitive;
-use strum_macros::Display;
+use strum_macros::{Display, EnumIter};
 use serde::{Serialize, Deserialize};
 use mona_derive::{BuffData, EnumLen};
 use crate::buffs::buff::{BuffMeta};
 
 #[derive(Copy, Clone)]
 #[derive(Serialize, Deserialize)]
-#[derive(BuffData, EnumLen, FromPrimitive, Display)]
+#[derive(BuffData, EnumLen, FromPrimitive, Display, EnumIter)]
 pub enum BuffName {
     // common
     ATKPercentage,
@@ -94,6 +94,7 @@ pub enum BuffName {
     CandaceTalent2,
     NahidaTalent1,
     FaruzanQ,
+    Mika,
 
     // weapon
     FreedomSworn,
@@ -107,6 +108,7 @@ pub enum BuffName {
     XiphosMoonlight,
     MakhairaAquamarine,
     KeyOfKhajNisut,
+    
 
     ResonancePyro2,
     ResonanceCryo2,

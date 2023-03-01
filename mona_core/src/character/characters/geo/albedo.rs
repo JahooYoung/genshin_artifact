@@ -15,6 +15,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct AlbedoSkillType {
     pub normal_dmg1: [f64; 15],
@@ -55,7 +56,6 @@ const ALBEDO_SKILL: AlbedoSkillType = AlbedoSkillType {
 const ALBEDO_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Albedo,
     internal_name: "Albedo",
-    chs: "阿贝多",
     element: Element::Geo,
     hp: [1030, 2671, 3554, 5317, 5944, 6839, 7675, 8579, 9207, 10119, 10746, 11669, 12296, 13226],
     atk: [20, 51, 68, 101, 113, 130, 146, 163, 175, 192, 204, 222, 233, 251],
@@ -63,9 +63,22 @@ const ALBEDO_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::Bonus288(StatName::GeoBonus),
     weapon_type: WeaponType::Sword,
     star: 5,
-    skill_name1: "普通攻击·西风剑术·白",
-    skill_name2: "创生法·拟造阳华",
-    skill_name3: "诞生式·大地之潮"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·西风剑术·白",
+        en: "Normal Attack: Favonius Bladework - Weiss",
+    ),
+    skill_name2: locale!(
+        zh_cn: "创生法·拟造阳华",
+        en: "Abiogenesis: Solar Isotoma",
+    ),
+    skill_name3: locale!(
+        zh_cn: "诞生式·大地之潮",
+        en: "Rite of Progeniture: Tectonic Tide",
+    ),
+    name_locale: locale!(
+        zh_cn: "阿贝多",
+        en: "Albedo",
+    )
 };
 
 #[derive(Copy, Clone, Eq, PartialEq)]
@@ -135,24 +148,24 @@ impl CharacterTrait for Albedo {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: AlbedoDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: AlbedoDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: AlbedoDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: AlbedoDamageEnum::Normal4 as usize, chs: "四段伤害" },
-            CharacterSkillMapItem { index: AlbedoDamageEnum::Normal5 as usize, chs: "五段伤害" },
-            CharacterSkillMapItem { index: AlbedoDamageEnum::Charged11 as usize, chs: "重击伤害-1" },
-            CharacterSkillMapItem { index: AlbedoDamageEnum::Charged12 as usize, chs: "重击伤害-2" },
-            CharacterSkillMapItem { index: AlbedoDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: AlbedoDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: AlbedoDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: AlbedoDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: AlbedoDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: AlbedoDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: AlbedoDamageEnum::Normal4 as usize, text: hit_n_dmg!(4) },
+            CharacterSkillMapItem { index: AlbedoDamageEnum::Normal5 as usize, text: hit_n_dmg!(5) },
+            CharacterSkillMapItem { index: AlbedoDamageEnum::Charged11 as usize, text: charged_dmg!(1) },
+            CharacterSkillMapItem { index: AlbedoDamageEnum::Charged12 as usize, text: charged_dmg!(2) },
+            CharacterSkillMapItem { index: AlbedoDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: AlbedoDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: AlbedoDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: AlbedoDamageEnum::E1 as usize, chs: "技能伤害" },
-            CharacterSkillMapItem { index: AlbedoDamageEnum::ETransientBlossom as usize, chs: "刹那之花伤害" },
+            CharacterSkillMapItem { index: AlbedoDamageEnum::E1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") },
+            CharacterSkillMapItem { index: AlbedoDamageEnum::ETransientBlossom as usize, text: locale!(zh_cn: "刹那之花伤害", en: "Transient Blossom DMG") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: AlbedoDamageEnum::Q1 as usize, chs: "爆发伤害" },
-            CharacterSkillMapItem { index: AlbedoDamageEnum::QFatalBlossom as usize, chs: "生灭之花" },
+            CharacterSkillMapItem { index: AlbedoDamageEnum::Q1 as usize, text: locale!(zh_cn: "爆发伤害", en: "Burst DMG") },
+            CharacterSkillMapItem { index: AlbedoDamageEnum::QFatalBlossom as usize, text: locale!(zh_cn: "生灭之花", en: "Fatal Blossom DMG") },
         ])
     };
 

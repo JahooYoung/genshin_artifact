@@ -22,11 +22,11 @@
 
 <script setup lang="ts">
 // @ts-ignore
-import { characterByElement } from "@character"
+import { characterByElement, characterData } from "@character"
 import qualityColors from "@const/quality_colors"
 import {useI18n} from "@/i18n/i18n"
 
-const { t } = useI18n()
+const { t, ta } = useI18n()
 
 const props = defineProps<{
     modelValue: string
@@ -43,7 +43,7 @@ const options = computed(() => {
             label: t('ele', element),
             value: element,
             children: characterByElement[element].map((character: any) => ({
-                label: t('character.' + character.name),
+                label: ta(characterData[character.name].nameLocale),
                 value: character.name,
                 avatar: character.avatar,
                 color: qualityColors[character.star - 1],

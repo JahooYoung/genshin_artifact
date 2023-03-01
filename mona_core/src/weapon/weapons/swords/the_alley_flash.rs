@@ -45,16 +45,22 @@ impl WeaponTrait for TheAlleyFlash {
         weapon_base: WeaponBaseATKFamily::ATK620,
         star: 4,
         #[cfg(not(target_family = "wasm"))]
-        effect: Some("街巷游侠：造成的伤害提升12%/15%/18%/21%/24%，受到伤害后的5秒内失效。"),
+        effect: Some(crate::common::i18n::locale!(
+            zh_cn: "角色造成的伤害提升<span style=\"color: #409EFF;\">12%-15%-18%-21%-24%</span>。受到伤害后，该伤害提升效果会失效5秒。",
+            en: "Increases DMG dealt by the character equipping this weapon by <span style=\"color: #409EFF;\">12%-15%-18%-21%-24%</span>. Taking DMG disables this effect for 5s."
+        )),
         #[cfg(not(target_family = "wasm"))]
-        chs: "暗巷闪光"
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "暗巷闪光",
+            en: "The Alley Flash"
+        )
     };
 
     #[cfg(not(target_family = "wasm"))]
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "rate",
-            title: "w2",
+            title: ItemConfig::DEFAULT_RATE_TITLE,
             config: ItemConfigType::Float {
                 min: 0.0,
                 max: 1.0,

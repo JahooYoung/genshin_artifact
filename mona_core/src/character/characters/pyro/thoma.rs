@@ -15,6 +15,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct ThomaSkillType {
     pub normal_dmg1: [f64; 15],
@@ -61,7 +62,6 @@ pub const THOMA_SKILL: ThomaSkillType = ThomaSkillType {
 pub const THOMA_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Thoma,
     internal_name: "Tohma",
-    chs: "托马",
     element: Element::Pyro,
     hp: [866, 2225, 2872, 4302, 4762, 5478, 6091, 6806, 7266, 7981, 8440, 9156, 9616, 10331],
     atk: [17, 43, 56, 84, 93, 107, 119, 133, 142, 156, 165, 179, 188, 202],
@@ -69,9 +69,22 @@ pub const THOMA_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::ATK240,
     weapon_type: WeaponType::Polearm,
     star: 4,
-    skill_name1: "普通攻击·迅破枪势",
-    skill_name2: "烈烧佑命之侍护",
-    skill_name3: "真红炽火之大铠"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·迅破枪势",
+        en: "Normal Attack: Swiftshatter Spear",
+    ),
+    skill_name2: locale!(
+        zh_cn: "烈烧佑命之侍护",
+        en: "Blazing Blessing",
+    ),
+    skill_name3: locale!(
+        zh_cn: "真红炽火之大铠",
+        en: "Crimson Ooyoroi",
+    ),
+    name_locale: locale!(
+        zh_cn: "托马",
+        en: "Thoma",
+    )
 };
 
 pub struct Thoma;
@@ -134,21 +147,21 @@ impl CharacterTrait for Thoma {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: ThomaDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: ThomaDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: ThomaDamageEnum::Normal3 as usize, chs: "三段伤害/2" },
-            CharacterSkillMapItem { index: ThomaDamageEnum::Normal4 as usize, chs: "四段伤害" },
-            CharacterSkillMapItem { index: ThomaDamageEnum::Charged as usize, chs: "重击伤害" },
-            CharacterSkillMapItem { index: ThomaDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: ThomaDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: ThomaDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: ThomaDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: ThomaDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: ThomaDamageEnum::Normal3 as usize, text: locale!(zh_cn: "三段伤害/2", en: "3-Hit DMG/2") },
+            CharacterSkillMapItem { index: ThomaDamageEnum::Normal4 as usize, text: hit_n_dmg!(4) },
+            CharacterSkillMapItem { index: ThomaDamageEnum::Charged as usize, text: charged_dmg!() },
+            CharacterSkillMapItem { index: ThomaDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: ThomaDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: ThomaDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: ThomaDamageEnum::E1 as usize, chs: "技能伤害" },
+            CharacterSkillMapItem { index: ThomaDamageEnum::E1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: ThomaDamageEnum::Q1 as usize, chs: "技能伤害" },
-            CharacterSkillMapItem { index: ThomaDamageEnum::Q2 as usize, chs: "炽火崩破伤害" },
+            CharacterSkillMapItem { index: ThomaDamageEnum::Q1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") },
+            CharacterSkillMapItem { index: ThomaDamageEnum::Q2 as usize, text: locale!(zh_cn: "炽火崩破伤害", en: "Fiery Collapse DMG") },
         ])
     };
 

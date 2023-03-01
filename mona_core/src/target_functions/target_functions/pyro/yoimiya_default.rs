@@ -41,8 +41,14 @@ impl TargetFunctionMetaTrait for YoimiyaDefaultTargetFunction {
     #[cfg(not(target_family = "wasm"))]
     const META_DATA: TargetFunctionMeta = TargetFunctionMeta {
         name: TargetFunctionName::YoimiyaDefault,
-        chs: "宵宫-琉焰华舞",
-        description: "普通输出宵宫",
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "宵宫-琉焰华舞",
+            en: "Yoimiya-Frolicking Flames"
+        ),
+        description: crate::common::i18n::locale!(
+            zh_cn: "普通输出宵宫",
+            en: "DPS Yoimiya"
+        ),
         tags: "输出",
         four: TargetFunctionFor::SomeWho(CharacterName::Yoimiya),
         image: TargetFunctionMetaImage::Avatar
@@ -52,12 +58,18 @@ impl TargetFunctionMetaTrait for YoimiyaDefaultTargetFunction {
     const CONFIG: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "vaporize_rate",
-            title: "t6",
+            title: crate::common::i18n::locale!(
+                zh_cn: "蒸发占比",
+                en: "Vaporize Ratio",
+            ),
             config: ItemConfig::RATE01_TYPE
         },
         ItemConfig {
             name: "melt_rate",
-            title: "t5",
+            title: crate::common::i18n::locale!(
+                zh_cn: "融化占比",
+                en: "Melt Ratio",
+            ),
             config: ItemConfig::RATE01_TYPE
         }
     ]);

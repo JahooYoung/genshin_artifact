@@ -26,8 +26,14 @@ impl TargetFunctionMetaTrait for BennettDefaultTargetFunction {
     #[cfg(not(target_family = "wasm"))]
     const META_DATA: TargetFunctionMeta = TargetFunctionMeta {
         name: TargetFunctionName::BennettDefault,
-        chs: "班尼特-命运试金石",
-        description: "普通辅助班尼特",
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "班尼特-命运试金石",
+            en: "Bennett-Trial by Fire"
+        ),
+        description: crate::common::i18n::locale!(
+            zh_cn: "普通辅助班尼特",
+            en: "Support Bennett"
+        ),
         tags: "辅助",
         four: TargetFunctionFor::SomeWho(CharacterName::Bennett),
         image: TargetFunctionMetaImage::Avatar
@@ -37,7 +43,10 @@ impl TargetFunctionMetaTrait for BennettDefaultTargetFunction {
     const CONFIG: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "recharge_demand",
-            title: "t4",
+            title: crate::common::i18n::locale!(
+                zh_cn: "充能需求",
+                en: "Recharge Requirement",
+            ),
             config: ItemConfigType::Float { min: 1.0, max: 3.0, default: 1.6 }
         }
     ]);

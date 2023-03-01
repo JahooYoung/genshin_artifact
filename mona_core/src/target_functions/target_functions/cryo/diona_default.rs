@@ -6,6 +6,7 @@ use crate::character::character_common_data::CharacterCommonData;
 use crate::character::characters::Diona;
 use crate::character::skill_config::CharacterSkillConfig;
 use crate::character::traits::CharacterTrait;
+use crate::common::i18n::locale;
 use crate::common::item_config_type::{ItemConfig, ItemConfigType};
 use crate::common::StatName;
 use crate::damage::{DamageContext, SimpleDamageBuilder};
@@ -26,8 +27,14 @@ impl TargetFunctionMetaTrait for DionaDefaultTargetFunction {
     #[cfg(not(target_family = "wasm"))]
     const META_DATA: TargetFunctionMeta = TargetFunctionMeta {
         name: TargetFunctionName::DionaDefault,
-        chs: "迪奥娜-猫尾特调",
-        description: "普通治疗、护盾辅助",
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "迪奥娜-猫尾特调",
+            en: "Diona-Kätzlein Cocktail"
+        ),
+        description: crate::common::i18n::locale!(
+            zh_cn: "普通治疗、护盾辅助",
+            en: "Healing, Shield Support"
+        ),
         tags: "治疗,护盾",
         four: TargetFunctionFor::SomeWho(CharacterName::Diona),
         image: TargetFunctionMetaImage::Avatar
@@ -37,7 +44,10 @@ impl TargetFunctionMetaTrait for DionaDefaultTargetFunction {
     const CONFIG: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "recharge_demand",
-            title: "t4",
+            title: locale!(
+                zh_cn: "充能需求",
+                en: "Recharge Requirement",
+            ),
             config: ItemConfigType::Float { min: 1.0, max: 3.0, default: 1.0 }
         }
     ]);

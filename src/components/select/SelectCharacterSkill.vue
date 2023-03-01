@@ -17,7 +17,7 @@ import type {CharacterName} from "@/types/character"
 import {deepCopy} from "@/utils/common"
 import {useI18n} from "@/i18n/i18n"
 
-const { t } = useI18n()
+const { t, ta } = useI18n()
 
 const props = defineProps<{
     characterName: CharacterName,
@@ -38,10 +38,10 @@ const options = computed(() => {
         const skillMap = data[`skillMap${j}`]
         if (skillMap.length > 0) {
             options.push({
-                label: t("characterSkill", props.characterName, i),
+                label: ta(data[`skillName${j}`]),
                 value: data[`skillName${j}`],
                 children: skillMap.map((item: any) => ({
-                    label: t('dmgName', item.text),
+                    label: ta(item.text),
                     value: item.index,
                 })),
             })

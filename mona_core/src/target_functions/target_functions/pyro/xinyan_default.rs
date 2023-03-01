@@ -40,8 +40,14 @@ impl TargetFunctionMetaTrait for XinyanDefaultTargetFunction {
     #[cfg(not(target_family = "wasm"))]
     const META_DATA: TargetFunctionMeta = TargetFunctionMeta {
         name: TargetFunctionName::XinyanDefault,
-        chs: "辛焱-燥热旋律",
-        description: "普通辅助辛焱",
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "辛焱-燥热旋律",
+            en: "Xinyan-Blazing Riff"
+        ),
+        description: crate::common::i18n::locale!(
+            zh_cn: "普通辅助辛焱",
+            en: "Support Xinyan"
+        ),
         tags: "辅助",
         four: TargetFunctionFor::SomeWho(CharacterName::Xinyan),
         image: TargetFunctionMetaImage::Avatar
@@ -56,7 +62,10 @@ impl TargetFunctionMetaTrait for XinyanDefaultTargetFunction {
         },
         ItemConfig {
             name: "damage_demand",
-            title: "t12",
+            title: crate::common::i18n::locale!(
+                zh_cn: "伤害需求",
+                en: "Damage Requirement",
+            ),
             config: ItemConfigType::Float { min: 0.0, max: 1.0, default: 0.5 }
         }
     ]);

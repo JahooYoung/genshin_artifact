@@ -25,10 +25,16 @@ impl BuffMeta for BuffKaedeharaKazuhaTalent2 {
     #[cfg(not(target_family = "wasm"))]
     const META_DATA: BuffMetaData = BuffMetaData {
         name: BuffName::KaedeharaKazuhaTalent2,
-        chs: "枫原万叶-「风物之诗咏」",
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "枫原万叶-「风物之诗咏」",
+            en: "Kazuha-「Poetics of Fuubutsu」",
+        ),
         image: BuffImage::Avatar(CharacterName::KaedeharaKazuha),
         genre: BuffGenre::Character,
-        description: Some("枫原万叶天赋2：枫原万叶触发扩散反应后，枫原万叶的每点元素精通，会为队伍中所有角色提供0.04%对应元素伤害加成，持续8秒。"),
+        description: Some(crate::common::i18n::locale!(
+            zh_cn: "枫原万叶天赋2：枫原万叶触发扩散反应后，枫原万叶的每点元素精通，会为队伍中所有角色提供0.04%对应元素伤害加成，持续8秒。",
+            en: "枫原万叶天赋2：枫原万叶触发扩散反应后，枫原万叶的每点元素精通，会为队伍中所有角色提供0.04%对应元素伤害加成，持续8秒。",
+        )),
         from: BuffFrom::Character(CharacterName::KaedeharaKazuha),
     };
 
@@ -36,12 +42,18 @@ impl BuffMeta for BuffKaedeharaKazuhaTalent2 {
     const CONFIG: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "element",
-            title: "b6",
+            title: crate::common::i18n::locale!(
+                zh_cn: "扩散元素",
+                en: "Swirl Element",
+            ),
             config: ItemConfigType::Element4 { default: Element::Electro }
         },
         ItemConfig {
             name: "em",
-            title: "b7",
+            title: crate::common::i18n::locale!(
+                zh_cn: "万叶的元素精通",
+                en: "Kazuha's EM",
+            ),
             config: ItemConfigType::FloatInput { default: 800.0 },
         }
     ]);
@@ -70,10 +82,16 @@ impl BuffMeta for BuffKaedeharaKazuhaC2 {
     #[cfg(not(target_family = "wasm"))]
     const META_DATA: BuffMetaData = BuffMetaData {
         name: BuffName::KaedeharaKazuhaC2,
-        chs: "枫原万叶-「山岚残芯」",
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "枫原万叶-「山岚残芯」",
+            en: "Kazuha-「Yamaarashi Tailwind」",
+        ),
         image: BuffImage::Avatar(CharacterName::KaedeharaKazuha),
         genre: BuffGenre::Character,
-        description: Some("枫原万叶命座2：场上角色的元素精通提升200点。"),
+        description: Some(crate::common::i18n::locale!(
+            zh_cn: "枫原万叶命座2：场上角色的元素精通提升200点。",
+            en: "枫原万叶命座2：场上角色的元素精通提升200点。",
+        )),
         from: BuffFrom::Character(CharacterName::KaedeharaKazuha),
     };
 

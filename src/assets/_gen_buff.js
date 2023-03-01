@@ -219,6 +219,8 @@ import BaseDmg_image from "@image/misc/sword"
 
 
 
+
+
 import ResonancePyro2_image from "@image/misc/pyro"
 
 
@@ -262,237 +264,269 @@ export default {
     
     "ATKPercentage": {
         name: "ATKPercentage",
-        // chs: "攻击力%",
+        nameLocale: 648,
+        
+        description: null,
+        
         
         badge: ATKPercentage_image,
         
         genre: "Common",
-        // description: "",
         config: [
             
-            {"default":0.0,"name":"p","title":"w4","type":"floatPercentageInput"},
+            {"default":0.0,"name":"p","title":684,"type":"floatPercentageInput"},
             
         ],
     },
     
     "DEFPercentage": {
         name: "DEFPercentage",
-        // chs: "防御力%",
+        nameLocale: 1559,
+        
+        description: null,
+        
         
         badge: DEFPercentage_image,
         
         genre: "Common",
-        // description: "",
         config: [
             
-            {"default":0.0,"name":"p","title":"w4","type":"floatPercentageInput"},
+            {"default":0.0,"name":"p","title":684,"type":"floatPercentageInput"},
             
         ],
     },
     
     "HPPercentage": {
         name: "HPPercentage",
-        // chs: "生命值%",
+        nameLocale: 1134,
+        
+        description: null,
+        
         
         badge: HPPercentage_image,
         
         genre: "Common",
-        // description: "",
         config: [
             
-            {"default":0.0,"name":"p","title":"w4","type":"floatPercentageInput"},
+            {"default":0.0,"name":"p","title":684,"type":"floatPercentageInput"},
             
         ],
     },
     
     "ATKFixed": {
         name: "ATKFixed",
-        // chs: "攻击力",
+        nameLocale: 647,
+        
+        description: null,
+        
         
         badge: ATKFixed_image,
         
         genre: "Common",
-        // description: "",
         config: [
             
-            {"default":0.0,"name":"value","title":"w4","type":"floatInput"},
+            {"default":0.0,"name":"value","title":684,"type":"floatInput"},
             
         ],
     },
     
     "DEFFixed": {
         name: "DEFFixed",
-        // chs: "防御力",
+        nameLocale: 1558,
+        
+        description: null,
+        
         
         badge: DEFFixed_image,
         
         genre: "Common",
-        // description: "",
         config: [
             
-            {"default":0.0,"name":"value","title":"w4","type":"floatInput"},
+            {"default":0.0,"name":"value","title":684,"type":"floatInput"},
             
         ],
     },
     
     "HPFixed": {
         name: "HPFixed",
-        // chs: "生命值",
+        nameLocale: 1133,
+        
+        description: null,
+        
         
         badge: HPFixed_image,
         
         genre: "Common",
-        // description: "",
         config: [
             
-            {"default":0.0,"name":"value","title":"w4","type":"floatInput"},
+            {"default":0.0,"name":"value","title":684,"type":"floatInput"},
             
         ],
     },
     
     "Critical": {
         name: "Critical",
-        // chs: "暴击率",
+        nameLocale: 893,
+        
+        description: null,
+        
         
         badge: Critical_image,
         
         genre: "Common",
-        // description: "",
         config: [
             
-            {"default":0.0,"name":"p","title":"w4","type":"floatPercentageInput"},
+            {"default":0.0,"name":"p","title":684,"type":"floatPercentageInput"},
             
         ],
     },
     
     "CriticalDamage": {
         name: "CriticalDamage",
-        // chs: "暴击伤害",
+        nameLocale: 889,
+        
+        description: null,
+        
         
         badge: CriticalDamage_image,
         
         genre: "Common",
-        // description: "",
         config: [
             
-            {"default":0.0,"name":"p","title":"w4","type":"floatPercentageInput"},
+            {"default":0.0,"name":"p","title":684,"type":"floatPercentageInput"},
             
         ],
     },
     
     "CustomBonus": {
         name: "CustomBonus",
-        // chs: "伤害加成",
+        nameLocale: 155,
+        
+        description: null,
+        
         
         badge: CustomBonus_image,
         
         genre: "Common",
-        // description: "",
         config: [
             
-            {"default":0.0,"name":"p","title":"w4","type":"floatPercentageInput"},
+            {"default":0.0,"name":"p","title":684,"type":"floatPercentageInput"},
             
         ],
     },
     
     "ElementalMastery": {
         name: "ElementalMastery",
-        // chs: "元素精通",
+        nameLocale: 205,
+        
+        description: null,
+        
         
         badge: ElementalMastery_image,
         
         genre: "Common",
-        // description: "",
         config: [
             
-            {"default":0.0,"name":"value","title":"w4","type":"floatInput"},
+            {"default":0.0,"name":"value","title":684,"type":"floatInput"},
             
         ],
     },
     
     "Recharge": {
         name: "Recharge",
-        // chs: "元素充能效率",
+        nameLocale: 173,
+        
+        description: null,
+        
         
         badge: Recharge_image,
         
         genre: "Common",
-        // description: "",
         config: [
             
-            {"default":20.0,"name":"p","title":"w4","type":"floatPercentageInput"},
+            {"default":20.0,"name":"p","title":684,"type":"floatPercentageInput"},
             
         ],
     },
     
     "DEFMinus": {
         name: "DEFMinus",
-        // chs: "减防",
+        nameLocale: 257,
+        
+        description: 0,
+        
         
         badge: DEFMinus_image,
         
         genre: "Common",
-        // description: "百分比减防",
         config: [
             
-            {"default":0.0,"name":"p","title":"w4","type":"floatPercentageInput"},
+            {"default":0.0,"name":"p","title":684,"type":"floatPercentageInput"},
             
         ],
     },
     
     "ResMinus": {
         name: "ResMinus",
-        // chs: "减抗",
+        nameLocale: 256,
+        
+        description: null,
+        
         
         badge: ResMinus_image,
         
         genre: "Common",
-        // description: "",
         config: [
             
-            {"default":0.0,"name":"p","title":"w4","type":"floatPercentageInput"},
+            {"default":0.0,"name":"p","title":684,"type":"floatPercentageInput"},
             
         ],
     },
     
     "HealingBonus": {
         name: "HealingBonus",
-        // chs: "治疗加成",
+        nameLocale: 985,
+        
+        description: null,
+        
         
         badge: HealingBonus_image,
         
         genre: "Common",
-        // description: "",
         config: [
             
-            {"default":0.0,"name":"p","title":"w4","type":"floatPercentageInput"},
+            {"default":0.0,"name":"p","title":684,"type":"floatPercentageInput"},
             
         ],
     },
     
     "BaseDmg": {
         name: "BaseDmg",
-        // chs: "基础伤害",
+        nameLocale: 413,
+        
+        description: 1450,
+        
         
         badge: BaseDmg_image,
         
         genre: "Common",
-        // description: "",
         config: [
             
-            {"default":0.0,"name":"value","title":"w4","type":"floatInput"},
+            {"default":0.0,"name":"value","title":684,"type":"floatInput"},
             
         ],
     },
     
     "AlbedoTalent2": {
         name: "AlbedoTalent2",
-        // chs: "阿贝多-「瓶中人的天慧」",
+        nameLocale: 1571,
+        
+        description: 1576,
+        
         
         badge: getImage("Albedo"),
         
         genre: "Character",
-        // description: "阿贝多天赋2：释放诞生式·大地之潮时,使附近的队伍中角色的元素精通提高125点，持续10秒",
         config: [
             
         ],
@@ -500,12 +534,14 @@ export default {
     
     "AlbedoC4": {
         name: "AlbedoC4",
-        // chs: "阿贝多-「神性之陨」",
+        nameLocale: 1572,
+        
+        description: 1574,
+        
         
         badge: getImage("Albedo"),
         
         genre: "Character",
-        // description: "阿贝多命座4：处于阳华的领域中的队伍中当前场上角色，造成的下落攻击伤害提高30%。",
         config: [
             
         ],
@@ -513,12 +549,14 @@ export default {
     
     "AlbedoC6": {
         name: "AlbedoC6",
-        // chs: "阿贝多-「无垢之土」",
+        nameLocale: 1570,
+        
+        description: 1575,
+        
         
         badge: getImage("Albedo"),
         
         genre: "Character",
-        // description: "阿贝多命座6：处在阳华的领域中的队伍中当前场上角色，若处于结晶反应产生的护盾庇护下，造成的伤害提高17%。",
         config: [
             
         ],
@@ -526,12 +564,14 @@ export default {
     
     "AloyTalent1": {
         name: "AloyTalent1",
-        // chs: "埃洛伊-「战斗覆盖」",
+        nameLocale: 408,
+        
+        description: 409,
+        
         
         badge: getImage("Aloy"),
         
         genre: "Character",
-        // description: "埃洛伊天赋1：埃洛伊获得冰尘雪野的线圈效果时，队伍中附近的其他角色的攻击力提升8%，持续10秒。",
         config: [
             
         ],
@@ -539,12 +579,14 @@ export default {
     
     "AratakiIttoC4": {
         name: "AratakiIttoC4",
-        // chs: "荒泷一斗-「奉行牢狱，茶饭之所」",
+        nameLocale: 1310,
+        
+        description: 1312,
+        
         
         badge: getImage("Itto"),
         
         genre: "Character",
-        // description: "荒泷一斗命座4：最恶鬼王•一斗轰临！！施加的「怒目鬼王」状态结束后，附近的队伍中所有角色的防御力提升20%，攻击力提升20%，持续10秒。",
         config: [
             
         ],
@@ -552,12 +594,14 @@ export default {
     
     "BeidouC6": {
         name: "BeidouC6",
-        // chs: "北斗-「北斗祓幽孽」",
+        nameLocale: 298,
+        
+        description: 300,
+        
         
         badge: getImage("Beidou"),
         
         genre: "Character",
-        // description: "北斗命座6：斫雷持续期间，周围敌人的雷元素抗性降低15%。",
         config: [
             
         ],
@@ -565,31 +609,35 @@ export default {
     
     "BennettQ": {
         name: "BennettQ",
-        // chs: "班尼特-「美妙旅程」",
+        nameLocale: 1111,
+        
+        description: 1114,
+        
         
         badge: getImage("Bennett"),
         
         genre: "Character",
-        // description: "班尼特Q技能：基于班尼特的基础攻击力，以一定比例获得攻击力加成<br>一命：美妙旅程的攻击力提升效果不再有血量限制，数值上追加班尼特基础攻击力的20%。",
         config: [
             
-            {"default":800.0,"name":"base_atk","title":"b1","type":"floatInput"},
+            {"default":800.0,"name":"base_atk","title":1116,"type":"floatInput"},
             
-            {"default":true,"name":"c1","title":"b2","type":"bool"},
+            {"default":true,"name":"c1","title":741,"type":"bool"},
             
-            {"default":10,"max":15,"min":1,"name":"skill3","title":"b3","type":"int"},
+            {"default":10,"max":15,"min":1,"name":"skill3","title":616,"type":"int"},
             
         ],
     },
     
     "BennettC6": {
         name: "BennettC6",
-        // chs: "班尼特-「烈火与勇气」",
+        nameLocale: 1110,
+        
+        description: 1115,
+        
         
         badge: getImage("Bennett"),
         
         genre: "Character",
-        // description: "班尼特命座6：处在美妙旅程领域内的队伍中当前场上单手剑、双手剑、长柄武器角色获得15%火元素伤害加成<br>注：此处不管当前角色的武器类型",
         config: [
             
         ],
@@ -597,12 +645,14 @@ export default {
     
     "ChongyunTalent2": {
         name: "ChongyunTalent2",
-        // chs: "重云-「追冰剑诀」",
+        nameLocale: 1500,
+        
+        description: 1502,
+        
         
         badge: getImage("Chongyun"),
         
         genre: "Character",
-        // description: "重云天赋2：灵刃·重华叠霜领域消失时，会唤出一柄灵刃自动攻击附近的敌人，造成相当于灵刃·重华叠霜技能伤害100%的冰元素范围伤害。被击中的敌人冰元素抗性降低10%，持续8秒。",
         config: [
             
         ],
@@ -610,12 +660,14 @@ export default {
     
     "DionaC6G50": {
         name: "DionaC6G50",
-        // chs: "迪奥娜-「猫尾打烊之时」",
+        nameLocale: 1478,
+        
+        description: 1480,
+        
         
         badge: getImage("Diona"),
         
         genre: "Character",
-        // description: "迪奥娜命座6：生命值高于50%时，元素精通提升200。",
         config: [
             
         ],
@@ -623,27 +675,31 @@ export default {
     
     "EulaE": {
         name: "EulaE",
-        // chs: "优菈-「冰潮的涡旋」减抗",
+        nameLocale: 151,
+        
+        description: 153,
+        
         
         badge: getImage("Eula"),
         
         genre: "Character",
-        // description: "优菈E技能：长按若消耗了冷酷之心效果，会使身边的敌人的物理抗性与冰元素抗性降低。",
         config: [
             
-            {"default":9,"max":15,"min":1,"name":"skill2","title":"b3","type":"int"},
+            {"default":9,"max":15,"min":1,"name":"skill2","title":616,"type":"int"},
             
         ],
     },
     
     "GanyuTalent2": {
         name: "GanyuTalent2",
-        // chs: "甘雨-「天地交泰」",
+        nameLocale: 1128,
+        
+        description: 1132,
+        
         
         badge: getImage("Ganyu"),
         
         genre: "Character",
-        // description: "甘雨天赋2：降众天华领域内的队伍中当前场上角色获得20%冰元素伤害加成。",
         config: [
             
         ],
@@ -651,12 +707,14 @@ export default {
     
     "GanyuC1": {
         name: "GanyuC1",
-        // chs: "甘雨-「饮露」",
+        nameLocale: 1129,
+        
+        description: 1131,
+        
         
         badge: getImage("Ganyu"),
         
         genre: "Character",
-        // description: "甘雨命座1：二段蓄力重击的霜华矢或霜华绽发命中敌人时，会使敌人的冰元素抗性降低15%，持续6秒。",
         config: [
             
         ],
@@ -664,27 +722,31 @@ export default {
     
     "GorouE1": {
         name: "GorouE1",
-        // chs: "五郎-「大将旗指物」-1",
+        nameLocale: 133,
+        
+        description: 138,
+        
         
         badge: getImage("Gorou"),
         
         genre: "Character",
-        // description: "五郎E技能：一名角色时：「坚牢」：防御力提升。",
         config: [
             
-            {"default":10,"max":15,"min":1,"name":"skill2","title":"b4","type":"int"},
+            {"default":10,"max":15,"min":1,"name":"skill2","title":137,"type":"int"},
             
         ],
     },
     
     "GorouE3": {
         name: "GorouE3",
-        // chs: "五郎-「大将旗指物」-3",
+        nameLocale: 134,
+        
+        description: 139,
+        
         
         badge: getImage("Gorou"),
         
         genre: "Character",
-        // description: "五郎E技能：三名角色时：「摧碎」：除上述效果外，获得岩元素伤害加成。",
         config: [
             
         ],
@@ -692,12 +754,14 @@ export default {
     
     "GorouTalent1": {
         name: "GorouTalent1",
-        // chs: "五郎-「不畏风雨」",
+        nameLocale: 132,
+        
+        description: 141,
+        
         
         badge: getImage("Gorou"),
         
         genre: "Character",
-        // description: "五郎天赋1：施放兽牙逐突形胜战法后的12秒内，附近的队伍中所有角色的防御力提升25%。",
         config: [
             
         ],
@@ -705,27 +769,31 @@ export default {
     
     "GorouC6": {
         name: "GorouC6",
-        // chs: "五郎-「犬勇•忠如山」",
+        nameLocale: 135,
+        
+        description: 140,
+        
         
         badge: getImage("Gorou"),
         
         genre: "Character",
-        // description: "五郎命座6：施放犬坂吠吠方圆阵或兽牙逐突形胜战法后的12秒内，依据施放时的领域等级，提高附近的队伍中所有角色岩元素伤害的暴击伤害。",
         config: [
             
-            {"default":1,"max":3,"min":1,"name":"level","title":"b5","type":"int"},
+            {"default":1,"max":3,"min":1,"name":"level","title":1619,"type":"int"},
             
         ],
     },
     
     "HuTaoTalent1": {
         name: "HuTaoTalent1",
-        // chs: "胡桃-「蝶隐之时」",
+        nameLocale: 1289,
+        
+        description: 1291,
+        
         
         badge: getImage("Hutao"),
         
         genre: "Character",
-        // description: "胡桃天赋1：蝶引来生施加的彼岸蝶舞状态结束后，队伍中所有角色（不包括胡桃自己）的暴击率提高12%，持续8秒。",
         config: [
             
         ],
@@ -733,12 +801,14 @@ export default {
     
     "JeanC4": {
         name: "JeanC4",
-        // chs: "琴-「蒲公英的国土」",
+        nameLocale: 1121,
+        
+        description: 1123,
+        
         
         badge: getImage("Qin"),
         
         genre: "Character",
-        // description: "琴命座4：在蒲公英之风的领域内，所有敌人的风元素抗性下降40％。",
         config: [
             
         ],
@@ -746,29 +816,33 @@ export default {
     
     "KaedeharaKazuhaTalent2": {
         name: "KaedeharaKazuhaTalent2",
-        // chs: "枫原万叶-「风物之诗咏」",
+        nameLocale: 935,
+        
+        description: 939,
+        
         
         badge: getImage("Kazuha"),
         
         genre: "Character",
-        // description: "枫原万叶天赋2：枫原万叶触发扩散反应后，枫原万叶的每点元素精通，会为队伍中所有角色提供0.04%对应元素伤害加成，持续8秒。",
         config: [
             
-            {"default":"Electro","name":"element","title":"b6","type":"element4"},
+            {"default":"Electro","name":"element","title":596,"type":"element4"},
             
-            {"default":800.0,"name":"em","title":"b7","type":"floatInput"},
+            {"default":800.0,"name":"em","title":62,"type":"floatInput"},
             
         ],
     },
     
     "KaedeharaKazuhaC2": {
         name: "KaedeharaKazuhaC2",
-        // chs: "枫原万叶-「山岚残芯」",
+        nameLocale: 934,
+        
+        description: 938,
+        
         
         badge: getImage("Kazuha"),
         
         genre: "Character",
-        // description: "枫原万叶命座2：场上角色的元素精通提升200点。",
         config: [
             
         ],
@@ -776,12 +850,14 @@ export default {
     
     "KamisatoAyakaC4": {
         name: "KamisatoAyakaC4",
-        // chs: "神里绫华-「盈缺流返」",
+        nameLocale: 1213,
+        
+        description: 1261,
+        
         
         badge: getImage("Ayaka"),
         
         genre: "Character",
-        // description: "绫华命座4：敌人受到神里流•霜灭的霜见雪关扉造成的伤害后，防御力降低30%，持续6秒。",
         config: [
             
         ],
@@ -789,12 +865,14 @@ export default {
     
     "KleeC2": {
         name: "KleeC2",
-        // chs: "可莉-「破破弹片」",
+        nameLocale: 339,
+        
+        description: 341,
+        
         
         badge: getImage("Klee"),
         
         genre: "Character",
-        // description: "可莉命座2：蹦蹦炸弹的诡雷会使敌人防御力降低23％，持续10秒。",
         config: [
             
         ],
@@ -802,12 +880,14 @@ export default {
     
     "KleeC6": {
         name: "KleeC6",
-        // chs: "可莉-「火力全开」",
+        nameLocale: 338,
+        
+        description: 342,
+        
         
         badge: getImage("Klee"),
         
         genre: "Character",
-        // description: "可莉命座6：施放轰轰火花后的25秒内，队伍中所有角色获得10％火元素伤害加成。",
         config: [
             
         ],
@@ -815,31 +895,35 @@ export default {
     
     "KujouSaraEOrQ": {
         name: "KujouSaraEOrQ",
-        // chs: "九条裟罗-「天狗咒雷」",
+        nameLocale: 94,
+        
+        description: 97,
+        
         
         badge: getImage("Sara"),
         
         genre: "Character",
-        // description: "九条裟罗E/Q技能：基于九条裟罗的基础攻击力，以一定比例获得攻击力加成<br>六命：处于天狗咒雷带来的攻击力提升效果状态下的角色，其雷元素伤害的暴击伤害提高60%。",
         config: [
             
-            {"default":700.0,"name":"base_atk","title":"b9","type":"floatInput"},
+            {"default":700.0,"name":"base_atk","title":98,"type":"floatInput"},
             
-            {"default":false,"name":"c6","title":"b10","type":"bool"},
+            {"default":false,"name":"c6","title":744,"type":"bool"},
             
-            {"default":10,"max":15,"min":1,"name":"skill2","title":"b11","type":"int"},
+            {"default":10,"max":15,"min":1,"name":"skill2","title":10,"type":"int"},
             
         ],
     },
     
     "LisaTalent2": {
         name: "LisaTalent2",
-        // chs: "丽莎-「静电场力」",
+        nameLocale: 86,
+        
+        description: 88,
+        
         
         badge: getImage("Lisa"),
         
         genre: "Character",
-        // description: "丽莎天赋2：敌人受到蔷薇的雷光攻击后，降低15%防御力，持续10秒。",
         config: [
             
         ],
@@ -847,29 +931,33 @@ export default {
     
     "MonaQ": {
         name: "MonaQ",
-        // chs: "莫娜-「星异」",
+        nameLocale: 1318,
+        
+        description: 1321,
+        
         
         badge: getImage("Mona"),
         
         genre: "Character",
-        // description: "莫娜Q技能：对敌人施加星异的伤害加成效果，并以此提高这一次造成的伤害。四命：队伍中所有角色攻击处于星异状态下的敌人时，暴击率提升15%",
         config: [
             
-            {"default":9,"max":15,"min":1,"name":"skill3","title":"b12","type":"int"},
+            {"default":9,"max":15,"min":1,"name":"skill3","title":16,"type":"int"},
             
-            {"default":false,"name":"c4","title":"b13","type":"bool"},
+            {"default":false,"name":"c4","title":743,"type":"bool"},
             
         ],
     },
     
     "MonaC1": {
         name: "MonaC1",
-        // chs: "莫娜-「沉没的预言」",
+        nameLocale: 1319,
+        
+        description: 1322,
+        
         
         badge: getImage("Mona"),
         
         genre: "Character",
-        // description: "莫娜命座1：队伍中自己的角色攻击命中处于星异状态下的敌人后的8秒内，水元素相关反应的效果提升：<br>•感电反应造成的伤害提升15%，蒸发反应造成的伤害提升15%，水元素扩散反应造成的伤害提升15%",
         config: [
             
         ],
@@ -877,12 +965,14 @@ export default {
     
     "NingguangTalent2": {
         name: "NingguangTalent2",
-        // chs: "凝光-「储之千日，用之一刻」",
+        nameLocale: 260,
+        
+        description: 262,
+        
         
         badge: getImage("Ningguang"),
         
         genre: "Character",
-        // description: "凝光天赋2：穿过璇玑屏的角色会获得12%岩元素伤害加成，持续10秒。",
         config: [
             
         ],
@@ -890,29 +980,33 @@ export default {
     
     "RaidenShogunE": {
         name: "RaidenShogunE",
-        // chs: "雷电将军-「雷罚恶曜之眼」",
+        nameLocale: 1602,
+        
+        description: 1605,
+        
         
         badge: getImage("Shougun"),
         
         genre: "Character",
-        // description: "雷电将军E技能：雷罚恶曜之眼的角色在持续期间内，元素爆发造成的伤害获得提升，提升程度基于元素爆发的元素能量。",
         config: [
             
-            {"default":8,"max":15,"min":1,"name":"skill2","title":"b14","type":"int"},
+            {"default":8,"max":15,"min":1,"name":"skill2","title":1604,"type":"int"},
             
-            {"default":80,"max":100,"min":20,"name":"energy","title":"b15","type":"int"},
+            {"default":80,"max":100,"min":20,"name":"energy","title":324,"type":"int"},
             
         ],
     },
     
     "RaidenShogunC4": {
         name: "RaidenShogunC4",
-        // chs: "雷电将军-「誓奉常道」",
+        nameLocale: 1601,
+        
+        description: 1606,
+        
         
         badge: getImage("Shougun"),
         
         genre: "Character",
-        // description: "雷电将军命座4：奥义•梦想真说施加的梦想一心状态结束后，附近的队伍中所有角色（不包括雷电将军自己）的攻击力提升30%，持续10秒。",
         config: [
             
         ],
@@ -920,12 +1014,14 @@ export default {
     
     "RazorC4": {
         name: "RazorC4",
-        // chs: "雷泽-「撕咬」",
+        nameLocale: 1595,
+        
+        description: 1597,
+        
         
         badge: getImage("Razor"),
         
         genre: "Character",
-        // description: "雷泽命座4：利爪与苍雷点按时，会使命中的敌人防御力降低15％，持续7秒。",
         config: [
             
         ],
@@ -933,27 +1029,31 @@ export default {
     
     "RosariaTalent2": {
         name: "RosariaTalent2",
-        // chs: "罗莎莉亚-「暗中支援的黯色」",
+        nameLocale: 1268,
+        
+        description: 1271,
+        
         
         badge: getImage("Rosaria"),
         
         genre: "Character",
-        // description: "罗莎莉亚天赋2：施放终命的圣礼时，基于自身暴击率的15%，提高附近的队伍中所有角色(不包括罗莎莉亚自己)的暴击率，持续10秒。通过这种方式获得的暴击率提升，无法超过15%。",
         config: [
             
-            {"default":70.0,"name":"crit","title":"b16","type":"floatPercentageInput"},
+            {"default":70.0,"name":"crit","title":1272,"type":"floatPercentageInput"},
             
         ],
     },
     
     "RosariaC6": {
         name: "RosariaC6",
-        // chs: "罗莎莉亚-「代行裁判」",
+        nameLocale: 1267,
+        
+        description: 1270,
+        
         
         badge: getImage("Rosaria"),
         
         genre: "Character",
-        // description: "罗莎莉亚命座6：终命的圣礼的攻击会使敌人的物理抗性降低20%，持续10秒。",
         config: [
             
         ],
@@ -961,74 +1061,84 @@ export default {
     
     "ShenheE": {
         name: "ShenheE",
-        // chs: "申鹤-「冰翎」",
+        nameLocale: 1156,
+        
+        description: 1162,
+        
         
         badge: getImage("Shenhe"),
         
         genre: "Character",
-        // description: "申鹤E技能：基于申鹤自己当前的攻击力，提高造成的伤害。",
         config: [
             
-            {"default":3000.0,"name":"atk","title":"b17","type":"floatInput"},
+            {"default":3000.0,"name":"atk","title":1167,"type":"floatInput"},
             
-            {"default":8,"max":15,"min":1,"name":"skill2","title":"b18","type":"int"},
+            {"default":8,"max":15,"min":1,"name":"skill2","title":1161,"type":"int"},
             
         ],
     },
     
     "ShenheQ": {
         name: "ShenheQ",
-        // chs: "申鹤-「神女遣灵真诀」减抗",
+        nameLocale: 1158,
+        
+        description: 1164,
+        
         
         badge: getImage("Shenhe"),
         
         genre: "Character",
-        // description: "申鹤Q技能：「箓灵」将结成领域，使其中敌人的冰元素抗性与物理抗性降低。",
         config: [
             
-            {"default":8,"max":15,"min":1,"name":"skill3","title":"b19","type":"int"},
+            {"default":8,"max":15,"min":1,"name":"skill3","title":1163,"type":"int"},
             
         ],
     },
     
     "ShenheTalent1": {
         name: "ShenheTalent1",
-        // chs: "申鹤-「大洞弥罗尊法」",
+        nameLocale: 1157,
+        
+        description: 1165,
+        
         
         badge: getImage("Shenhe"),
         
         genre: "Character",
-        // description: "申鹤天赋1：处于神女遣灵真诀的领域中的当前场上角色，冰元素伤害加成提高15%。二命：领域中的当前场上角色，冰元素伤害的暴击伤害提高15%。",
         config: [
             
-            {"default":false,"name":"c2","title":"b20","type":"bool"},
+            {"default":false,"name":"c2","title":742,"type":"bool"},
             
         ],
     },
     
     "ShenheTalent2": {
         name: "ShenheTalent2",
-        // chs: "申鹤-「缚灵通真法印」",
+        nameLocale: 1159,
+        
+        description: 1166,
+        
         
         badge: getImage("Shenhe"),
         
         genre: "Character",
-        // description: "申鹤天赋2：申鹤施放仰灵威召将役咒后，将使附近的队伍中所有角色获得如下效果：<br>•点按：元素战技和元素爆发造成的伤害提高15%，持续10秒；<br>•长按：普通攻击、重击和下落攻击造成的伤害提高15%，持续15秒。",
         config: [
             
-            {"default":0,"name":"t","options":["点按","长按"],"title":"b21","type":"option"},
+            {"default":0,"name":"t","options":["点按","长按"],"title":617,"type":"option"},
             
         ],
     },
     
     "SucroseTalent1": {
         name: "SucroseTalent1",
-        // chs: "砂糖-「触媒置换术」",
+        nameLocale: 1183,
+        
+        description: 1186,
+        
         
         badge: getImage("Sucrose"),
         
         genre: "Character",
-        // description: "砂糖天赋1：砂糖触发扩散反应时，使队伍中所有对应元素类型的角色（不包括砂糖自己）元素精通提升50，持续8秒。",
         config: [
             
         ],
@@ -1036,57 +1146,65 @@ export default {
     
     "SucroseTalent2": {
         name: "SucroseTalent2",
-        // chs: "砂糖-「小小的慧风」",
+        nameLocale: 1181,
+        
+        description: 1187,
+        
         
         badge: getImage("Sucrose"),
         
         genre: "Character",
-        // description: "砂糖天赋2：风灵作成·陆叁零捌或禁·风灵作成·染伍同构贰型命中敌人时，基于砂糖元素精通的20%,为队伍中所有角色（不包括砂糖自己）提供元素精通加成，持续8秒。",
         config: [
             
-            {"default":200.0,"name":"em","title":"b22","type":"floatInput"},
+            {"default":200.0,"name":"em","title":1188,"type":"floatInput"},
             
         ],
     },
     
     "SucroseC6": {
         name: "SucroseC6",
-        // chs: "砂糖-「混元熵增论」",
+        nameLocale: 1182,
+        
+        description: 1185,
+        
         
         badge: getImage("Sucrose"),
         
         genre: "Character",
-        // description: "砂糖命座6：禁·风灵作成·柒伍同构贰型如果发生了元素转化，则使队伍中所有角色在技能持续时间内获得20%的对应元素伤害加成。",
         config: [
             
-            {"default":"Electro","name":"element","title":"b23","type":"element4"},
+            {"default":"Electro","name":"element","title":601,"type":"element4"},
             
         ],
     },
     
     "ThomaTalent1": {
         name: "ThomaTalent1",
-        // chs: "托马-「甲衣交叠」",
+        nameLocale: 592,
+        
+        description: 595,
+        
         
         badge: getImage("Tohma"),
         
         genre: "Character",
-        // description: "托马天赋1：当前场上自己的角色获取或刷新烈烧佑命护盾时，护盾强效提升5%，持续时间6秒。此效果每0.3秒至多触发一次，至多叠加5次。",
         config: [
             
-            {"default":2.0,"max":5.0,"min":0.0,"name":"stack","title":"b24","type":"float"},
+            {"default":2.0,"max":5.0,"min":0.0,"name":"stack","title":332,"type":"float"},
             
         ],
     },
     
     "ThomaC6": {
         name: "ThomaC6",
-        // chs: "托马-「炽烧的至心」",
+        nameLocale: 591,
+        
+        description: 594,
+        
         
         badge: getImage("Tohma"),
         
         genre: "Character",
-        // description: "托马命座6：获取或刷新烈烧佑命护盾时，队伍中所有角色的普通攻击，重击与下落攻击造成的伤害提升15%，持续6秒。",
         config: [
             
         ],
@@ -1094,44 +1212,50 @@ export default {
     
     "VentiC2": {
         name: "VentiC2",
-        // chs: "温迪-「眷恋的泠风」",
+        nameLocale: 1028,
+        
+        description: 1030,
+        
         
         badge: getImage("Venti"),
         
         genre: "Character",
-        // description: "温迪命座2：高天之歌会使敌人的风元素抗性与物理抗性降低12％，持续10秒。被高天之歌击飞的敌人在落地前，风元素抗性与物理抗性额外降低12％。",
         config: [
             
-            {"default":false,"name":"levitating","title":"b25","type":"bool"},
+            {"default":false,"name":"levitating","title":1344,"type":"bool"},
             
         ],
     },
     
     "VentiC6": {
         name: "VentiC6",
-        // chs: "温迪-「抗争的暴风」",
+        nameLocale: 1027,
+        
+        description: 1031,
+        
         
         badge: getImage("Venti"),
         
         genre: "Character",
-        // description: "温迪命座6：温迪六命BUFF。受风神之诗伤害的敌人，风元素抗性降低20％。若产生了元素转化，则使转换的元素抗性也降低20％。",
         config: [
             
-            {"default":true,"name":"is_convert","title":"b26","type":"bool"},
+            {"default":true,"name":"is_convert","title":323,"type":"bool"},
             
-            {"default":"Electro","name":"element","title":"b27","type":"element4"},
+            {"default":"Electro","name":"element","title":1455,"type":"element4"},
             
         ],
     },
     
     "XianglingTalent2": {
         name: "XianglingTalent2",
-        // chs: "香菱-「绝云朝天椒」",
+        nameLocale: 1657,
+        
+        description: 1661,
+        
         
         badge: getImage("Xiangling"),
         
         genre: "Character",
-        // description: "香菱天赋2：锅巴出击效果结束时，锅巴会在消失的位置留下辣椒。拾取辣椒会提高10%攻击力，持续10秒。",
         config: [
             
         ],
@@ -1139,12 +1263,14 @@ export default {
     
     "XianglingC1": {
         name: "XianglingC1",
-        // chs: "香菱-「外酥里嫩」",
+        nameLocale: 1655,
+        
+        description: 1659,
+        
         
         badge: getImage("Xiangling"),
         
         genre: "Character",
-        // description: "香菱命座1：受到锅巴攻击的敌人，火元素抗性降低15％，持续6秒。",
         config: [
             
         ],
@@ -1152,12 +1278,14 @@ export default {
     
     "XianglingC6": {
         name: "XianglingC6",
-        // chs: "香菱-「大龙卷旋火轮」",
+        nameLocale: 1656,
+        
+        description: 1660,
+        
         
         badge: getImage("Xiangling"),
         
         genre: "Character",
-        // description: "香菱命座6；旋火轮持续期间，队伍中所有角色获得15％火元素伤害加成。",
         config: [
             
         ],
@@ -1165,12 +1293,14 @@ export default {
     
     "XingqiuC2": {
         name: "XingqiuC2",
-        // chs: "行秋-「天青现虹」",
+        nameLocale: 1360,
+        
+        description: 1362,
+        
         
         badge: getImage("Xingqiu"),
         
         genre: "Character",
-        // description: "行秋命座2：受到剑雨攻击的敌人，水元素抗性降低15％，持续4秒。",
         config: [
             
         ],
@@ -1178,12 +1308,14 @@ export default {
     
     "XinyanC4": {
         name: "XinyanC4",
-        // chs: "辛焱-「节奏的传染」",
+        nameLocale: 1461,
+        
+        description: 1465,
+        
         
         badge: getImage("Xinyan"),
         
         genre: "Character",
-        // description: "辛焱命座4：热情拂扫的伤害，会使敌人的物理抗性降低15%，持续12秒。",
         config: [
             
         ],
@@ -1191,12 +1323,14 @@ export default {
     
     "XinyanTalent2": {
         name: "XinyanTalent2",
-        // chs: "辛焱-「这才是摇滚!」",
+        nameLocale: 1462,
+        
+        description: 1466,
+        
         
         badge: getImage("Xinyan"),
         
         genre: "Character",
-        // description: "辛焱天赋2：处于热情拂扫的护盾保护下的角色造成的物理伤害提高15%。",
         config: [
             
         ],
@@ -1204,12 +1338,14 @@ export default {
     
     "YaeMikoC4": {
         name: "YaeMikoC4",
-        // chs: "八重神子-「绯樱引雷章」",
+        nameLocale: 218,
+        
+        description: 220,
+        
         
         badge: getImage("Yae"),
         
         genre: "Character",
-        // description: "八重神子命座4：杀生樱的落雷命中敌人后，队伍中附近的所有角色获得20%雷元素伤害加成，持续5秒。",
         config: [
             
         ],
@@ -1217,48 +1353,54 @@ export default {
     
     "YoimiyaTalent2": {
         name: "YoimiyaTalent2",
-        // chs: "宵宫-「炎昼风物诗」",
+        nameLocale: 510,
+        
+        description: 512,
+        
         
         badge: getImage("Yoimiya"),
         
         genre: "Character",
-        // description: "宵宫天赋2：释放琉金云间草后的15秒内，附近的队伍中所有其它角色（不包括宵宫自己）攻击力提高10%。此外，依据宵宫自己释放琉金云间草时固有天赋「袖火百景图」的叠加层数，将额外提升上述的攻击力效果，每层提升1%攻击力。",
         config: [
             
-            {"default":0,"max":10,"min":0,"name":"talent1_stack","title":"b29","type":"int"},
+            {"default":0,"max":10,"min":0,"name":"talent1_stack","title":38,"type":"int"},
             
         ],
     },
     
     "YunjinQ": {
         name: "YunjinQ",
-        // chs: "云堇-「飞云旗阵」",
+        nameLocale: 121,
+        
+        description: 123,
+        
         
         badge: getImage("Yunjin"),
         
         genre: "Character",
-        // description: "云堇Q技能：对敌人造成普通攻击伤害时，基于云堇自己当前的防御力，提高造成的伤害。<br>天赋「莫从恒蹊」：「飞云旗阵」提供的普通攻击伤害提高，当队伍中存在1/2/3/4种元素类型的角色时，数值上进一步追加云堇防御力的2.5%/5.0%/7.5%/11.5%。",
         config: [
             
-            {"default":10,"max":15,"min":1,"name":"skill3","title":"b12","type":"int"},
+            {"default":10,"max":15,"min":1,"name":"skill3","title":16,"type":"int"},
             
-            {"default":2000.0,"name":"def","title":"b30","type":"floatInput"},
+            {"default":2000.0,"name":"def","title":125,"type":"floatInput"},
             
-            {"default":true,"name":"talent2","title":"b31","type":"bool"},
+            {"default":true,"name":"talent2","title":5,"type":"bool"},
             
-            {"default":4,"max":4,"min":1,"name":"ele_count","title":"b32","type":"int"},
+            {"default":4,"max":4,"min":1,"name":"ele_count","title":1547,"type":"int"},
             
         ],
     },
     
     "YunjinC2": {
         name: "YunjinC2",
-        // chs: "云堇-「诸般切末」",
+        nameLocale: 120,
+        
+        description: 124,
+        
         
         badge: getImage("Yunjin"),
         
         genre: "Character",
-        // description: "云堇命座2：施放破嶂见旌仪后，附近队伍中所有角色普通攻击造成的伤害提高15%，持续12秒。",
         config: [
             
         ],
@@ -1266,12 +1408,14 @@ export default {
     
     "ZhongliShield": {
         name: "ZhongliShield",
-        // chs: "钟离-「玉璋护盾」",
+        nameLocale: 1530,
+        
+        description: 1532,
+        
         
         badge: getImage("Zhongli"),
         
         genre: "Character",
-        // description: "钟离盾：使附近小范围内敌人的所有元素抗性与物理抗性降低20%",
         config: [
             
         ],
@@ -1279,57 +1423,65 @@ export default {
     
     "YelanTalent2": {
         name: "YelanTalent2",
-        // chs: "夜兰-「妙转随心」",
+        nameLocale: 432,
+        
+        description: 436,
+        
         
         badge: getImage("Yelan"),
         
         genre: "Character",
-        // description: "夜兰天赋2：「玄掷玲珑」存在期间，能使队伍中自己的当前场上角色造成的伤害提高1%，并且每1秒进一步提高3.5%，至多使角色造成的伤害提高50%。效果存在期间重新施放渊图玲珑骰，将移除原有的上述效果。",
         config: [
             
-            {"default":14,"max":14,"min":0,"name":"secs","title":"b28","type":"int"},
+            {"default":14,"max":14,"min":0,"name":"secs","title":1256,"type":"int"},
             
         ],
     },
     
     "YelanC4": {
         name: "YelanC4",
-        // chs: "夜兰-「诓惑者，接树移花」",
+        nameLocale: 433,
+        
+        description: 435,
+        
         
         badge: getImage("Yelan"),
         
         genre: "Character",
-        // description: "夜兰4命：依照「络命丝」标记敌人的数量，每次标记将在爆发时使队伍中所有角色的生命值上限提升10%，持续25秒。通过这种方式，生命值上限至多获得40%提升。",
         config: [
             
-            {"default":4,"max":4,"min":1,"name":"count","title":"b45","type":"int"},
+            {"default":4,"max":4,"min":1,"name":"count","title":946,"type":"int"},
             
         ],
     },
     
     "KamisatoAyatoQ": {
         name: "KamisatoAyatoQ",
-        // chs: "神里绫人-「水囿」",
+        nameLocale: 1207,
+        
+        description: 1210,
+        
         
         badge: getImage("Ayato"),
         
         genre: "Character",
-        // description: "神里绫人Q技能：展开清净之园囿，熄灭其中一切嚣闹。存在期间，其中会持续降下水花剑，攻击范围内的敌人，造成水元素伤害，并提高其中的角色的普通攻击伤害。",
         config: [
             
-            {"default":8,"max":15,"min":1,"name":"skill_level","title":"b8","type":"int"},
+            {"default":8,"max":15,"min":1,"name":"skill_level","title":1209,"type":"int"},
             
         ],
     },
     
     "ShikanoinHeizouTalent2": {
         name: "ShikanoinHeizouTalent2",
-        // chs: "鹿野院平藏-因由勘破",
+        nameLocale: 1679,
+        
+        description: 1681,
+        
         
         badge: getImage("Heizo"),
         
         genre: "Character",
-        // description: "鹿野院平藏天赋2：勠心拳命中敌人后，队伍中所有角色（不包括鹿野院平藏自己）的元素精通提升80点，持续10秒。",
         config: [
             
         ],
@@ -1337,44 +1489,50 @@ export default {
     
     "TighnariC4": {
         name: "TighnariC4",
-        // chs: "",
+        nameLocale: 642,
+        
+        description: 644,
+        
         
         badge: getImage("Tighnari"),
         
         genre: "Character",
-        // description: "",
         config: [
             
-            {"default":false,"name":"after_reaction","title":"b38","type":"bool"},
+            {"default":false,"name":"after_reaction","title":1496,"type":"bool"},
             
         ],
     },
     
     "DoriC4": {
         name: "DoriC4",
-        // chs: "",
+        nameLocale: 429,
+        
+        description: 430,
+        
         
         badge: getImage("Dori"),
         
         genre: "Character",
-        // description: "",
         config: [
             
-            {"default":false,"name":"hp_below50","title":"b39","type":"bool"},
+            {"default":false,"name":"hp_below50","title":1139,"type":"bool"},
             
-            {"default":true,"name":"energy_below50","title":"b40","type":"bool"},
+            {"default":true,"name":"energy_below50","title":212,"type":"bool"},
             
         ],
     },
     
     "NilouTalent1": {
         name: "NilouTalent1",
-        // chs: "",
+        nameLocale: 477,
+        
+        description: 421,
+        
         
         badge: getImage("Nilou"),
         
         genre: "Character",
-        // description: "",
         config: [
             
         ],
@@ -1382,27 +1540,31 @@ export default {
     
     "NilouTalent2": {
         name: "NilouTalent2",
-        // chs: "",
+        nameLocale: 478,
+        
+        description: 411,
+        
         
         badge: getImage("Nilou"),
         
         genre: "Character",
-        // description: "",
         config: [
             
-            {"default":60000.0,"name":"hp","title":"b42","type":"floatInput"},
+            {"default":60000.0,"name":"hp","title":480,"type":"floatInput"},
             
         ],
     },
     
     "CandaceQ": {
         name: "CandaceQ",
-        // chs: "",
+        nameLocale: 401,
+        
+        description: 1394,
+        
         
         badge: getImage("Candace"),
         
         genre: "Character",
-        // description: "",
         config: [
             
         ],
@@ -1410,240 +1572,291 @@ export default {
     
     "CandaceTalent2": {
         name: "CandaceTalent2",
-        // chs: "",
+        nameLocale: 400,
+        
+        description: 419,
+        
         
         badge: getImage("Candace"),
         
         genre: "Character",
-        // description: "",
         config: [
             
-            {"default":30000.0,"name":"hp","title":"b43","type":"floatInput"},
+            {"default":30000.0,"name":"hp","title":402,"type":"floatInput"},
             
         ],
     },
     
     "NahidaTalent1": {
         name: "NahidaTalent1",
-        // chs: "",
+        nameLocale: 1249,
+        
+        description: 714,
+        
         
         badge: getImage("Nahida"),
         
         genre: "Character",
-        // description: "",
         config: [
             
-            {"default":1000.0,"max":3000.0,"min":0.0,"name":"max_em","title":"b44","type":"float"},
+            {"default":1000.0,"max":3000.0,"min":0.0,"name":"max_em","title":1553,"type":"float"},
             
         ],
     },
     
     "FaruzanQ": {
         name: "FaruzanQ",
-        // chs: "法露珊 -「抟风秘道」",
+        nameLocale: 990,
+        
+        description: 1108,
+        
         
         badge: getImage("Faruzan"),
         
         genre: "Character",
-        // description: "法露珊Q技能：「诡风之祸」效果：降低敌人的风元素抗性；<br>「祈风之赐」效果：获得风元素伤害加成；<br>处于抟风秘道的「祈风之赐」效果下的角色，对敌人造成风元素伤害时，基于珐露珊基础攻击力的32%，提高造成的伤害。此效果将在对敌人造成风元素伤害的0.1秒后清除，每1秒最多触发一次。",
         config: [
             
-            {"default":650,"max":1000,"min":0,"name":"base_atk","title":"b46","type":"int"},
+            {"default":650,"max":1000,"min":0,"name":"base_atk","title":991,"type":"int"},
             
-            {"default":10,"max":15,"min":1,"name":"q_level","title":"b12","type":"int"},
+            {"default":10,"max":15,"min":1,"name":"q_level","title":16,"type":"int"},
             
-            {"default":1.0,"max":1.0,"min":0.0,"name":"rate_q1","title":"b47","type":"float"},
+            {"default":1.0,"max":1.0,"min":0.0,"name":"rate_q1","title":39,"type":"float"},
             
-            {"default":1.0,"max":1.0,"min":0.0,"name":"rate_q2","title":"b48","type":"float"},
+            {"default":1.0,"max":1.0,"min":0.0,"name":"rate_q2","title":36,"type":"float"},
             
-            {"default":0.0,"max":1.0,"min":0.0,"name":"rate_talent2","title":"b49","type":"float"},
+            {"default":0.0,"max":1.0,"min":0.0,"name":"rate_talent2","title":18,"type":"float"},
+            
+            {"default":false,"name":"enable_c6","title":221,"type":"bool"},
+            
+        ],
+    },
+    
+    "Mika": {
+        name: "Mika",
+        nameLocale: 1242,
+        
+        description: 738,
+        
+        
+        badge: getImage("Mika"),
+        
+        genre: "Character",
+        config: [
+            
+            {"default":3.0,"max":5.0,"min":0.0,"name":"stack_talent2","title":168,"type":"float"},
+            
+            {"default":1.0,"max":1.0,"min":0.0,"name":"rate_c6","title":223,"type":"float"},
             
         ],
     },
     
     "FreedomSworn": {
         name: "FreedomSworn",
-        // chs: "苍古自由之誓-「千年的大乐章·抗争之歌」",
+        nameLocale: 1301,
+        
+        description: 20,
+        
         
         badge: getImageW("Sword_Widsith"),
         
         genre: "Weapon",
-        // description: "「千年的大乐章·抗争之歌」效果：普通攻击、重击、下落攻击造成的伤害提升16%/20%/24%/28%/32%，攻击力提升20%/25%/30%/35%/40%。",
         config: [
             
-            {"default":1,"max":5,"min":1,"name":"refine","title":"w5","type":"intInput"},
+            {"default":1,"max":5,"min":1,"name":"refine","title":1245,"type":"intInput"},
             
         ],
     },
     
     "SongOfBrokenPines": {
         name: "SongOfBrokenPines",
-        // chs: "松籁响起之时-「千年的大乐章·揭旗之歌」",
+        nameLocale: 931,
+        
+        description: 21,
+        
         
         badge: getImageW("Claymore_Widsith"),
         
         genre: "Weapon",
-        // description: "「千年的大乐章·揭旗之歌」效果：普通攻击速度提升12%/15%/18%/21%/24%，攻击力提升20%/25%/30%/35%/40%。",
         config: [
             
-            {"default":1,"max":5,"min":1,"name":"refine","title":"w5","type":"intInput"},
+            {"default":1,"max":5,"min":1,"name":"refine","title":1245,"type":"intInput"},
             
         ],
     },
     
     "WolfsGravestone": {
         name: "WolfsGravestone",
-        // chs: "狼的末路-「如狼般狩猎者」",
+        nameLocale: 1088,
+        
+        description: 661,
+        
         
         badge: getImageW("Claymore_Wolfmound"),
         
         genre: "Weapon",
-        // description: "攻击命中生命值低于30%的敌人时，队伍中所有成员的攻击力提高40%/50%/60%/70%/80%，持续12秒。该效果30秒只能触发一次。",
         config: [
             
-            {"default":1,"max":5,"min":1,"name":"refine","title":"w5","type":"intInput"},
+            {"default":1,"max":5,"min":1,"name":"refine","title":1245,"type":"intInput"},
             
         ],
     },
     
     "ThrillingTalesOfDragonSlayers": {
         name: "ThrillingTalesOfDragonSlayers",
-        // chs: "讨龙英杰谭-「传承」",
+        nameLocale: 1408,
+        
+        description: 154,
+        
         
         badge: getImageW("Catalyst_Pulpfic"),
         
         genre: "Weapon",
-        // description: "传承：主动切换角色时，新登场的角色攻击力提升24%/30%/36%/42%/48%，持续10秒。该效果每20秒只能触发一次。",
         config: [
             
-            {"default":1,"max":5,"min":1,"name":"refine","title":"w5","type":"intInput"},
+            {"default":1,"max":5,"min":1,"name":"refine","title":1245,"type":"intInput"},
             
         ],
     },
     
     "ElegyOfTheEnd": {
         name: "ElegyOfTheEnd",
-        // chs: "终末嗟叹之诗-「千年的大乐章·别离之歌」",
+        nameLocale: 1255,
+        
+        description: 309,
+        
         
         badge: getImageW("Bow_Widsith"),
         
         genre: "Weapon",
-        // description: "千年的大乐章·别离之歌」效果：元素精通提高100/125/150/175/200点，攻击力提升20%/25%/30%/35%/40%。",
         config: [
             
-            {"default":1,"max":5,"min":1,"name":"refine","title":"w5","type":"intInput"},
+            {"default":1,"max":5,"min":1,"name":"refine","title":1245,"type":"intInput"},
             
         ],
     },
     
     "HakushinRing": {
         name: "HakushinRing",
-        // chs: "白辰之环-「樱之斋宫」",
+        nameLocale: 1173,
+        
+        description: 955,
+        
         
         badge: getImageW("Catalyst_Bakufu"),
         
         genre: "Weapon",
-        // description: "樱之斋宫：装备该武器的角色触发雷元素相关反应后，队伍中附近的与该元素反应相关的元素类型的角色，获得10%/12.5%/15%/17.5%/20%对应元素的元素伤害加成，持续6秒。通过这种方式，角色获得的元素伤害加成无法叠加。",
         config: [
             
-            {"default":1,"max":5,"min":1,"name":"refine","title":"w5","type":"intInput"},
+            {"default":1,"max":5,"min":1,"name":"refine","title":1245,"type":"intInput"},
             
-            {"default":"Electro","name":"element","title":"b33","type":"element8"},
+            {"default":"Electro","name":"element","title":171,"type":"element8"},
             
         ],
     },
     
     "SapwoodBlade": {
         name: "SapwoodBlade",
-        // chs: "",
+        nameLocale: 321,
+        
+        description: 628,
+        
         
         badge: getImageW("Sword_Arakalari"),
         
         genre: "Weapon",
-        // description: "",
         config: [
             
-            {"default":1,"max":5,"min":1,"name":"refine","title":"w5","type":"intInput"},
+            {"default":1,"max":5,"min":1,"name":"refine","title":1245,"type":"intInput"},
             
-            {"default":1.0,"max":1.0,"min":0.0,"name":"rate","title":"b41","type":"float"},
+            {"default":1.0,"max":1.0,"min":0.0,"name":"rate","title":559,"type":"float"},
             
         ],
     },
     
     "Moonpiercer": {
         name: "Moonpiercer",
-        // chs: "",
+        nameLocale: 1426,
+        
+        description: 629,
+        
         
         badge: getImageW("Pole_Arakalari"),
         
         genre: "Weapon",
-        // description: "",
         config: [
             
-            {"default":1,"max":5,"min":1,"name":"refine","title":"w5","type":"intInput"},
+            {"default":1,"max":5,"min":1,"name":"refine","title":1245,"type":"intInput"},
             
         ],
     },
     
     "XiphosMoonlight": {
         name: "XiphosMoonlight",
-        // chs: "",
+        nameLocale: 1379,
+        
+        description: 1373,
+        
         
         badge: getImageW("Sword_Pleroma"),
         
         genre: "Weapon",
-        // description: "",
         config: [
             
-            {"default":1,"max":5,"min":1,"name":"refine","title":"w5","type":"intInput"},
+            {"default":1,"max":5,"min":1,"name":"refine","title":1245,"type":"intInput"},
             
-            {"default":900.0,"name":"em","title":"w27","type":"floatInput"},
+            {"default":900.0,"name":"em","title":204,"type":"floatInput"},
             
         ],
     },
     
     "MakhairaAquamarine": {
         name: "MakhairaAquamarine",
-        // chs: "",
+        nameLocale: 1103,
+        
+        description: 29,
+        
         
         badge: getImageW("Claymore_Pleroma"),
         
         genre: "Weapon",
-        // description: "",
         config: [
             
-            {"default":1,"max":5,"min":1,"name":"refine","title":"w5","type":"intInput"},
+            {"default":1,"max":5,"min":1,"name":"refine","title":1245,"type":"intInput"},
             
-            {"default":900.0,"name":"em","title":"w27","type":"floatInput"},
+            {"default":900.0,"name":"em","title":204,"type":"floatInput"},
             
         ],
     },
     
     "KeyOfKhajNisut": {
         name: "KeyOfKhajNisut",
-        // chs: "",
+        nameLocale: 397,
+        
+        description: 526,
+        
         
         badge: getImageW("Sword_Deshret"),
         
         genre: "Weapon",
-        // description: "",
         config: [
             
-            {"default":1,"max":5,"min":1,"name":"refine","title":"w5","type":"intInput"},
+            {"default":1,"max":5,"min":1,"name":"refine","title":1245,"type":"intInput"},
             
-            {"default":20000.0,"name":"hp","title":"w28","type":"floatInput"},
+            {"default":20000.0,"name":"hp","title":1133,"type":"floatInput"},
             
         ],
     },
     
     "ResonancePyro2": {
         name: "ResonancePyro2",
-        // chs: "元素共鸣-热诚之火",
+        nameLocale: 179,
+        
+        description: 651,
+        
         
         badge: ResonancePyro2_image,
         
         genre: "Resonance",
-        // description: "攻击力提升25%。",
         config: [
             
         ],
@@ -1651,44 +1864,50 @@ export default {
     
     "ResonanceCryo2": {
         name: "ResonanceCryo2",
-        // chs: "元素共鸣-粉碎之冰",
+        nameLocale: 180,
+        
+        description: 646,
+        
         
         badge: ResonanceCryo2_image,
         
         genre: "Resonance",
-        // description: "攻击冰元素附着或冻结状态下的敌人时，暴击率提高15%。",
         config: [
             
-            {"default":1.0,"max":1.0,"min":0.0,"name":"rate","title":"b34","type":"float"},
+            {"default":1.0,"max":1.0,"min":0.0,"name":"rate","title":559,"type":"float"},
             
         ],
     },
     
     "ResonanceGeo2": {
         name: "ResonanceGeo2",
-        // chs: "元素共鸣-坚定之岩",
+        nameLocale: 177,
+        
+        description: 621,
+        
         
         badge: ResonanceGeo2_image,
         
         genre: "Resonance",
-        // description: "护盾强效提升15%。角色处于护盾保护状态时，①造成的伤害提升15%，对敌人造成伤害时会使敌人的的②岩元素抗性降低20%，持续15秒。",
         config: [
             
-            {"default":1.0,"max":1.0,"min":0.0,"name":"rate1","title":"b35","type":"float"},
+            {"default":1.0,"max":1.0,"min":0.0,"name":"rate1","title":671,"type":"float"},
             
-            {"default":1.0,"max":1.0,"min":0.0,"name":"rate2","title":"b36","type":"float"},
+            {"default":1.0,"max":1.0,"min":0.0,"name":"rate2","title":672,"type":"float"},
             
         ],
     },
     
     "ResonanceHydro2": {
         name: "ResonanceHydro2",
-        // chs: "元素共鸣-愈疗之水",
+        nameLocale: 178,
+        
+        description: 1048,
+        
         
         badge: ResonanceHydro2_image,
         
         genre: "Resonance",
-        // description: "",
         config: [
             
         ],
@@ -1696,29 +1915,33 @@ export default {
     
     "ResonanceDendro2": {
         name: "ResonanceDendro2",
-        // chs: "元素共鸣-蔓生之草",
+        nameLocale: 181,
+        
+        description: 206,
+        
         
         badge: ResonanceDendro2_image,
         
         genre: "Resonance",
-        // description: "",
         config: [
             
-            {"default":1.0,"max":1.0,"min":0.0,"name":"rate1","title":"b35","type":"float"},
+            {"default":1.0,"max":1.0,"min":0.0,"name":"rate1","title":671,"type":"float"},
             
-            {"default":1.0,"max":1.0,"min":0.0,"name":"rate2","title":"b36","type":"float"},
+            {"default":1.0,"max":1.0,"min":0.0,"name":"rate2","title":672,"type":"float"},
             
         ],
     },
     
     "Instructor4": {
         name: "Instructor4",
-        // chs: "教官4",
+        nameLocale: 678,
+        
+        description: 1399,
+        
         
         badge: getImageA("UI_RelicIcon_10007_4"),
         
         genre: "Artifact",
-        // description: "触发元素反应后。队伍中所有角色元素精通提高120点，持续8秒。",
         config: [
             
         ],
@@ -1726,12 +1949,14 @@ export default {
     
     "NoblesseOblige4": {
         name: "NoblesseOblige4",
-        // chs: "昔日宗室之仪4",
+        nameLocale: 730,
+        
+        description: 711,
+        
         
         badge: getImageA("UI_RelicIcon_15007_4"),
         
         genre: "Artifact",
-        // description: "施放元素爆发后，队伍中所有角色攻击力提升20％，持续12秒。该效果不可叠加。",
         config: [
             
         ],
@@ -1739,42 +1964,48 @@ export default {
     
     "ArchaicPetra4": {
         name: "ArchaicPetra4",
-        // chs: "悠古的磐岩4",
+        nameLocale: 578,
+        
+        description: 1339,
+        
         
         badge: getImageA("UI_RelicIcon_15014_4"),
         
         genre: "Artifact",
-        // description: "获得结晶反应形成的晶片时，队伍中所有角色获得35%对应元素伤害加成，持续10秒。",
         config: [
             
-            {"default":"Electro","name":"element","title":"b37","type":"element4"},
+            {"default":"Electro","name":"element","title":1258,"type":"element4"},
             
         ],
     },
     
     "ViridescentVenerer4": {
         name: "ViridescentVenerer4",
-        // chs: "翠绿之影4",
+        nameLocale: 1277,
+        
+        description: 947,
+        
         
         badge: getImageA("UI_RelicIcon_15002_4"),
         
         genre: "Artifact",
-        // description: "根据扩散的元素类型，降低受到影响的敌人40%的对应元素抗性，持续10秒。",
         config: [
             
-            {"default":"Electro","name":"element","title":"b6","type":"element4"},
+            {"default":"Electro","name":"element","title":596,"type":"element4"},
             
         ],
     },
     
     "TenacityOfTheMillelith4": {
         name: "TenacityOfTheMillelith4",
-        // chs: "千岩牢固4",
+        nameLocale: 307,
+        
+        description: 184,
+        
         
         badge: getImageA("UI_RelicIcon_15017_4"),
         
         genre: "Artifact",
-        // description: "元素战技命中敌人后，使队伍中附近的所有角色攻击力提升20%，护盾强效提升30%，持续3秒。",
         config: [
             
         ],
@@ -1782,15 +2013,17 @@ export default {
     
     "DeepwoodMemories4": {
         name: "DeepwoodMemories4",
-        // chs: "",
+        nameLocale: 1017,
+        
+        description: 190,
+        
         
         badge: getImageA("UI_RelicIcon_15025_4"),
         
         genre: "Artifact",
-        // description: "",
         config: [
             
-            {"default":1.0,"max":1.0,"min":0.0,"name":"rate","title":"b41","type":"float"},
+            {"default":1.0,"max":1.0,"min":0.0,"name":"rate","title":559,"type":"float"},
             
         ],
     },

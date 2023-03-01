@@ -6,6 +6,7 @@ use crate::character::character_common_data::CharacterCommonData;
 use crate::character::characters::electro::keqing::Keqing;
 use crate::character::skill_config::CharacterSkillConfig;
 use crate::character::traits::CharacterTrait;
+use crate::common::i18n::locale;
 use crate::common::item_config_type::{ItemConfig, ItemConfigType};
 use crate::common::StatName;
 use crate::damage::{DamageContext, SimpleDamageBuilder};
@@ -26,8 +27,14 @@ impl TargetFunctionMetaTrait for KeqingDefaultTargetFunction {
     #[cfg(not(target_family = "wasm"))]
     const META_DATA: TargetFunctionMeta = TargetFunctionMeta {
         name: TargetFunctionName::KeqingDefault,
-        chs: "刻晴-霆霓快雨",
-        description: "普通雷伤刻晴",
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "刻晴-霆霓快雨",
+            en: "Keqing-Driving Thunder"
+        ),
+        description: crate::common::i18n::locale!(
+            zh_cn: "普通雷伤刻晴",
+            en: "Electro DPS Keqing"
+        ),
         tags: "输出",
         four: TargetFunctionFor::SomeWho(CharacterName::Keqing),
         image: TargetFunctionMetaImage::Avatar
@@ -37,7 +44,10 @@ impl TargetFunctionMetaTrait for KeqingDefaultTargetFunction {
     const CONFIG: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "aggravate_rate",
-            title: "t17",
+            title: locale!(
+                zh_cn: "超激化比例",
+                en: "Aggravate Ratio",
+            ),
             config: ItemConfigType::Float { min: 0.0, max: 1.0, default: 0.0 }
         }
     ]);

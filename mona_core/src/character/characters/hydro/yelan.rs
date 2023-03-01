@@ -9,6 +9,7 @@ use crate::character::character_sub_stat::CharacterSubStatFamily;
 use crate::character::skill_config::CharacterSkillConfig;
 use crate::character::traits::{CharacterSkillMap, CharacterSkillMapItem, CharacterTrait};
 use crate::common::{ChangeAttribute, Element, SkillType, WeaponType};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 use crate::common::item_config_type::{ItemConfig, ItemConfigType};
 use crate::damage::damage_builder::DamageBuilder;
 use crate::damage::DamageContext;
@@ -133,7 +134,6 @@ impl CharacterTrait for Yelan {
     const STATIC_DATA: CharacterStaticData = CharacterStaticData {
         name: CharacterName::Yelan,
         internal_name: "Yelan",
-        chs: "夜兰",
         element: Element::Hydro,
         hp: [1125, 2918, 3883, 5810, 6495, 7472, 8386, 9374, 10059, 11056, 11741, 12749, 13434, 14450],
         atk: [19, 49, 66, 98, 110, 126, 142, 158, 170, 187, 198, 215, 227, 244],
@@ -141,9 +141,22 @@ impl CharacterTrait for Yelan {
         sub_stat: CharacterSubStatFamily::CriticalRate192,
         weapon_type: WeaponType::Bow,
         star: 5,
-        skill_name1: "普通攻击·潜形隐曜弓",
-        skill_name2: "萦络纵命索",
-        skill_name3: "渊图玲珑骰"
+        skill_name1: locale!(
+            zh_cn: "普通攻击·潜形隐曜弓",
+            en: "Normal Attack: Stealthy Bowshot",
+        ),
+        skill_name2: locale!(
+            zh_cn: "萦络纵命索",
+            en: "Lingering Lifeline",
+        ),
+        skill_name3: locale!(
+            zh_cn: "渊图玲珑骰",
+            en: "Depth-Clarion Dice",
+        ),
+        name_locale: locale!(
+            zh_cn: "夜兰",
+            en: "Yelan",
+        )
     };
     type SkillType = YelanSkillType;
     const SKILL: Self::SkillType = YELAN_SKILL;
@@ -153,23 +166,23 @@ impl CharacterTrait for Yelan {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: YelanDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: YelanDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: YelanDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: YelanDamageEnum::Normal4Div2 as usize, chs: "四段伤害/2" },
-            CharacterSkillMapItem { index: YelanDamageEnum::Charged1 as usize, chs: "瞄准射击" },
-            CharacterSkillMapItem { index: YelanDamageEnum::Charged2 as usize, chs: "满蓄力瞄准射击" },
-            CharacterSkillMapItem { index: YelanDamageEnum::Charged3 as usize, chs: "破局矢伤害" },
-            CharacterSkillMapItem { index: YelanDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: YelanDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: YelanDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: YelanDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: YelanDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: YelanDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: YelanDamageEnum::Normal4Div2 as usize, text: locale!(zh_cn: "四段伤害/2", en: "4-Hit DMG/2") },
+            CharacterSkillMapItem { index: YelanDamageEnum::Charged1 as usize, text: charged_dmg!("shoot1") },
+            CharacterSkillMapItem { index: YelanDamageEnum::Charged2 as usize, text: charged_dmg!("shoot2") },
+            CharacterSkillMapItem { index: YelanDamageEnum::Charged3 as usize, text: locale!(zh_cn: "破局矢伤害", en: "Breakthrough Barb DMG") },
+            CharacterSkillMapItem { index: YelanDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: YelanDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: YelanDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: YelanDamageEnum::E1 as usize, chs: "技能伤害" },
+            CharacterSkillMapItem { index: YelanDamageEnum::E1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: YelanDamageEnum::Q1 as usize, chs: "技能伤害" },
-            CharacterSkillMapItem { index: YelanDamageEnum::Q2 as usize, chs: "玄掷玲珑伤害" },
+            CharacterSkillMapItem { index: YelanDamageEnum::Q1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") },
+            CharacterSkillMapItem { index: YelanDamageEnum::Q2 as usize, text: locale!(zh_cn: "玄掷玲珑伤害", en: "Exquisite Throw DMG") },
         ])
     };
 
@@ -177,7 +190,10 @@ impl CharacterTrait for Yelan {
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "team_element_count",
-            title: "c17",
+            title: locale!(
+                zh_cn: "队伍不同元素数量",
+                en: "Different Element Count",
+            ),
             config: ItemConfigType::Int { min: 1, max: 4, default: 4 }
         }
     ]);

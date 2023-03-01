@@ -6,6 +6,7 @@ use crate::character::macros::{damage_enum, damage_ratio, skill_map, skill_type}
 use crate::character::skill_config::CharacterSkillConfig;
 use crate::character::traits::{CharacterSkillMap, CharacterSkillMapItem, CharacterTrait};
 use crate::common::{ChangeAttribute, Element, SkillType, WeaponType};
+use crate::common::i18n::{locale, hit_n_dmg, plunging_dmg, charged_dmg};
 use crate::common::item_config_type::{ItemConfig, ItemConfigType};
 use crate::damage::damage_builder::DamageBuilder;
 use crate::damage::DamageContext;
@@ -98,7 +99,6 @@ impl CharacterTrait for Wanderer {
     const STATIC_DATA: CharacterStaticData = CharacterStaticData {
         name: CharacterName::Wanderer,
         internal_name: "Wanderer",
-        chs: "流浪者",
         element: Element::Anemo,
         hp: [791, 2053, 2731, 4086, 4568, 5256, 5899, 6593, 7076, 7777, 8259, 8968, 9450, 10164],
         atk: [26, 66, 88, 132, 147, 169, 190, 213, 228, 251, 266, 289, 305, 328],
@@ -106,9 +106,22 @@ impl CharacterTrait for Wanderer {
         sub_stat: CharacterSubStatFamily::CriticalRate192,
         weapon_type: WeaponType::Catalyst,
         star: 5,
-        skill_name1: "普通攻击·行幡鸣弦",
-        skill_name2: "羽画·风姿华歌",
-        skill_name3: "狂言·式乐五番",
+        skill_name1: locale!(
+            zh_cn: "普通攻击·行幡鸣弦",
+            en: "Normal Attack: Yuuban Meigen",
+        ),
+        skill_name2: locale!(
+            zh_cn: "羽画·风姿华歌",
+            en: "Hanega: Fushi Kakka",
+        ),
+        skill_name3: locale!(
+            zh_cn: "狂言·式乐五番",
+            en: "Kyougen: Shikiraku Gobandate",
+        ),
+        name_locale: locale!(
+            zh_cn: "流浪者",
+            en: "Wanderer",
+        )
     };
     type SkillType = WandererSkillType;
     const SKILL: Self::SkillType = WANDERER_SKILL;
@@ -119,25 +132,25 @@ impl CharacterTrait for Wanderer {
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: skill_map!(
             WandererDamageEnum
-            Normal1 "一段伤害"
-            Normal2 "二段伤害"
-            Normal3 "三段伤害/2"
-            Normal1C6 "一段六命额外"
-            Normal2C6 "二段六命额外"
-            Normal3C6 "三段六命额外"
-            Charged1 "重击伤害"
-            Dash1 "「梦迹一风」风矢伤害"
-            Plunging1 "下坠期间伤害"
-            Plunging2 "低空坠地冲击伤害"
-            Plunging3 "高空坠地冲击伤害"
+            Normal1 hit_n_dmg!(1)
+            Normal2 hit_n_dmg!(2)
+            Normal3 locale!(zh_cn: "三段伤害/2", en: "2-Hit DMG/2")
+            Normal1C6 locale!(zh_cn: "一段六命额外", en: "C6 Additional 1")
+            Normal2C6 locale!(zh_cn: "二段六命额外", en: "C6 Additional 2")
+            Normal3C6 locale!(zh_cn: "三段六命额外", en: "C6 Additional 3")
+            Charged1 charged_dmg!()
+            Dash1 locale!(zh_cn: "「梦迹一风」风矢伤害", en: "Gales of Reverie Wind Arrow DMG")
+            Plunging1 plunging_dmg!(1)
+            Plunging2 plunging_dmg!(2)
+            Plunging3 plunging_dmg!(3)
         ),
         skill2: skill_map!(
             WandererDamageEnum
-            E1 "技能伤害"
+            E1 locale!(zh_cn: "技能伤害", en: "Skill DMG")
         ),
         skill3: skill_map!(
             WandererDamageEnum
-            Q1 "技能伤害/5"
+            Q1 locale!(zh_cn: "技能伤害/5", en: "Skill DMG/5")
         ),
     };
 
@@ -145,12 +158,18 @@ impl CharacterTrait for Wanderer {
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "e_pyro",
-            title: "c52",
+            title: locale!(
+                zh_cn: "「拾玉得花」染火",
+                en: "Jade-Claimed Flower Pyro",
+            ),
             config: ItemConfigType::Bool { default: false },
         },
         ItemConfig {
             name: "e_cryo",
-            title: "c53",
+            title: locale!(
+                zh_cn: "「拾玉得花」染冰",
+                en: "Jade-Claimed Flower Cryo"
+            ),
             config: ItemConfigType::Bool { default: false },
         },
     ]);
@@ -159,17 +178,26 @@ impl CharacterTrait for Wanderer {
     const CONFIG_SKILL: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "e_enabled",
-            title: "c50",
+            title: locale!(
+                zh_cn: "处于「优风倾姿」状态",
+                en: "Under Windfavored State"
+            ),
             config: ItemConfigType::Bool { default: true },
         },
         ItemConfig {
             name: "e_hydro",
-            title: "c51",
+            title: locale!(
+                zh_cn: "「拾玉得花」染水",
+                en: "Jade-Claimed Flower Hydro",
+            ),
             config: ItemConfigType::Bool { default: false },
         },
         ItemConfig {
             name: "sdpoints",
-            title: "c54",
+            title: locale!(
+                zh_cn: "等效「空居力」",
+                en: "Kuugoryoku Points"
+            ),
             config: ItemConfigType::Float { min: 0.0, max: 120.0, default: 50.0 },
         },
     ]);

@@ -15,6 +15,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct RazorSkillType {
     pub normal_dmg1: [f64; 15],
@@ -55,7 +56,6 @@ pub const RAZOR_SKILL: RazorSkillType = RazorSkillType {
 pub const RAZOR_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Razor,
     internal_name: "Razor",
-    chs: "雷泽",
     element: Element::Electro,
     hp: [1003, 2577, 3326, 4982, 5514, 6343, 7052, 7881, 8413, 9241, 9773, 10602, 11134, 11962],
     atk: [20, 50, 65, 97, 108, 124, 138, 154, 164, 180, 191, 207, 217, 234],
@@ -63,9 +63,22 @@ pub const RAZOR_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::Bonus300(StatName::PhysicalBonus),
     weapon_type: WeaponType::Claymore,
     star: 4,
-    skill_name1: "普通攻击·钢脊",
-    skill_name2: "利爪与苍雷",
-    skill_name3: "雷牙"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·钢脊",
+        en: "Normal Attack: Steel Fang",
+    ),
+    skill_name2: locale!(
+        zh_cn: "利爪与苍雷",
+        en: "Claw and Thunder",
+    ),
+    skill_name3: locale!(
+        zh_cn: "雷牙",
+        en: "Lightning Fang",
+    ),
+    name_locale: locale!(
+        zh_cn: "雷泽",
+        en: "Razor",
+    )
 };
 
 pub struct RazorEffect {
@@ -162,26 +175,26 @@ impl CharacterTrait for Razor {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: RazorDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: RazorDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: RazorDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: RazorDamageEnum::Normal4 as usize, chs: "四段伤害" },
-            CharacterSkillMapItem { index: RazorDamageEnum::Charged1 as usize, chs: "重击循环伤害" },
-            CharacterSkillMapItem { index: RazorDamageEnum::Charged2 as usize, chs: "重击终结伤害" },
-            CharacterSkillMapItem { index: RazorDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: RazorDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: RazorDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: RazorDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: RazorDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: RazorDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: RazorDamageEnum::Normal4 as usize, text: hit_n_dmg!(4) },
+            CharacterSkillMapItem { index: RazorDamageEnum::Charged1 as usize, text: charged_dmg!("loop1") },
+            CharacterSkillMapItem { index: RazorDamageEnum::Charged2 as usize, text: charged_dmg!("loop2") },
+            CharacterSkillMapItem { index: RazorDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: RazorDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: RazorDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: RazorDamageEnum::E1 as usize, chs: "点按技能伤害" },
-            CharacterSkillMapItem { index: RazorDamageEnum::E2 as usize, chs: "长按技能伤害" },
+            CharacterSkillMapItem { index: RazorDamageEnum::E1 as usize, text: locale!(zh_cn: "点按技能伤害", en: "Tapping Skill DMG") },
+            CharacterSkillMapItem { index: RazorDamageEnum::E2 as usize, text: locale!(zh_cn: "长按技能伤害", en: "Hold Skill DMG") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: RazorDamageEnum::Q1 as usize, chs: "爆发伤害" },
-            CharacterSkillMapItem { index: RazorDamageEnum::QNormal1 as usize, chs: "狼魂-一段伤害" },
-            CharacterSkillMapItem { index: RazorDamageEnum::QNormal2 as usize, chs: "狼魂-二段伤害" },
-            CharacterSkillMapItem { index: RazorDamageEnum::QNormal3 as usize, chs: "狼魂-三段伤害" },
-            CharacterSkillMapItem { index: RazorDamageEnum::QNormal4 as usize, chs: "狼魂-四段伤害" },
+            CharacterSkillMapItem { index: RazorDamageEnum::Q1 as usize, text: locale!(zh_cn: "爆发伤害", en: "Burst DMG") },
+            CharacterSkillMapItem { index: RazorDamageEnum::QNormal1 as usize, text: locale!(zh_cn: "狼魂-一段伤害", en: "Soul Companion 1-Hit DMG") },
+            CharacterSkillMapItem { index: RazorDamageEnum::QNormal2 as usize, text: locale!(zh_cn: "狼魂-二段伤害", en: "Soul Companion 2-Hit DMG") },
+            CharacterSkillMapItem { index: RazorDamageEnum::QNormal3 as usize, text: locale!(zh_cn: "狼魂-三段伤害", en: "Soul Companion 3-Hit DMG") },
+            CharacterSkillMapItem { index: RazorDamageEnum::QNormal4 as usize, text: locale!(zh_cn: "狼魂-四段伤害", en: "Soul Companion 4-Hit DMG") },
         ])
     };
 
@@ -189,12 +202,18 @@ impl CharacterTrait for Razor {
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "e_stack",
-            title: "c15",
+            title: locale!(
+                zh_cn: "雷之印层数",
+                en: "Electro Sigil Count"
+            ),
             config: ItemConfigType::Float { min: 0.0, max: 3.0, default: 0.0 }
         },
         ItemConfig {
             name: "talent2_ratio",
-            title: "c16",
+            title: locale!(
+                zh_cn: "天赋「饥饿」应用比例",
+                en: "Talent「Hunger」Apply Ratio",
+            ),
             config: ItemConfig::RATE01_TYPE
         }
     ]);

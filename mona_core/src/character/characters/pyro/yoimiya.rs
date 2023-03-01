@@ -15,6 +15,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct YoimiyaSkill {
     pub normal_dmg1: [f64; 15],
@@ -55,7 +56,6 @@ pub const YOIMIYA_SKILL: YoimiyaSkill = YoimiyaSkill {
 pub const YOIMIYA_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Yoimiya,
     internal_name: "Yoimiya",
-    chs: "宵宫",
     element: Element::Pyro,
     hp: [791, 2053, 2731, 4086, 4568, 5256, 5899, 6593, 7075, 7777, 8259, 8968, 9450, 10164],
     atk: [25, 65, 87, 130, 145, 167, 187, 209, 225, 247, 262, 285, 300, 323],
@@ -63,9 +63,22 @@ pub const YOIMIYA_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::CriticalRate192,
     weapon_type: WeaponType::Bow,
     star: 5,
-    skill_name1: "普通攻击·烟火打扬",
-    skill_name2: "焰硝庭火舞",
-    skill_name3: "琉金云间草"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·烟火打扬",
+        en: "Normal Attack: Firework Flare-Up",
+    ),
+    skill_name2: locale!(
+        zh_cn: "焰硝庭火舞",
+        en: "Niwabi Fire-Dance",
+    ),
+    skill_name3: locale!(
+        zh_cn: "琉金云间草",
+        en: "Ryuukin Saxifrage",
+    ),
+    name_locale: locale!(
+        zh_cn: "宵宫",
+        en: "Yoimiya",
+    )
 };
 
 pub struct YoimiyaEffect {
@@ -161,22 +174,22 @@ impl CharacterTrait for Yoimiya {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: YoimiyaDamageEnum::Normal1 as usize, chs: "一段伤害/2" },
-            CharacterSkillMapItem { index: YoimiyaDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: YoimiyaDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: YoimiyaDamageEnum::Normal4 as usize, chs: "四段伤害/2" },
-            CharacterSkillMapItem { index: YoimiyaDamageEnum::Normal5 as usize, chs: "五段伤害" },
-            CharacterSkillMapItem { index: YoimiyaDamageEnum::Charged1 as usize, chs: "瞄准射击" },
-            CharacterSkillMapItem { index: YoimiyaDamageEnum::Charged2 as usize, chs: "满蓄力瞄准射击" },
-            CharacterSkillMapItem { index: YoimiyaDamageEnum::Charged3 as usize, chs: "焰硝矢伤害" },
-            CharacterSkillMapItem { index: YoimiyaDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: YoimiyaDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: YoimiyaDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: YoimiyaDamageEnum::Normal1 as usize, text: locale!(zh_cn: "一段伤害/2", en: "1-Hit DMG/2") },
+            CharacterSkillMapItem { index: YoimiyaDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: YoimiyaDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: YoimiyaDamageEnum::Normal4 as usize, text: locale!(zh_cn: "四段伤害/2", en: "4-Hit DMG/2") },
+            CharacterSkillMapItem { index: YoimiyaDamageEnum::Normal5 as usize, text: hit_n_dmg!(5) },
+            CharacterSkillMapItem { index: YoimiyaDamageEnum::Charged1 as usize, text: charged_dmg!("shoot1") },
+            CharacterSkillMapItem { index: YoimiyaDamageEnum::Charged2 as usize, text: charged_dmg!("shoot2") },
+            CharacterSkillMapItem { index: YoimiyaDamageEnum::Charged3 as usize, text: locale!(zh_cn: "焰硝矢伤害", en: "Kindling Arrow DMG") },
+            CharacterSkillMapItem { index: YoimiyaDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: YoimiyaDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: YoimiyaDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: None,
         skill3: Some(&[
-            CharacterSkillMapItem { index: YoimiyaDamageEnum::Q1 as usize, chs: "技能伤害" },
-            CharacterSkillMapItem { index: YoimiyaDamageEnum::Q2 as usize, chs: "琉金火光爆炸伤害" },
+            CharacterSkillMapItem { index: YoimiyaDamageEnum::Q1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") },
+            CharacterSkillMapItem { index: YoimiyaDamageEnum::Q2 as usize, text: locale!(zh_cn: "琉金火光爆炸伤害", en: "Aurous Blaze Explosion DMG") },
         ])
     };
 
@@ -184,7 +197,10 @@ impl CharacterTrait for Yoimiya {
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "talent1_level",
-            title: "c18",
+            title: locale!(
+                zh_cn: "天赋「袖火百景图」应用层数",
+                en: "Talent「Tricks of the Trouble-Maker」Apply Ratio",
+            ),
             config: ItemConfigType::Float { min: 0.0, max: 10.0, default: 8.0 }
         }
     ]);
@@ -193,7 +209,10 @@ impl CharacterTrait for Yoimiya {
     const CONFIG_SKILL: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "after_e",
-            title: "c19",
+            title: locale!(
+                zh_cn: "庭火焰硝",
+                en: "Niwabi Enshou"
+            ),
             config: ItemConfigType::Bool { default: true }
         }
     ]);

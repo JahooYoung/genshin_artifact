@@ -42,17 +42,41 @@ impl ArtifactTrait for GildedDreams {
     const META_DATA: ArtifactMetaData = ArtifactMetaData {
         name: ArtifactSetName::GildedDreams,
         name_mona: "GildedDreams",
-        chs: "",
-        flower: Some("梦中的铁花"),
-        feather: Some("裁断的翎羽"),
-        sand: Some("沉金的岁月"),
-        goblet: Some("如蜜的终宴"),
-        head: Some("沙王的投影"),
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "饰金之梦",
+            en: "Gilded Dreams",
+        ),
+        flower: Some(crate::common::i18n::locale!(
+            zh_cn: "梦中的铁花",
+            en: "Dreaming Steelbloom",
+        )),
+        feather: Some(crate::common::i18n::locale!(
+            zh_cn: "裁断的翎羽",
+            en: "Feather of Judgment",
+        )),
+        sand: Some(crate::common::i18n::locale!(
+            zh_cn: "沉金的岁月",
+            en: "The Sunken Years",
+        )),
+        goblet: Some(crate::common::i18n::locale!(
+            zh_cn: "如蜜的终宴",
+            en: "Honeyed Final Feast",
+        )),
+        head: Some(crate::common::i18n::locale!(
+            zh_cn: "沙王的投影",
+            en: "Shadow of the Sand King",
+        )),
         star: (4, 5),
         effect1: None,
-        effect2: Some(""),
+        effect2: Some(crate::common::i18n::locale!(
+            zh_cn: "元素精通提高80点。",
+            en: "Elemental Mastery +80.",
+        )),
         effect3: None,
-        effect4: Some(""),
+        effect4: Some(crate::common::i18n::locale!(
+            zh_cn: "触发元素反应后的8秒内，会根据队伍内其他角色的元素类型，使装备者获得强化：队伍中每存在1个和装备者同类元素的角色，攻击力提升14%；每存在1个和装备者不同元素类型的角色，元素精通提升50点。上述每类效果至多计算3个角色。该效果每8秒至多触发一次。装备者处于队伍后台时，依然能触发该效果。",
+            en: "Within 8s of triggering an Elemental Reaction, the character equipping this will obtain buffs based on the Elemental Type of the other party members. ATK is increased by 14% for each party member whose Elemental Type is the same as the equipping character, and Elemental Mastery is increased by 50 for every party member with a different Elemental Type. Each of the aforementioned buffs will count up to 3 characters. This effect can be triggered once every 8s. The character who equips this can still trigger its effects when not on the field.",
+        )),
         effect5: None,
         internal_id: 15026,
     };
@@ -61,17 +85,26 @@ impl ArtifactTrait for GildedDreams {
     const CONFIG4: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "same_count",
-            title: "a14",
+            title: crate::common::i18n::locale!(
+                zh_cn: "同元素角色数",
+                en: "Same Element Count",
+            ),
             config: ItemConfigType::Int { min: 0, max: 3, default: 0 }
         },
         ItemConfig {
             name: "diff_count",
-            title: "a15",
+            title: crate::common::i18n::locale!(
+                zh_cn: "不同元素角色数",
+                en: "Different Element Count",
+            ),
             config: ItemConfigType::Int { min: 0, max: 3, default: 0 }
         },
         ItemConfig {
             name: "rate",
-            title: "a2",
+            title: crate::common::i18n::locale!(
+                zh_cn: "效果应用比例",
+                en: "Effect Apply Ratio",
+            ),
             config: ItemConfigType::Float { min: 0.0, max: 1.0, default: 0.0 }
         }
     ]);

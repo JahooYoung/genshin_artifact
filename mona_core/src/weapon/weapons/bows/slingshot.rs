@@ -1,5 +1,6 @@
 use crate::attribute::{Attribute, AttributeName};
 use crate::character::character_common_data::CharacterCommonData;
+use crate::common::i18n::locale;
 use crate::common::item_config_type::{ItemConfig, ItemConfigType};
 use crate::common::WeaponType;
 use crate::weapon::weapon_common_data::WeaponCommonData;
@@ -46,16 +47,25 @@ impl WeaponTrait for Slingshot {
         weapon_base: WeaponBaseATKFamily::ATK354,
         star: 3,
         #[cfg(not(target_family = "wasm"))]
-        effect: Some("弹弓：普通攻击和瞄准射击时，箭矢若在发射后的0.3秒内击中敌人，则造成的伤害增加36%/42%/48%/54%/60%；否则，造成的伤害下降10%。"),
+        effect: Some(crate::common::i18n::locale!(
+            zh_cn: "普通攻击与重击的箭矢若在发射后的0.3秒内击中敌人，则造成的伤害增加<span style=\"color: #409EFF;\">36%-42%-48%-54%-60%</span>；否则，造成的伤害下降10%。",
+            en: "If a Normal or Charged Attack hits a target within 0.3s of being fired, increases DMG by <span style=\"color: #409EFF;\">36%-42%-48%-54%-60%</span>. Otherwise, decreases DMG by 10%."
+        )),
         #[cfg(not(target_family = "wasm"))]
-        chs: "弹弓"
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "弹弓",
+            en: "Slingshot"
+        )
     };
 
     #[cfg(not(target_family = "wasm"))]
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "is_effect",
-            title: "w12",
+            title: locale!(
+                zh_cn: "0.3秒内命中",
+                en: "Hit in 0.3s",
+            ),
             config: ItemConfigType::Bool { default: true }
         },
         ItemConfig::RATE01

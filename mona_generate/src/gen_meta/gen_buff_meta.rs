@@ -4,10 +4,12 @@ use askama::Template;
 use mona::artifacts::artifact_trait::ArtifactMetaData;
 use mona::character::CharacterStaticData;
 use mona::weapon::weapon_static_data::WeaponStaticData;
+use crate::gen_meta::gen_locale::get_index_mapping;
+use crate::utils::config_to_json;
 
 struct BuffMeta {
     name: String,
-    chs: String,
+    name_locale: usize,
     image: String,
     // character | misc | weapon | artifact
     image_type: String,
@@ -17,7 +19,7 @@ struct BuffMeta {
     artifact_internal_name: String,
     genre: String,
     config: Vec<String>,
-    description: String,
+    description: Option<usize>,
 }
 
 #[derive(Template)]
@@ -51,21 +53,22 @@ fn convert_image(i: &BuffImage) -> String {
 
 pub fn gen_buff_meta_as_js_file() -> String {
     let mut data: Vec<BuffMeta> = Vec::new();
+    let index_map = get_index_mapping();
 
     for i in 0_usize..BuffName::LEN {
         let e: BuffName = num::FromPrimitive::from_usize(i).unwrap();
 
         let meta: BuffMetaData = e.get_meta();
         let config = if let Some(x) = e.get_config() {
-            x.iter().map(|c| c.to_json()).collect()
+            x.iter().map(|c| config_to_json(&c)).collect()
         } else {
             Vec::new()
         };
 
-        let description = if let Some(x) = meta.description {
-            String::from(x)
+        let description = if let Some(ref x) = meta.description {
+            Some(*index_map.get(x).unwrap())
         } else {
-            String::new()
+            None
         };
 
         let image_type = if let BuffImage::Avatar(_) = meta.image {
@@ -80,7 +83,7 @@ pub fn gen_buff_meta_as_js_file() -> String {
 
         data.push(BuffMeta {
             name: meta.name.to_string(),
-            chs: String::from(meta.chs),
+            name_locale: *index_map.get(&meta.name_locale).unwrap(),
             image: convert_image(&meta.image),
             image_type,
             character_internal_name: if let BuffImage::Avatar(c) = meta.image {

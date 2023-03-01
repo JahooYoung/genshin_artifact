@@ -15,6 +15,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct SangonomiyaKokomiSkillType {
     pub normal_dmg1: [f64; 15],
@@ -59,7 +60,6 @@ pub const SANGONOMIYA_KOKOMI_SKILL: SangonomiyaKokomiSkillType = SangonomiyaKoko
 pub const SANGONOMIYA_KOKOMI_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::SangonomiyaKokomi,
     internal_name: "Kokomi",
-    chs: "珊瑚宫心海",
     element: Element::Hydro,
     hp: [1049, 2720, 3619, 5416, 6055, 6966, 7818, 8738, 9377, 10306, 10945, 11885, 12524, 13471],
     atk: [18, 47, 63, 94, 105, 121, 136, 152, 163, 179, 190, 207, 218, 234],
@@ -67,9 +67,22 @@ pub const SANGONOMIYA_KOKOMI_STATIC_DATA: CharacterStaticData = CharacterStaticD
     sub_stat: CharacterSubStatFamily::Bonus288(StatName::HydroBonus),
     weapon_type: WeaponType::Catalyst,
     star: 5,
-    skill_name1: "普通攻击•水有常形",
-    skill_name2: "海月之誓",
-    skill_name3: "海人化羽"
+    skill_name1: locale!(
+        zh_cn: "普通攻击•水有常形",
+        en: "Normal Attack: The Shape of Water",
+    ),
+    skill_name2: locale!(
+        zh_cn: "海月之誓",
+        en: "Kurage's Oath",
+    ),
+    skill_name3: locale!(
+        zh_cn: "海人化羽",
+        en: "Nereid's Ascension",
+    ),
+    name_locale: locale!(
+        zh_cn: "珊瑚宫心海",
+        en: "Sangonomiya Kokomi",
+    )
 };
 
 pub struct SangonomiyaKokomiEffect;
@@ -146,21 +159,21 @@ impl CharacterTrait for SangonomiyaKokomi {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::Charged as usize, chs: "重击伤害" },
-            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::Charged as usize, text: charged_dmg!() },
+            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::E1 as usize, chs: "波纹伤害" },
-            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::EHeal1 as usize, chs: "治疗量" },
+            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::E1 as usize, text: locale!(zh_cn: "波纹伤害", en: "Ripple DMG") },
+            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::EHeal1 as usize, text: locale!(zh_cn: "治疗量", en: "Regeneration") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::Q1 as usize, chs: "技能伤害" },
-            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::QHeal1 as usize, chs: "命中治疗量" },
+            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::Q1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") },
+            CharacterSkillMapItem { index: SangonomiyaKokomiDamageEnum::QHeal1 as usize, text: locale!(zh_cn: "命中治疗量", en: "HP Regeneration Per Hit") },
         ])
     };
 
@@ -168,7 +181,10 @@ impl CharacterTrait for SangonomiyaKokomi {
     const CONFIG_SKILL: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "after_q",
-            title: "c30",
+            title: locale!(
+                zh_cn: "「仪来羽衣」状态",
+                en: "Under 「Ceremonial Garment」",
+            ),
             config: ItemConfigType::Bool { default: true }
         }
     ]);

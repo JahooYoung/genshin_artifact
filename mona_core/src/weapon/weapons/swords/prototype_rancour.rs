@@ -46,16 +46,22 @@ impl WeaponTrait for PrototypeRancour {
         weapon_base: WeaponBaseATKFamily::ATK565,
         star: 4,
         #[cfg(not(target_family = "wasm"))]
-        effect: Some("碎石：普通攻击或重击命中时，攻击力（原为基础攻击力）和防御力提高4%/5%/6%/7%/8%，持续6秒，最多叠加4层。该效果每0.3秒只能触发一次。"),
+        effect: Some(crate::common::i18n::locale!(
+            zh_cn: "普通攻击或重击命中时，攻击力和防御力提高<span style=\"color: #409EFF;\">4%-5%-6%-7%-8%</span>，持续6秒，最多叠加4层。该效果每0.3秒只能触发一次。",
+            en: "On hit, Normal or Charged Attacks increase ATK and DEF by <span style=\"color: #409EFF;\">4%-5%-6%-7%-8%</span> for 6s. Max 4 stacks. This effect can only occur once every 0.3s."
+        )),
         #[cfg(not(target_family = "wasm"))]
-        chs: "试作斩岩"
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "试作斩岩",
+            en: "Prototype Rancour"
+        )
     };
 
     #[cfg(not(target_family = "wasm"))]
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "stack",
-            title: "w1",
+            title: ItemConfig::DEFAULT_STACK_TITLE,
             config: ItemConfigType::Float {
                 min: 0.0,
                 max: 4.0,

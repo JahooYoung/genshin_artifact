@@ -26,8 +26,14 @@ impl TargetFunctionMetaTrait for KleeDefaultTargetFunction {
     #[cfg(not(target_family = "wasm"))]
     const META_DATA: TargetFunctionMeta = TargetFunctionMeta {
         name: TargetFunctionName::KleeDefault,
-        chs: "可莉-逃跑的太阳",
-        description: "可莉火伤输出",
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "可莉-逃跑的太阳",
+            en: "Klee-Fleeing Sunlight"
+        ),
+        description: crate::common::i18n::locale!(
+            zh_cn: "可莉火伤输出",
+            en: "Pyro DPS Klee"
+        ),
         tags: "输出",
         four: TargetFunctionFor::SomeWho(CharacterName::Klee),
         image: TargetFunctionMetaImage::Avatar
@@ -37,7 +43,10 @@ impl TargetFunctionMetaTrait for KleeDefaultTargetFunction {
     const CONFIG: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "recharge_demand",
-            title: "t4",
+            title: crate::common::i18n::locale!(
+                zh_cn: "充能需求",
+                en: "Recharge Requirement",
+            ),
             config: ItemConfigType::Float { min: 1.0, max: 3.0, default: 1.0 }
         }
     ]);

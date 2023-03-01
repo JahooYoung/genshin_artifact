@@ -14,6 +14,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct MonaSkillType {
     pub normal_dmg1: [f64; 15],
@@ -50,7 +51,6 @@ pub const MONA_SKILL: MonaSkillType = MonaSkillType {
 pub const MONA_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Mona,
     internal_name: "Mona",
-    chs: "莫娜",
     element: Element::Hydro,
     hp: [810, 2102, 2797, 4185, 4678, 5383, 6041, 6752, 7246, 7964, 8458, 9184, 9677, 10409],
     atk: [22, 58, 77, 115, 129, 148, 167, 186, 200, 220, 233, 253, 267, 287],
@@ -58,9 +58,22 @@ pub const MONA_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::Recharge320,
     weapon_type: WeaponType::Catalyst,
     star: 5,
-    skill_name1: "普通攻击·因果点破",
-    skill_name2: "水中幻愿",
-    skill_name3: "星命定轨"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·因果点破",
+        en: "Normal Attack: Ripple of Fate",
+    ),
+    skill_name2: locale!(
+        zh_cn: "水中幻愿",
+        en: "Mirror Reflection of Doom",
+    ),
+    skill_name3: locale!(
+        zh_cn: "星命定轨",
+        en: "Stellaris Phantasm",
+    ),
+    name_locale: locale!(
+        zh_cn: "莫娜",
+        en: "Mona",
+    )
 };
 
 pub struct MonaEffect {
@@ -142,21 +155,21 @@ impl CharacterTrait for Mona {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: MonaDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: MonaDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: MonaDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: MonaDamageEnum::Normal4 as usize, chs: "四段伤害" },
-            CharacterSkillMapItem { index: MonaDamageEnum::Charged as usize, chs: "重击伤害" },
-            CharacterSkillMapItem { index: MonaDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: MonaDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: MonaDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: MonaDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: MonaDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: MonaDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: MonaDamageEnum::Normal4 as usize, text: hit_n_dmg!(4) },
+            CharacterSkillMapItem { index: MonaDamageEnum::Charged as usize, text: charged_dmg!() },
+            CharacterSkillMapItem { index: MonaDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: MonaDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: MonaDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: MonaDamageEnum::E1 as usize, chs: "持续伤害" },
-            CharacterSkillMapItem { index: MonaDamageEnum::E2 as usize, chs: "爆裂伤害" },
+            CharacterSkillMapItem { index: MonaDamageEnum::E1 as usize, text: locale!(zh_cn: "持续伤害", en: "DoT") },
+            CharacterSkillMapItem { index: MonaDamageEnum::E2 as usize, text: locale!(zh_cn: "爆裂伤害", en: "Explosion DMG") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: MonaDamageEnum::Q1 as usize, chs: "泡影破裂伤害" }
+            CharacterSkillMapItem { index: MonaDamageEnum::Q1 as usize, text: locale!(zh_cn: "泡影破裂伤害", en: "Illusory Bubble Explosion DMG") }
         ])
     };
 

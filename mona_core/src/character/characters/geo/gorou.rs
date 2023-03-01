@@ -14,6 +14,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct GorouSkillType {
     pub normal_dmg1: [f64; 15],
@@ -52,7 +53,6 @@ pub const GOROU_SKILL: GorouSkillType = GorouSkillType {
 pub const GOROU_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Gorou,
     internal_name: "Gorou",
-    chs: "五郎",
     element: Element::Geo,
     hp: [802, 2061, 2661, 3985, 4411, 5074, 5642, 6305, 6731, 7393, 7818, 8481, 8907, 9570],
     atk: [15, 39, 51, 76, 84, 97, 108, 120, 128, 141, 149, 162, 170, 183],
@@ -60,9 +60,22 @@ pub const GOROU_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::Bonus240(StatName::GeoBonus),
     weapon_type: WeaponType::Bow,
     star: 4,
-    skill_name1: "普通攻击•呲牙裂扇箭",
-    skill_name2: "犬坂吠吠方圆阵",
-    skill_name3: "兽牙逐突形胜战法"
+    skill_name1: locale!(
+        zh_cn: "普通攻击•呲牙裂扇箭",
+        en: "Normal Attack: Ripping Fang Fletching",
+    ),
+    skill_name2: locale!(
+        zh_cn: "犬坂吠吠方圆阵",
+        en: "Inuzaka All-Round Defense",
+    ),
+    skill_name3: locale!(
+        zh_cn: "兽牙逐突形胜战法",
+        en: "Juuga: Forward Unto Victory",
+    ),
+    name_locale: locale!(
+        zh_cn: "五郎",
+        en: "Gorou",
+    )
 };
 
 pub struct Gorou;
@@ -126,22 +139,22 @@ impl CharacterTrait for Gorou {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: GorouDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: GorouDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: GorouDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: GorouDamageEnum::Normal4 as usize, chs: "四段伤害" },
-            CharacterSkillMapItem { index: GorouDamageEnum::Charged1 as usize, chs: "瞄准射击" },
-            CharacterSkillMapItem { index: GorouDamageEnum::Charged2 as usize, chs: "满蓄力瞄准射击" },
-            CharacterSkillMapItem { index: GorouDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: GorouDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: GorouDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: GorouDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: GorouDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: GorouDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: GorouDamageEnum::Normal4 as usize, text: hit_n_dmg!(4) },
+            CharacterSkillMapItem { index: GorouDamageEnum::Charged1 as usize, text: charged_dmg!("shoot1") },
+            CharacterSkillMapItem { index: GorouDamageEnum::Charged2 as usize, text: charged_dmg!("shoot2") },
+            CharacterSkillMapItem { index: GorouDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: GorouDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: GorouDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: GorouDamageEnum::E1 as usize, chs: "技能伤害" },
+            CharacterSkillMapItem { index: GorouDamageEnum::E1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: GorouDamageEnum::Q1 as usize, chs: "技能伤害" },
-            CharacterSkillMapItem { index: GorouDamageEnum::Q2 as usize, chs: "岩晶崩破伤害" },
+            CharacterSkillMapItem { index: GorouDamageEnum::Q1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") },
+            CharacterSkillMapItem { index: GorouDamageEnum::Q2 as usize, text: locale!(zh_cn: "岩晶崩破伤害", en: "Crystal Collapse DMG") },
         ])
     };
 

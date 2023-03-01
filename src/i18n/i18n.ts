@@ -1,6 +1,6 @@
-import inlineLocale from "./locales/zh-cn"
+// @ts-ignore
+import inlineLocale from "./zh-cn.i18n"
 import {pathAccess} from "@/utils/common"
-
 
 export function createI18n() {
     const locale = ref("zh-cn")
@@ -25,6 +25,13 @@ export function createI18n() {
         }
     }
 
+    function ta(index: number | undefined | null): string {
+        if (index === undefined || index === null) {
+            return ""
+        }
+        return t("a", index)
+    }
+
     async function setLocale(name: string) {
         await setLocaleMessage(name)
         locale.value = name
@@ -34,7 +41,7 @@ export function createI18n() {
         if (!messages[name]) {
             const message = await import(
                 /* webpackChunkName: "locale-[request]" */
-                `./locales/${name}`
+                `./${name}.i18n`
                 )
             messages[name] = message.default
         }
@@ -44,6 +51,7 @@ export function createI18n() {
         locale,
 
         t,
+        ta,
         setLocale,
     }
 }

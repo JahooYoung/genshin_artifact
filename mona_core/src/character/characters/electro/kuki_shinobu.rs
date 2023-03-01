@@ -9,6 +9,7 @@ use crate::character::character_sub_stat::CharacterSubStatFamily;
 use crate::character::skill_config::CharacterSkillConfig;
 use crate::character::traits::{CharacterSkillMap, CharacterSkillMapItem, CharacterTrait};
 use crate::common::{ChangeAttribute, Element, SkillType, WeaponType};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 use crate::common::item_config_type::{ItemConfig, ItemConfigType};
 use crate::damage::damage_builder::DamageBuilder;
 use crate::damage::DamageContext;
@@ -141,7 +142,6 @@ impl CharacterTrait for KukiShinobu {
     const STATIC_DATA: CharacterStaticData = CharacterStaticData {
         name: CharacterName::KukiShinobu,
         internal_name: "Shinobu",
-        chs: "久岐忍",
         element: Element::Electro,
         hp: [1030, 2647, 3417, 5118, 5665, 6516, 7245, 8096, 8643, 9493, 10040, 10891, 11438, 12289],
         atk: [18, 46, 59, 88, 98, 113, 125, 140, 149, 164, 174, 188, 198, 212],
@@ -149,9 +149,22 @@ impl CharacterTrait for KukiShinobu {
         sub_stat: CharacterSubStatFamily::HP240,
         weapon_type: WeaponType::Sword,
         star: 4,
-        skill_name1: "普通攻击·忍流飞刃斩",
-        skill_name2: "越祓雷草之轮",
-        skill_name3: "御咏鸣神刈山祭",
+        skill_name1: locale!(
+            zh_cn: "普通攻击·忍流飞刃斩",
+            en: "Normal Attack: Shinobu's Shadowsword",
+        ),
+        skill_name2: locale!(
+            zh_cn: "越祓雷草之轮",
+            en: "Sanctifying Ring",
+        ),
+        skill_name3: locale!(
+            zh_cn: "御咏鸣神刈山祭",
+            en: "Gyoei Narukami Kariyama Rite",
+        ),
+        name_locale: locale!(
+            zh_cn: "久岐忍",
+            en: "Kuki Shinobu",
+        )
     };
     type SkillType = KukiShinobuSkillType;
     const SKILL: Self::SkillType = KUKI_SHINOBU_SKILL;
@@ -161,26 +174,26 @@ impl CharacterTrait for KukiShinobu {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Normal4 as usize, chs: "四段伤害" },
-            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Charged11 as usize, chs: "重击伤害-1" },
-            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Charged12 as usize, chs: "重击伤害-2" },
-            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Charged1 as usize, chs: "重击伤害" },
-            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Normal4 as usize, text: hit_n_dmg!(4) },
+            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Charged11 as usize, text: charged_dmg!(1) },
+            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Charged12 as usize, text: charged_dmg!(2) },
+            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Charged1 as usize, text: charged_dmg!() },
+            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: KukiShinobuDamageEnum::E1 as usize, chs: "技能伤害" },
-            CharacterSkillMapItem { index: KukiShinobuDamageEnum::EHeal1 as usize, chs: "越祓草轮治疗量" },
-            CharacterSkillMapItem { index: KukiShinobuDamageEnum::E2 as usize, chs: "越祓草轮伤害" },
+            CharacterSkillMapItem { index: KukiShinobuDamageEnum::E1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") },
+            CharacterSkillMapItem { index: KukiShinobuDamageEnum::EHeal1 as usize, text: locale!(zh_cn: "越祓草轮治疗量", en: "Grass Ring of Sanctification Healing") },
+            CharacterSkillMapItem { index: KukiShinobuDamageEnum::E2 as usize, text: locale!(zh_cn: "越祓草轮伤害", en: "Grass Ring of Sanctification DMG") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Q1 as usize, chs: "单次伤害" },
-            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Q2 as usize, chs: "总伤害" },
-            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Q3 as usize, chs: "总伤害-低血量" },
+            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Q1 as usize, text: locale!(zh_cn: "单次伤害", en: "Single Instance DMG") },
+            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Q2 as usize, text: locale!(zh_cn: "总伤害", en: "Total DMG") },
+            CharacterSkillMapItem { index: KukiShinobuDamageEnum::Q3 as usize, text: locale!(zh_cn: "总伤害-低血量", en: "Total DMG-Low HP") },
         ]),
     };
 
@@ -188,12 +201,18 @@ impl CharacterTrait for KukiShinobu {
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "hp_le_50",
-            title: "c11",
+            title: locale!(
+                zh_cn: "生命值不高于50%（天赋1：治疗加成+15%）",
+                en: "HP <= 50%(Talent1: Healing Bonus + 15%)",
+            ),
             config: ItemConfigType::Bool { default: true },
         },
         ItemConfig {
             name: "use_c6",
-            title: "c12",
+            title: locale!(
+                zh_cn: "启用六命",
+                en: "Use C6",
+            ),
             config: ItemConfigType::Bool { default: false },
         }
     ]);

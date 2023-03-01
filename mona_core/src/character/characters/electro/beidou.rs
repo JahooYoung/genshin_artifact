@@ -14,6 +14,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct BeidouSkillType {
     pub normal_dmg1: [f64; 15],
@@ -60,7 +61,6 @@ pub const BEIDOU_SKILL: BeidouSkillType = BeidouSkillType {
 const BEIDOU_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Beidou,
     internal_name: "Beidou",
-    chs: "北斗",
     element: Element::Electro,
     hp: [1094, 2811, 3628, 5435, 6015, 6919, 7694, 8597, 9178, 10081, 10662, 11565, 12146, 13050],
     atk: [19, 48, 63, 94, 104, 119, 133, 148, 158, 174, 184, 200, 210, 225],
@@ -68,9 +68,22 @@ const BEIDOU_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::Bonus240(StatName::ElectroBonus),
     weapon_type: WeaponType::Claymore,
     star: 4,
-    skill_name1: "普通攻击·征涛",
-    skill_name2: "捉浪",
-    skill_name3: "斫雷"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·征涛",
+        en: "Normal Attack: Oceanborne",
+    ),
+    skill_name2: locale!(
+        zh_cn: "捉浪",
+        en: "Tidecaller",
+    ),
+    skill_name3: locale!(
+        zh_cn: "斫雷",
+        en: "Stormbreaker",
+    ),
+    name_locale: locale!(
+        zh_cn: "北斗",
+        en: "Beidou",
+    )
 };
 
 pub struct Beidou;
@@ -137,25 +150,25 @@ impl CharacterTrait for Beidou {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: BeidouDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: BeidouDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: BeidouDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: BeidouDamageEnum::Normal4 as usize, chs: "四段伤害" },
-            CharacterSkillMapItem { index: BeidouDamageEnum::Normal5 as usize, chs: "五段伤害" },
-            CharacterSkillMapItem { index: BeidouDamageEnum::Charged1 as usize, chs: "重击循环伤害" },
-            CharacterSkillMapItem { index: BeidouDamageEnum::Charged2 as usize, chs: "重击终结伤害" },
-            CharacterSkillMapItem { index: BeidouDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: BeidouDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: BeidouDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: BeidouDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: BeidouDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: BeidouDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: BeidouDamageEnum::Normal4 as usize, text: hit_n_dmg!(4) },
+            CharacterSkillMapItem { index: BeidouDamageEnum::Normal5 as usize, text: hit_n_dmg!(5) },
+            CharacterSkillMapItem { index: BeidouDamageEnum::Charged1 as usize, text: charged_dmg!("loop1") },
+            CharacterSkillMapItem { index: BeidouDamageEnum::Charged2 as usize, text: charged_dmg!("loop2") },
+            CharacterSkillMapItem { index: BeidouDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: BeidouDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: BeidouDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: BeidouDamageEnum::E1 as usize, chs: "基础伤害" },
-            CharacterSkillMapItem { index: BeidouDamageEnum::E2 as usize, chs: "一层伤害" },
-            CharacterSkillMapItem { index: BeidouDamageEnum::E3 as usize, chs: "二层伤害" },
+            CharacterSkillMapItem { index: BeidouDamageEnum::E1 as usize, text: locale!(zh_cn: "基础伤害", en: "Base DMG") },
+            CharacterSkillMapItem { index: BeidouDamageEnum::E2 as usize, text: locale!(zh_cn: "一层伤害", en: "1-Stack DMG") },
+            CharacterSkillMapItem { index: BeidouDamageEnum::E3 as usize, text: locale!(zh_cn: "二层伤害", en: "2-Stack DMG") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: BeidouDamageEnum::Q1 as usize, chs: "技能伤害" },
-            CharacterSkillMapItem { index: BeidouDamageEnum::Q2 as usize, chs: "闪电伤害" },
+            CharacterSkillMapItem { index: BeidouDamageEnum::Q1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") },
+            CharacterSkillMapItem { index: BeidouDamageEnum::Q2 as usize, text: locale!(zh_cn: "闪电伤害", en: "Lightning DMG") },
         ])
     };
 

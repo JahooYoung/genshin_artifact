@@ -15,6 +15,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct AloySkillType {
     pub normal_dmg11: [f64; 15],
@@ -63,7 +64,6 @@ pub const ALOY_SKILL: AloySkillType = AloySkillType {
 pub const ALOY_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Aloy,
     internal_name: "Aloy",
-    chs: "埃洛伊",
     element: Element::Cryo,
     hp: [848, 2201, 2928, 4382, 4899, 5636, 6325, 7070, 7587, 8339, 8856, 9616, 10133, 10899],
     atk: [18, 47, 63, 94, 105, 121, 136, 152, 163, 179, 190, 206, 217, 234],
@@ -71,9 +71,22 @@ pub const ALOY_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::Bonus288(StatName::CryoBonus),
     weapon_type: WeaponType::Bow,
     star: 5,
-    skill_name1: "普通攻击·快速射击",
-    skill_name2: "冰尘雪野",
-    skill_name3: "曙光预言"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·快速射击",
+        en: "Normal Attack: Rapid Fire",
+    ),
+    skill_name2: locale!(
+        zh_cn: "冰尘雪野",
+        en: "Frozen Wilds",
+    ),
+    skill_name3: locale!(
+        zh_cn: "曙光预言",
+        en: "Prophecies of Dawn",
+    ),
+    name_locale: locale!(
+        zh_cn: "埃洛伊",
+        en: "Aloy",
+    )
 };
 
 pub struct Aloy;
@@ -145,23 +158,23 @@ impl CharacterTrait for Aloy {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: AloyDamageEnum::Normal11 as usize, chs: "一段伤害-1" },
-            CharacterSkillMapItem { index: AloyDamageEnum::Normal12 as usize, chs: "一段伤害-2" },
-            CharacterSkillMapItem { index: AloyDamageEnum::Normal2 as usize, chs: "二段伤害-1" },
-            CharacterSkillMapItem { index: AloyDamageEnum::Normal3 as usize, chs: "三段伤害-1" },
-            CharacterSkillMapItem { index: AloyDamageEnum::Normal4 as usize, chs: "四段伤害-1" },
-            CharacterSkillMapItem { index: AloyDamageEnum::Charged1 as usize, chs: "瞄准射击" },
-            CharacterSkillMapItem { index: AloyDamageEnum::Charged2 as usize, chs: "满蓄力瞄准射击" },
-            CharacterSkillMapItem { index: AloyDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: AloyDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: AloyDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: AloyDamageEnum::Normal11 as usize, text: hit_n_dmg!(1, 1) },
+            CharacterSkillMapItem { index: AloyDamageEnum::Normal12 as usize, text: hit_n_dmg!(1, 2) },
+            CharacterSkillMapItem { index: AloyDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: AloyDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: AloyDamageEnum::Normal4 as usize, text: hit_n_dmg!(4) },
+            CharacterSkillMapItem { index: AloyDamageEnum::Charged1 as usize, text: charged_dmg!("shoot1") },
+            CharacterSkillMapItem { index: AloyDamageEnum::Charged2 as usize, text: charged_dmg!("shoot2") },
+            CharacterSkillMapItem { index: AloyDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: AloyDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: AloyDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: AloyDamageEnum::E1 as usize, chs: "冰尘弹伤害" },
-            CharacterSkillMapItem { index: AloyDamageEnum::E2 as usize, chs: "冷冻炸弹伤害" },
+            CharacterSkillMapItem { index: AloyDamageEnum::E1 as usize, text: locale!(zh_cn: "冰尘弹伤害", en: "Freeze Bomb DMG") },
+            CharacterSkillMapItem { index: AloyDamageEnum::E2 as usize, text: locale!(zh_cn: "冷冻炸弹伤害", en: "Chillwater Bomblet DMG") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: AloyDamageEnum::Q1 as usize, chs: "技能伤害" }
+            CharacterSkillMapItem { index: AloyDamageEnum::Q1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") }
         ])
     };
 
@@ -169,7 +182,10 @@ impl CharacterTrait for Aloy {
     const CONFIG_SKILL: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "coil_count",
-            title: "c20",
+            title: locale!(
+                zh_cn: "线圈层数",
+                en: "Coil Stack"
+            ),
             config: ItemConfigType::Int { min: 0, max: 4, default: 4 }
         }
     ]);

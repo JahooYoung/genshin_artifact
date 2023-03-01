@@ -14,6 +14,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct ChongyunSkillType {
     pub normal_dmg1: [f64; 15],
@@ -48,7 +49,6 @@ pub const CHONGYUN_SKILL: ChongyunSkillType = ChongyunSkillType {
 pub const CHONGYUN_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Chongyun,
     internal_name: "Chongyun",
-    chs: "重云",
     element: Element::Cryo,
     hp: [921, 2366, 3054, 4574, 5063, 5824, 6475, 7236, 7725, 8485, 8974, 9734, 10223, 10984],
     atk: [19, 48, 62, 93, 103, 118, 131, 147, 157, 172, 182, 197, 208, 223],
@@ -56,9 +56,22 @@ pub const CHONGYUN_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::ATK240,
     weapon_type: WeaponType::Claymore,
     star: 4,
-    skill_name1: "普通攻击·灭邪四式",
-    skill_name2: "灵刃·重华叠霜",
-    skill_name3: "灵刃·云开星落"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·灭邪四式",
+        en: "Normal Attack: Demonbane",
+    ),
+    skill_name2: locale!(
+        zh_cn: "灵刃·重华叠霜",
+        en: "Spirit Blade: Chonghua's Layered Frost",
+    ),
+    skill_name3: locale!(
+        zh_cn: "灵刃·云开星落",
+        en: "Spirit Blade: Cloud-Parting Star",
+    ),
+    name_locale: locale!(
+        zh_cn: "重云",
+        en: "Chongyun",
+    )
 };
 
 pub struct Chongyun;
@@ -121,21 +134,21 @@ impl CharacterTrait for Chongyun {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: ChongyunDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: ChongyunDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: ChongyunDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: ChongyunDamageEnum::Normal4 as usize, chs: "四段伤害" },
-            CharacterSkillMapItem { index: ChongyunDamageEnum::Charged1 as usize, chs: "重击循环伤害" },
-            CharacterSkillMapItem { index: ChongyunDamageEnum::Charged2 as usize, chs: "重击终结伤害" },
-            CharacterSkillMapItem { index: ChongyunDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: ChongyunDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: ChongyunDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: ChongyunDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: ChongyunDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: ChongyunDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: ChongyunDamageEnum::Normal4 as usize, text: hit_n_dmg!(4) },
+            CharacterSkillMapItem { index: ChongyunDamageEnum::Charged1 as usize, text: charged_dmg!("loop1") },
+            CharacterSkillMapItem { index: ChongyunDamageEnum::Charged2 as usize, text: charged_dmg!("loop2") },
+            CharacterSkillMapItem { index: ChongyunDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: ChongyunDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: ChongyunDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: ChongyunDamageEnum::E1 as usize, chs: "技能伤害" },
+            CharacterSkillMapItem { index: ChongyunDamageEnum::E1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: ChongyunDamageEnum::Q1 as usize, chs: "技能伤害" },
+            CharacterSkillMapItem { index: ChongyunDamageEnum::Q1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") },
         ])
     };
 

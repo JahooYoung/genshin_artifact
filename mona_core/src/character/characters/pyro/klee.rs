@@ -15,6 +15,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct KleeSkillType {
     pub normal_dmg1: [f64; 15],
@@ -47,7 +48,6 @@ pub const KLEE_SKILL: KleeSkillType = KleeSkillType {
 pub const KLEE_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Klee,
     internal_name: "Klee",
-    chs: "可莉",
     element: Element::Pyro,
     hp: [801, 2077, 2764, 4136, 4623, 5319, 5970, 6673, 7161, 7870, 8358, 9076, 9563, 10287],
     atk: [24, 63, 84, 125, 140, 161, 180, 202, 216, 238, 253, 274, 289, 311],
@@ -55,9 +55,22 @@ pub const KLEE_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::Bonus288(StatName::PyroBonus),
     weapon_type: WeaponType::Catalyst,
     star: 5,
-    skill_name1: "普通攻击·砰砰",
-    skill_name2: "蹦蹦炸弹",
-    skill_name3: "轰轰火花"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·砰砰",
+        en: "Normal Attack: Kaboom!",
+    ),
+    skill_name2: locale!(
+        zh_cn: "蹦蹦炸弹",
+        en: "Jumpy Dumpty",
+    ),
+    skill_name3: locale!(
+        zh_cn: "轰轰火花",
+        en: "Sparks 'n' Splash",
+    ),
+    name_locale: locale!(
+        zh_cn: "可莉",
+        en: "Klee",
+    )
 };
 
 pub struct Klee;
@@ -112,21 +125,21 @@ impl CharacterTrait for Klee {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: KleeDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: KleeDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: KleeDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: KleeDamageEnum::Charged as usize, chs: "重击伤害" },
-            CharacterSkillMapItem { index: KleeDamageEnum::ChargedWithTalent as usize, chs: "重击伤害（带天赋）" },
-            CharacterSkillMapItem { index: KleeDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: KleeDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: KleeDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: KleeDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: KleeDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: KleeDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: KleeDamageEnum::Charged as usize, text: charged_dmg!() },
+            CharacterSkillMapItem { index: KleeDamageEnum::ChargedWithTalent as usize, text: locale!(zh_cn: "重击伤害（带天赋）", en: "Charged Attack DMG(With talent)") },
+            CharacterSkillMapItem { index: KleeDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: KleeDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: KleeDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: KleeDamageEnum::E1 as usize, chs: "蹦蹦炸弹伤害" },
-            CharacterSkillMapItem { index: KleeDamageEnum::E2 as usize, chs: "诡雷伤害" },
+            CharacterSkillMapItem { index: KleeDamageEnum::E1 as usize, text: locale!(zh_cn: "蹦蹦炸弹伤害", en: "Jumpy Dumpty DMG") },
+            CharacterSkillMapItem { index: KleeDamageEnum::E2 as usize, text: locale!(zh_cn: "诡雷伤害", en: "Mine DMG") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: KleeDamageEnum::Q1 as usize, chs: "轰轰火花伤害" }
+            CharacterSkillMapItem { index: KleeDamageEnum::Q1 as usize, text: locale!(zh_cn: "轰轰火花伤害", en: "Sparks ‘n’ Splash DMG") }
         ])
     };
 

@@ -1,5 +1,6 @@
 use crate::attribute::{Attribute, AttributeName, AttributeCommon};
 use crate::character::character_common_data::CharacterCommonData;
+use crate::common::i18n::locale;
 use crate::common::item_config_type::ItemConfig;
 use crate::common::WeaponType;
 use crate::weapon::weapon_base_atk::WeaponBaseATKFamily;
@@ -49,21 +50,33 @@ impl WeaponTrait for DodocoTales {
         weapon_base: WeaponBaseATKFamily::ATK454,
         star: 4,
         #[cfg(not(target_family = "wasm"))]
-        effect: Some("普通攻击命中敌人后的6秒内，重击造成的伤害提升16/20/24/28/32%；重击命中敌人后的6秒内，攻击力提升8/10/12/14/16%。"),
+        effect: Some(crate::common::i18n::locale!(
+            zh_cn: "普通攻击命中敌人后的6秒内，重击造成的伤害提升<span style=\"color: #409EFF;\">16%-20%-24%-28%-32%</span>；重击命中敌人后的6秒内，攻击力提升<span style=\"color: #409EFF;\">8%-10%-12%-14%-16%</span>。",
+            en: "Normal Attack hits on opponents increase Charged Attack DMG by <span style=\"color: #409EFF;\">16%-20%-24%-28%-32%</span> for 6s. Charged Attack hits on opponents increase ATK by <span style=\"color: #409EFF;\">8%-10%-12%-14%-16%</span> for 6s."
+        )),
         #[cfg(not(target_family = "wasm"))]
-        chs: "嘟嘟可故事集"
+        name_locale: crate::common::i18n::locale!(
+            zh_cn: "嘟嘟可故事集",
+            en: "Dodoco Tales"
+        )
     };
 
     #[cfg(not(target_family = "wasm"))]
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
         ItemConfig {
             name: "rate1",
-            title: "w8",
+            title: locale!(
+                zh_cn: "效果1比例",
+                en: "Effect1 Ratio",
+            ),
             config: ItemConfig::RATE01_TYPE
         },
         ItemConfig {
             name: "rate2",
-            title: "w9",
+            title: locale!(
+                zh_cn: "效果2比例",
+                en: "Effect2 Ratio"
+            ),
             config: ItemConfig::RATE01_TYPE
         },
     ]);

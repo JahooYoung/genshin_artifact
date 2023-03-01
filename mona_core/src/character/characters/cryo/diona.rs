@@ -14,6 +14,7 @@ use crate::team::TeamQuantization;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use strum::EnumCount;
 use strum_macros::{EnumCount as EnumCountMacro, EnumString};
+use crate::common::i18n::{charged_dmg, hit_n_dmg, locale, plunging_dmg};
 
 pub struct DionaSkillType {
     pub normal_dmg1: [f64; 15],
@@ -60,7 +61,6 @@ pub const DIONA_SKILL: DionaSkillType = DionaSkillType {
 pub const DIONA_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     name: CharacterName::Diona,
     internal_name: "Diona",
-    chs: "迪奥娜",
     element: Element::Cryo,
     hp: [802, 2061, 2661, 3985, 4411, 5074, 5642, 6305, 6731, 7393, 7818, 8481, 8907, 9570],
     atk: [18, 46, 59, 88, 98, 113, 125, 140, 149, 164, 174, 188, 198, 212],
@@ -68,9 +68,22 @@ pub const DIONA_STATIC_DATA: CharacterStaticData = CharacterStaticData {
     sub_stat: CharacterSubStatFamily::Bonus240(StatName::CryoBonus),
     weapon_type: WeaponType::Bow,
     star: 4,
-    skill_name1: "普通攻击·猎人射术",
-    skill_name2: "猫爪冻冻",
-    skill_name3: "最烈特调"
+    skill_name1: locale!(
+        zh_cn: "普通攻击·猎人射术",
+        en: "Normal Attack: Kätzlein Style",
+    ),
+    skill_name2: locale!(
+        zh_cn: "猫爪冻冻",
+        en: "Icy Paws",
+    ),
+    skill_name3: locale!(
+        zh_cn: "最烈特调",
+        en: "Signature Mix",
+    ),
+    name_locale: locale!(
+        zh_cn: "迪奥娜",
+        en: "Diona",
+    )
 };
 
 pub struct Diona;
@@ -140,24 +153,24 @@ impl CharacterTrait for Diona {
     #[cfg(not(target_family = "wasm"))]
     const SKILL_MAP: CharacterSkillMap = CharacterSkillMap {
         skill1: Some(&[
-            CharacterSkillMapItem { index: DionaDamageEnum::Normal1 as usize, chs: "一段伤害" },
-            CharacterSkillMapItem { index: DionaDamageEnum::Normal2 as usize, chs: "二段伤害" },
-            CharacterSkillMapItem { index: DionaDamageEnum::Normal3 as usize, chs: "三段伤害" },
-            CharacterSkillMapItem { index: DionaDamageEnum::Normal4 as usize, chs: "四段伤害" },
-            CharacterSkillMapItem { index: DionaDamageEnum::Normal5 as usize, chs: "五段伤害" },
-            CharacterSkillMapItem { index: DionaDamageEnum::Charged1 as usize, chs: "瞄准射击" },
-            CharacterSkillMapItem { index: DionaDamageEnum::Charged2 as usize, chs: "满蓄力瞄准射击" },
-            CharacterSkillMapItem { index: DionaDamageEnum::Plunging1 as usize, chs: "下坠期间伤害" },
-            CharacterSkillMapItem { index: DionaDamageEnum::Plunging2 as usize, chs: "低空坠地冲击伤害" },
-            CharacterSkillMapItem { index: DionaDamageEnum::Plunging3 as usize, chs: "高空坠地冲击伤害" },
+            CharacterSkillMapItem { index: DionaDamageEnum::Normal1 as usize, text: hit_n_dmg!(1) },
+            CharacterSkillMapItem { index: DionaDamageEnum::Normal2 as usize, text: hit_n_dmg!(2) },
+            CharacterSkillMapItem { index: DionaDamageEnum::Normal3 as usize, text: hit_n_dmg!(3) },
+            CharacterSkillMapItem { index: DionaDamageEnum::Normal4 as usize, text: hit_n_dmg!(4) },
+            CharacterSkillMapItem { index: DionaDamageEnum::Normal5 as usize, text: hit_n_dmg!(5) },
+            CharacterSkillMapItem { index: DionaDamageEnum::Charged1 as usize, text: charged_dmg!("shoot1") },
+            CharacterSkillMapItem { index: DionaDamageEnum::Charged2 as usize, text: charged_dmg!("shoot2") },
+            CharacterSkillMapItem { index: DionaDamageEnum::Plunging1 as usize, text: plunging_dmg!(1) },
+            CharacterSkillMapItem { index: DionaDamageEnum::Plunging2 as usize, text: plunging_dmg!(2) },
+            CharacterSkillMapItem { index: DionaDamageEnum::Plunging3 as usize, text: plunging_dmg!(3) },
         ]),
         skill2: Some(&[
-            CharacterSkillMapItem { index: DionaDamageEnum::E1 as usize, chs: "猫爪伤害" },
+            CharacterSkillMapItem { index: DionaDamageEnum::E1 as usize, text: locale!(zh_cn: "猫爪伤害", en: "Icy Paw DMG") },
         ]),
         skill3: Some(&[
-            CharacterSkillMapItem { index: DionaDamageEnum::Q1 as usize, chs: "技能伤害" },
-            CharacterSkillMapItem { index: DionaDamageEnum::Q2 as usize, chs: "领域持续伤害" },
-            CharacterSkillMapItem { index: DionaDamageEnum::QHeal as usize, chs: "持续治疗量" },
+            CharacterSkillMapItem { index: DionaDamageEnum::Q1 as usize, text: locale!(zh_cn: "技能伤害", en: "Skill DMG") },
+            CharacterSkillMapItem { index: DionaDamageEnum::Q2 as usize, text: locale!(zh_cn: "领域持续伤害", en: "Continuous Field DMG") },
+            CharacterSkillMapItem { index: DionaDamageEnum::QHeal as usize, text: locale!(zh_cn: "持续治疗量", en: "HP Regeneration Over Time") },
         ])
     };
 

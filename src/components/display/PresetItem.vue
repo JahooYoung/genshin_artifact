@@ -37,17 +37,17 @@
             <div class="detail-div fs-12">
                 <img :src="characterAvatar" class="c-avatar br-50p">
 <!--                <span>{{ characterChs }}</span>-->
-                <span>{{ t("character", characterName) }}</span>
+                <span>{{ ta(characterLocaleIndex) }}</span>
             </div>
             <div class="detail-div fs-12">
                 <img :src="wData.url" class="w-avatar br-50p">
 <!--                <span>{{ wData.chs }}</span>-->
-                <span>{{ t("weapon", props.item.weapon.name) }}</span>
+                <span>{{ ta(weaponNameIndex) }}</span>
             </div>
             <div class="detail-div fs-12">
                 <img :src="tfData.badge" class="tf-avatar br-50p">
 <!--                <span>{{ tfData.chs }}</span>-->
-                <span>{{ t("tfName", tfData.name) }}</span>
+                <span>{{ ta(tfNameIndex) }}</span>
             </div>
         </div>
     </div>
@@ -65,7 +65,7 @@ import {IPreset} from "@/types/preset"
 import {useI18n} from "@/i18n/i18n";
 
 
-const { t } = useI18n()
+const { t, ta } = useI18n()
 
 interface Props {
     item: IPreset,
@@ -82,6 +82,10 @@ const props = withDefaults(defineProps<Props>(), {
 
 const characterName = computed(() => {
     return props.item.character.name
+})
+
+const characterLocaleIndex = computed(() => {
+    return characterData[characterName.value].nameLocale
 })
 
 const characterAvatar = computed(() => {
@@ -102,8 +106,16 @@ const wData = computed(() => {
     return weaponData[props.item.weapon.name]
 })
 
+const weaponNameIndex = computed(() => {
+    return wData.value.nameLocale
+})
+
 const tfData = computed(() => {
     return targetFunctionData[props.item.targetFunction.name]
+})
+
+const tfNameIndex = computed(() => {
+    return tfData.value.nameLocale
 })
 </script>
 
