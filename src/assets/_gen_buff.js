@@ -423,7 +423,7 @@ export default {
 
     "ElementalMastery": {
         name: "ElementalMastery",
-        nameLocale: 210,
+        nameLocale: 211,
 
         description: null,
 
@@ -508,7 +508,7 @@ export default {
 
     "BaseDmg": {
         name: "BaseDmg",
-        nameLocale: 427,
+        nameLocale: 428,
 
         description: 1494,
 
@@ -1829,7 +1829,7 @@ export default {
 
             {"default":1,"max":5,"min":1,"name":"refine","title":1287,"type":"intInput"},
 
-            {"default":1.0,"max":1.0,"min":0.0,"name":"rate","title":577,"type":"float"},
+            {"default":1.0,"max":1.0,"min":0.0,"name":"rate","title":575,"type":"float"},
 
         ],
     },
@@ -1865,7 +1865,7 @@ export default {
 
             {"default":1,"max":5,"min":1,"name":"refine","title":1287,"type":"intInput"},
 
-            {"default":900.0,"name":"em","title":211,"type":"floatInput"},
+            {"default":900.0,"name":"em","title":210,"type":"floatInput"},
 
         ],
     },
@@ -1884,7 +1884,7 @@ export default {
 
             {"default":1,"max":5,"min":1,"name":"refine","title":1287,"type":"intInput"},
 
-            {"default":900.0,"name":"em","title":211,"type":"floatInput"},
+            {"default":900.0,"name":"em","title":210,"type":"floatInput"},
 
         ],
     },
@@ -1935,7 +1935,7 @@ export default {
         genre: "Resonance",
         config: [
 
-            {"default":1.0,"max":1.0,"min":0.0,"name":"rate","title":577,"type":"float"},
+            {"default":1.0,"max":1.0,"min":0.0,"name":"rate","title":575,"type":"float"},
 
         ],
     },
@@ -2076,7 +2076,7 @@ export default {
         name: "DeepwoodMemories4",
         nameLocale: 1048,
 
-        description: 196,
+        description: 197,
 
 
         badge: getImageA("UI_RelicIcon_15025_4"),
@@ -2084,7 +2084,7 @@ export default {
         genre: "Artifact",
         config: [
 
-            {"default":1.0,"max":1.0,"min":0.0,"name":"rate","title":577,"type":"float"},
+            {"default":1.0,"max":1.0,"min":0.0,"name":"rate","title":575,"type":"float"},
 
         ],
     },

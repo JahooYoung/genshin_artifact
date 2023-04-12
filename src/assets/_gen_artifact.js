@@ -387,7 +387,7 @@ export default {
 
 
 
-        effect4: 197,
+        effect4: 196,
 
 
 
@@ -591,7 +591,7 @@ export default {
         maxStar: 5,
 
 
-        effect2: 215,
+        effect2: 214,
 
 
 
@@ -748,7 +748,7 @@ export default {
         maxStar: 5,
 
 
-        effect2: 214,
+        effect2: 215,
 
 
 
@@ -1322,7 +1322,7 @@ export default {
 
             {"default":1.0,"max":1.0,"min":0.0,"name":"w3","title":67,"type":"float"},
 
-            {"default":1.0,"max":1.0,"min":0.0,"name":"rate","title":575,"type":"float"},
+            {"default":1.0,"max":1.0,"min":0.0,"name":"rate","title":577,"type":"float"},
 
         ],
     },
@@ -1648,7 +1648,7 @@ export default {
 
         config4: [
 
-            {"default":0.0,"max":1.0,"min":0.0,"name":"rate","title":644,"type":"float"},
+            {"default":0.0,"max":1.0,"min":0.0,"name":"rate","title":645,"type":"float"},
 
         ],
     },
@@ -2117,7 +2117,7 @@ export default {
 
             {"default":0.0,"max":1.0,"min":0.0,"name":"rate_q","title":209,"type":"float"},
 
-            {"default":0.0,"max":4.0,"min":0.0,"name":"stack","title":558,"type":"float"},
+            {"default":0.0,"max":4.0,"min":0.0,"name":"stack","title":557,"type":"float"},
 
         ],
     },
@@ -2221,7 +2221,7 @@ export default {
 
         config4: [
 
-            {"default":4.0,"max":5.0,"min":0.0,"name":"stack","title":557,"type":"float"},
+            {"default":4.0,"max":5.0,"min":0.0,"name":"stack","title":558,"type":"float"},
 
         ],
     },
