@@ -95,6 +95,9 @@ pub enum BuffName {
     NahidaTalent1,
     FaruzanQ,
     Mika,
+    KavehQ,
+    BaizhuTalent2,
+    BaizhuC4,
 
     // weapon
     FreedomSworn,

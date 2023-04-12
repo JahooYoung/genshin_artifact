@@ -41,6 +41,8 @@ pub use candace::{BuffCandaceQ, BuffCandaceTalent2};
 pub use nahida::BuffNahidaTalent1;
 pub use faruzan::BuffFaruzanQ;
 pub use mika::BuffMika;
+pub use kaveh::BuffKavehQ;
+pub use baizhu::{BuffBaizhuC4, BuffBaizhuTalent2};
 
 pub mod albedo;
 pub mod aloy;
@@ -85,3 +87,5 @@ pub mod candace;
 pub mod nahida;
 pub mod faruzan;
 pub mod mika;
+pub mod kaveh;
+pub mod baizhu;
