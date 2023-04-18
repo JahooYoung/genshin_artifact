@@ -681,6 +681,13 @@
                 <transformative-damage
                     :data="characterTransformativeDamage"
                 ></transformative-damage>
+
+                <template v-for="category of buffGraphData" :key="category.category">
+                    <h3 class="common-title2">{{ category.category }}</h3>
+                    <buff-graph
+                        :data="category.data"
+                    ></buff-graph>
+                </template>
             </el-col>
         </el-row>
     </div>
@@ -753,7 +760,8 @@ import {useAccountStore} from "@/store/pinia/account"
 import ApplyPresetDialog from "./ApplyPresetDialog.vue"
 import objectHash from "object-hash"
 import {artifactsData} from "@/assets/artifacts"
-
+import BuffGraph from "./BuffGraph.vue"
+import { buffData } from "@buff"
 import {ElMessage} from "element-plus"
 import "element-plus/es/components/message/style/css"
 import SelectElementType from "@/components/select/SelectElementType.vue";
@@ -1218,6 +1226,38 @@ const damageAnalysisWasmInterface = computed(() => {
         skill: characterSkillInterface.value,
         enemy: enemyInterface.value,
     }
+})
+
+const buffGraphData = computed(() => {
+    let result = []
+    let fumo2 = null
+    if (fumo.value !== "None") {
+        fumo2 = fumo.value
+    }
+    let base = damageAnalysisWasmInterface.value
+    let js = JSON.stringify(base)
+    let odmg = mona.CalculatorInterface.get_damage_analysis(base, fumo2)
+    let category = ["normal", "vaporize", "melt", "aggravate", "spread"]
+    let c2 = ["正常伤害占比", "蒸发伤害占比", "融化伤害占比", "超激化伤害占比", "蔓激化伤害占比"]
+    for (let c = 0; c < 5; c++) {
+        if (odmg[category[c]]) {
+            let data = []
+            for (let i = 0; i < base.buffs.length; i++) {
+                let d = JSON.parse(js)
+                d.buffs.splice(i, 1)
+                let pdmg = mona.CalculatorInterface.get_damage_analysis(d, fumo2)
+                let n = odmg[category[c]].expectation * 100 / pdmg[category[c]].expectation - 100
+                if (n < 1e-5) {
+                    n = 0
+                }
+                data.push({ name: ta(buffData[base.buffs[i].name].nameLocale), data: n })
+            }
+            data.sort((a, b) => { return b.data - a.data })
+            data.unshift({ name: "基础伤害", data: 100 })
+            result.push({ category: c2[c], data: data })
+        }
+    }
+    return result
 })
 
 const characterDamageAnalysis = computed(() => {
