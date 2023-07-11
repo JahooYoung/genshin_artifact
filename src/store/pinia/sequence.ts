@@ -1,18 +1,20 @@
 import {computed, reactive, ref, watch} from "vue"
 
 function f() {
-    const sequence = ref<string[]>([])
+    const sequences = ref<Record<string, string[]>>({})
 
     function init(payload: any) {
-        if (payload) {
-            sequence.value = payload.sequence
+        if (payload?.sequences) {
+            sequences.value = payload.sequences
+        } else if (payload?.sequence) { // backward compatibility
+            sequences.value['default'] = payload.sequence
         } else {
-            sequence.value = []
+            sequences.value = {}
         }
     }
 
     return {
-        sequence,
+        sequences,
         init,
     }
 }
@@ -21,7 +23,7 @@ const s = f()
 
 export function watchContent() {
     return {
-        sequence: s.sequence.value
+        sequences: s.sequences.value
     }
 }
 

@@ -8,9 +8,24 @@
 
         <el-row style="margin-bottom: 12px">
             <el-col :span="12">
-                <el-button size="default" :icon="IconEpFolderOpened" @click="handleClickImportSequence">导入序列</el-button>
-                <el-button type="primary" size="default" :icon="IconEpFolderChecked" :disabled="!sequenceDirty"
-                    @click="handleClickSaveSequence">保存序列</el-button>
+                <el-dropdown trigger="click" style="margin-right: 12px" @command="handleImportSequence">
+                    <el-button size="default" :icon="IconEpDownload">导入序列</el-button>
+                    <template #dropdown>
+                        <el-dropdown-menu>
+                            <el-dropdown-item v-for="seqName in Object.keys(sequenceStore.sequences.value)" :key="seqName" :command="seqName">
+                                {{ seqName }}
+                            </el-dropdown-item>
+
+                            <el-dropdown-item divided :command="-1">
+                                新建序列
+                            </el-dropdown-item>
+                        </el-dropdown-menu>
+                    </template>
+                </el-dropdown>
+                <el-button :type="!currentSequenceName ? 'primary' : 'default'" size="default" :icon="IconEpFolderAdd"
+                    @click="handleSaveSequence(null)">存为新序列</el-button>
+                <el-button v-if="currentSequenceName" type="primary" size="default" :icon="IconEpFolderChecked" :disabled="!sequenceDirty"
+                    @click="handleSaveSequence(currentSequenceName)">保存序列</el-button>
                 <el-divider direction="vertical"></el-divider>
                 <el-button v-if="!cancelOptimizeArtifact" type="primary" size="default" :icon="IconEpCpu"
                     @click="handleClickStart">开始计算</el-button>
@@ -127,7 +142,7 @@
 <script setup lang="ts">
 import { ElMessage, ElMessageBox } from "element-plus"
 import draggable from "vuedraggable"
-import IconEpFolderOpened from "~icons/ep/folder-opened"
+import IconEpFolderAdd from "~icons/ep/folder-add"
 import IconEpFolderChecked from "~icons/ep/folder-checked"
 import IconEpCpu from "~icons/ep/cpu"
 import IconEpWarningOutline from "~icons/ep/warning"
@@ -229,20 +244,51 @@ watch(() => presetValid.value, valid => {
 })
 
 // sequence management: save or restore the sequence data
+const currentSequenceName = ref<string | null>(null)
 const savedSequenceHash = ref<string | null>(null)
 const sequenceDirty = computed(() => {
     const hash = objectHash(presetNames.value)
     return hash !== savedSequenceHash.value
 })
 
-function handleClickSaveSequence() {
-    sequenceStore.sequence.value = presetNames.value.slice()
-    savedSequenceHash.value = objectHash(presetNames.value)
-    ElMessage.info('保存序列成功')
+function getSequenceDefaultName() {
+    return presetNames.value.map(s => s[0]).slice(0, 8).join('')
 }
 
-function handleClickImportSequence() {
-    const newData = sequenceStore.sequence.value.map(defaultSeqItem)
+async function handleSaveSequence(name: string | null) {
+    if (!name) {
+        name = (await ElMessageBox.prompt("输入名称", "保存序列", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            inputPattern: /[^\s]+$/,
+            inputValue: getSequenceDefaultName()
+        })).value
+        if (presetStore.presets.value[name]) {
+            try {
+                await ElMessageBox.confirm("已存在该名称的序列，确定覆盖？", "警告", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: 'warning'
+                })
+            } catch (e) {
+                return
+            }
+        }
+        currentSequenceName.value = name
+    }
+    sequenceStore.sequences.value[name] = presetNames.value.slice()
+    savedSequenceHash.value = objectHash(presetNames.value)
+    ElMessage.success('保存序列成功')
+}
+
+function handleImportSequence(name: string | -1) {
+    let newData: SequenceItem[] = []
+    if (name === -1) {
+        currentSequenceName.value = null
+    } else {
+        currentSequenceName.value = name
+        newData = sequenceStore.sequences.value[name].map(defaultSeqItem)
+    }
     sequenceData.splice(0, sequenceData.length, ...newData)
     savedSequenceHash.value = objectHash(presetNames.value)
 }
@@ -328,7 +374,7 @@ async function handleClickStart() {
                 cancelButtonText: "取消",
                 type: 'warning'
             })
-            handleClickSaveSequence()
+            await handleSaveSequence(currentSequenceName.value)
         } catch (e) {
         }
     }
@@ -418,8 +464,13 @@ function getArtifactsFromDirectory(dirId: number | null) {
     return orderedArtsMap
 }
 
-function handleClickSaveToDirectory() {
-    const dirName = new Date().toLocaleString()
+async function handleClickSaveToDirectory() {
+    const dirName = (await ElMessageBox.prompt("输入名称", "存至收藏夹", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        inputPattern: /[^\s]+$/,
+        inputValue: new Date().toLocaleString()
+    })).value
     const dirId = kumiStore.createDir(dirName)
     for (const item of sequenceData) {
         const kumiId = kumiStore.createKumi(dirId, item.name)!
