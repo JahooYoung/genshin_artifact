@@ -14,6 +14,24 @@
                         <el-dropdown-menu>
                             <el-dropdown-item v-for="seqName in Object.keys(sequenceStore.sequences.value)" :key="seqName" :command="seqName">
                                 {{ seqName }}
+                                <el-popconfirm
+                                    :title="t('accountPage.confirmDelete')"
+                                    @confirm="handleDeleteSequence(seqName)"
+                                >
+                                    <template #reference>
+                                        <el-button
+                                            v-show="seqName !== currentSequenceName"
+                                            :icon="IconEpDelete"
+                                            type="danger"
+                                            link
+                                            size="default"
+                                            circle
+                                            class="seq-delete-button"
+                                            :title="t('accountPage.delete')"
+                                            @click.stop=""
+                                        ></el-button>
+                                    </template>
+                                </el-popconfirm>
                             </el-dropdown-item>
 
                             <el-dropdown-item divided :command="-1">
@@ -25,7 +43,7 @@
                 <el-button :type="!currentSequenceName ? 'primary' : 'default'" size="default" :icon="IconEpFolderAdd"
                     @click="handleSaveSequence(null)">存为新序列</el-button>
                 <el-button v-if="currentSequenceName" type="primary" size="default" :icon="IconEpFolderChecked" :disabled="!sequenceDirty"
-                    @click="handleSaveSequence(currentSequenceName)">保存序列</el-button>
+                    @click="handleSaveSequence(currentSequenceName)">保存序列「{{ currentSequenceName }}」</el-button>
                 <el-divider direction="vertical"></el-divider>
                 <el-button v-if="!cancelOptimizeArtifact" type="primary" size="default" :icon="IconEpCpu"
                     @click="handleClickStart">开始计算</el-button>
@@ -175,7 +193,9 @@ import { useKumiStore } from "@/store/pinia/kumi"
 import { useSequenceStore } from "@/store/pinia/sequence"
 import { useAccountStore } from "@/store/pinia/account"
 import { useRouter } from "vue-router"
+import { useI18n } from "@/i18n/i18n"
 
+const { t } = useI18n()
 const artifactStore = useArtifactStore()
 const artifactsById = artifactStore.artifacts
 const presetStore = usePresetStore()
@@ -243,7 +263,7 @@ watch(() => presetValid.value, valid => {
     }
 })
 
-// sequence management: save or restore the sequence data
+// sequence management: save, restore and delete sequences
 const currentSequenceName = ref<string | null>(null)
 const savedSequenceHash = ref<string | null>(null)
 const sequenceDirty = computed(() => {
@@ -291,6 +311,10 @@ function handleImportSequence(name: string | -1) {
     }
     sequenceData.splice(0, sequenceData.length, ...newData)
     savedSequenceHash.value = objectHash(presetNames.value)
+}
+
+function handleDeleteSequence(name: string) {
+    delete sequenceStore.sequences.value[name]
 }
 
 // watch: {
@@ -694,5 +718,12 @@ watch(() => accountStore.currentAccountId.value, () => {
 
 .directory-active {
     color: #66b1ff;
+}
+</style>
+
+<style>
+.seq-delete-button i {
+    margin-left: 8px;
+    margin-right: 0px;
 }
 </style>
