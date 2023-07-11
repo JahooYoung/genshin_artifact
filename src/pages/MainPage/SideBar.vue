@@ -1,7 +1,7 @@
 <template>
     <div class="root">
         <el-menu
-            :default-active="doRoute ? $route.fullPath : '/intro'"
+            :default-active="doRoute ? $route.path : '/intro'"
             style="border: none"
             @select="doRoute ? undefined : handleSelect($event)"
             :mode="mode"
