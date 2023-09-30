@@ -2,7 +2,7 @@ import { IArtifactWasm } from "@/types/artifact"
 
 export function wasmSingleOptimize(optimizeConfig: object, artifacts: IArtifactWasm[], timeout?: number, needCancel?: false): Promise<any>
 export function wasmSingleOptimize(optimizeConfig: object, artifacts: IArtifactWasm[], timeout: number, needCancel: true): [Promise<any>, () => void]
-export function wasmSingleOptimize(optimizeConfig: object, artifacts: IArtifactWasm[], timeout = 120000, needCancel = false): Promise<any> | [Promise<any>, () => void]{
+export function wasmSingleOptimize(optimizeConfig: object, artifacts: IArtifactWasm[], timeout = 300000, needCancel = false): Promise<any> | [Promise<any>, () => void]{
     const worker = new Worker(new URL("@worker/optimize_artifact.js", import.meta.url))
     let cancel: (() => void) | null = null
     let timer: number = -1

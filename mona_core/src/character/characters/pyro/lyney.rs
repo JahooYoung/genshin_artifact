@@ -264,15 +264,16 @@ impl CharacterTrait for Lyney {
         }
 
         builder.add_atk_ratio("技能倍率", ratio);
-        if context.character_common_data.has_talent1 && s == Charged3 {
-            builder.add_atk_ratio("天赋1「」惊险演出", 0.8);
+        if context.character_common_data.has_talent1 && s == A1 {
+            builder.add_atk_ratio("天赋1「惊险演出」", 0.8);
         }
 
         if context.character_common_data.has_talent2 && under_pyro {
             let mut bonus = 0.6;
             bonus += pyro_count as f64 * 0.2;
             bonus = bonus.min(1.0);
-            builder.add_atk_ratio("天赋2「完场喝彩」", bonus);
+            builder.add_extra_bonus("天赋2「完场喝彩」", bonus);
+            // builder.add_atk_ratio("天赋2「完场喝彩」", bonus);
         }
 
         builder.damage(
