@@ -50,7 +50,7 @@ pub enum TargetFunctionConfig {
     ZhongliDefault { recharge_demand: f64 },
     KujouSaraDamage { recharge_demand: f64 },
     KukiShinobuDefault { e_ratio: f64 },
-    TighnariDefault { spread_rate: f64 },
+    // TighnariDefault { spread_rate: f64 },
     CynoDefault { recharge_requirement: f64, combo: usize, until_expire: bool, aggravate_rate: f64, elecharged_rate: f64, overload_rate: f64, hyperbloom_rate: f64 },
     KeqingDefault { aggravate_rate: f64 },
     NilouDefault { e_ratio: f64, q_ratio: f64, bloom_ratio: f64, other_em: f64, other_bloom_ratio: f64 },
@@ -61,6 +61,6 @@ pub enum TargetFunctionConfig {
     AlhaithamDefault { charged_ratio: f64, e_ratio: f64, q_ratio: f64, spread_ratio: f64 },
     DehyaDefault { melt_rate: f64, vaporize_rate: f64, e_count: usize },
     MikaDefault { recharge_demand: f64, crit_demand: f64 },
-
+    WriothesleyDefault { punch_ratio: f64, melt_rate:f64 },
     NoConfig,
 }
