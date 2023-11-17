@@ -1,6 +1,7 @@
 use crate::attribute::{Attribute, AttributeCommon, AttributeName};
 use crate::character::character_common_data::CharacterCommonData;
-use crate::common::item_config_type::ItemConfig;
+use crate::common::i18n::locale;
+use crate::common::item_config_type::{ItemConfig, ItemConfigType};
 use crate::common::WeaponType;
 use crate::weapon::weapon_common_data::WeaponCommonData;
 use crate::weapon::weapon_effect::WeaponEffect;
@@ -12,6 +13,7 @@ use crate::weapon::weapon_sub_stat::WeaponSubStatFamily;
 
 pub struct KeyOfKhajNisutEffect {
     pub stack: f64,
+    pub rate: f64,
 }
 
 impl<A: Attribute> WeaponEffect<A> for KeyOfKhajNisutEffect {
@@ -24,6 +26,15 @@ impl<A: Attribute> WeaponEffect<A> for KeyOfKhajNisutEffect {
             AttributeName::ElementalMastery,
             Box::new(move |hp, _| hp * em_bonus),
             Box::new(move |hp, _, grad| (em_bonus, 0.0)),
+            "圣显之钥被动等效"
+        );
+
+        let em_bonus2 = (0.0005 * refine + 0.0015) * self.rate;
+        attribute.add_edge1(
+            AttributeName::HP,
+            AttributeName::ElementalMasteryExtra,
+            Box::new(move |hp, _| hp * em_bonus2),
+            Box::new(move |hp, _, grad| (0.0, 0.0)),
             "圣显之钥被动等效"
         );
     }
@@ -53,15 +64,23 @@ impl WeaponTrait for KeyOfKhajNisut {
 
     #[cfg(not(target_family = "wasm"))]
     const CONFIG_DATA: Option<&'static [ItemConfig]> = Some(&[
-        ItemConfig::STACK03
+        ItemConfig::STACK03,
+        ItemConfig {
+            name: "rate",
+            title: locale!(
+                zh_cn: "第二个效果比例",
+                en: "Second effect's Ratio"
+            ),
+            config: ItemConfigType::Float { min: 0.0, max: 1.0, default: 0.5 }
+        }
     ]);
 
     fn get_effect<A: Attribute>(character: &CharacterCommonData, config: &WeaponConfig) -> Option<Box<dyn WeaponEffect<A>>> {
-        let stack = match *config {
-            WeaponConfig::KeyOfKhajNisut { stack } => stack,
-            _ => 0.0
+        let (stack, rate) = match *config {
+            WeaponConfig::KeyOfKhajNisut { stack, rate } => (stack, rate),
+            _ => (0.0, 0.0)
         };
 
-        Some(Box::new(KeyOfKhajNisutEffect { stack }))
+        Some(Box::new(KeyOfKhajNisutEffect { stack, rate }))
     }
 }
