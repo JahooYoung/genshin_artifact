@@ -49,18 +49,20 @@ function migrateBackendToV2(data: [Record<string, any>, BackendMeta]): [Record<s
     }
     const accountHashDict: Record<number, string> = {}
     for (const account of record['mona_accounts'].allAccounts as Account[]) {
+        // console.log('migrate kumi', account.id, record[`mona_account_kumi_${account.id}`])
         const accountContentHashes = [
             objectHash(record[`mona_account_artifacts_${account.id}`] ?? artifactDefaultWatchContent),
             objectHash(record[`mona_account_kumi_${account.id}`] ?? kumiDefaultWatchContent),
             objectHash(record[`mona_account_presets_${account.id}`] ?? presetDefaultWatchContent),
             objectHash(record[`mona_account_sequence_${account.id}`] ?? sequenceDefaultWatchContent),
         ]
+        // console.log('migrating account hashes', account.id, accountContentHashes)
         const accountHash = objectHash(accountContentHashes)
         accountHashDict[account.id] = accountHash
         record[`mona_account_version_hash_${account.id}`] = accountHash
     }
 
-    const accountListHash = objectHash(accountWatchContent())
+    const accountListHash = objectHash(record['mona_accounts'])
     const overallHash = objectHash([accountListHash, accountHashDict])
     record['mona_meta'] = {
         version: 2,
@@ -171,17 +173,17 @@ const presetStore = usePresetStore()
 const kumiStore = useKumiStore()
 const sequenceStore = useSequenceStore()
 
-let loadingAccountData = false
+let disableWatchEffect = true
 
 function nextTick() {
     return new Promise((resolve) => {
-        setTimeout(resolve, 0)
+        setTimeout(resolve, 10)
     })
 }
 
 async function loadAccountData() {
-    // console.log('start to load')
-    loadingAccountData = true
+    disableWatchEffect = true
+    // console.log('start to load', disableWatchEffect)
     const id = accountStore.currentAccountId.value
     const artKey = `mona_account_artifacts_${id}`
     artifactStore.init(await backend.getItem(artKey))
@@ -193,8 +195,8 @@ async function loadAccountData() {
     sequenceStore.init(await backend.getItem(seqKey))
     // no need to load version hash, it will be loaded by the watch function
     await nextTick()
-    loadingAccountData = false
-    // console.log('loaded')
+    // console.log('loaded', disableWatchEffect)
+    disableWatchEffect = false
 }
 
 export async function changeAccount(id: number) {
@@ -223,7 +225,7 @@ export async function deleteAccount(id: number) {
 }
 
 export async function reload() {
-    loadingAccountData = true
+    disableWatchEffect = true
     accountStore.init(await backend.getItem('mona_accounts') as any)
     await loadAccountData()
 }
@@ -251,16 +253,17 @@ async function init_store() {
     }
     await backend.setItem('mona_meta', { version: 1 })
     await migrateBackend(backend)
+    await updateCachedHashDict()
     await reload()
 }
 
 init_store()
 
 function updateCurrentAccount(type: string, value: any) {
-    if (loadingAccountData) {
+    if (disableWatchEffect) {
         return
     }
-    // console.log('update', type, loadingAccountData)
+    // console.log('update', type, disableWatchEffect)
     const key = `mona_account_${type}_${accountStore.currentAccountId.value}`
     backend.setItem(key, deepCopy(value))
 }
@@ -287,16 +290,19 @@ function accountWatchContent() {
 
 const cachedHashDict = ref<Record<number, string>>({})
 
+export async function updateCachedHashDict() {
+    const allAccounts: Account[] = (await backend.getItem('mona_accounts')).allAccounts
+    for (const account of allAccounts) {
+        cachedHashDict.value[account.id] = await backend.getItem(`mona_account_version_hash_${account.id}`) as string
+    }
+}
+
 watch(accountWatchContent, async value => {
-    if (loadingAccountData) {
+    if (disableWatchEffect) {
         return
     }
     await backend.setItem('mona_accounts', deepCopy(value))
-    const dict: Record<number, string> = {}
-    for (const account of value.allAccounts) {
-        dict[account.id] = await backend.getItem(`mona_account_version_hash_${account.id}`) as string
-    }
-    cachedHashDict.value = dict
+    await updateCachedHashDict()
 }, { deep: true })
 
 const accountListHash = computed(() => objectHash(accountWatchContent()))
@@ -305,19 +311,21 @@ const overallHash = computed(() => {
         ...cachedHashDict.value,
         [accountStore.currentAccountId.value]: currentAccountHash.value,
     }
+    // console.log('calc overall hash', accountListHash.value, accountHashDict)
     return objectHash([accountListHash.value, accountHashDict])
 })
 
 
 const debouncedCommitVersion = useDebounceFn(async (hash: string) => {
-    let metaData = await backend.getItem('mona_meta') as MonaMeta
-    if (metaData.version !== VERSION_STORAGE) {
+    if (disableWatchEffect) {
         return
     }
+    let metaData = await backend.getItem('mona_meta') as MonaMeta
     if (metaData.versionHashes.length === 0 || metaData.versionHashes[metaData.versionHashes.length - 1] !== hash) {
+        // console.log('commit version', hash)
         metaData.versionHashes.push(hash)
         await backend.setItem('mona_meta', metaData)
     }
-}, 1000)
+}, 2000)
 
 watch(overallHash, debouncedCommitVersion, { deep: true })

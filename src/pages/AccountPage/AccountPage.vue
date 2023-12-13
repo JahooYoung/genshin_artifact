@@ -4,7 +4,7 @@
             :title="t('accountPage.chooseSyncBase')"
             width="30%"
             v-model="showSyncDialog"
-            @closed="handleSyncDialogClosed!"
+            @closed="handleSyncDialogClosed!()"
         >
             <div>
                 <el-button
@@ -110,7 +110,7 @@ import IconEpSort from "~icons/ep/sort"
 import IconEpDelete from "~icons/ep/delete"
 import {useI18n} from "@/i18n/i18n"
 
-import { useAccountStore, deleteAccount, changeAccount, reload, migrateBackend, type MonaMeta } from "@/store/pinia/account"
+import { useAccountStore, deleteAccount, changeAccount, reload, migrateBackend, updateCachedHashDict, type MonaMeta } from "@/store/pinia/account"
 import { localBackend, fileBackend, type BackendMeta } from "@/store/backend_v2"
 
 // i18n
@@ -170,6 +170,7 @@ async function sync(type: 'local' | 'file') {
         ElMessage.success(t('accountPage.message.syncedOnBrowser'))
     } else if (type === 'file') {
         await localBackend.importContent(...await fileBackend.exportContent())
+        await updateCachedHashDict()
         await reload()
         ElMessage.success(t('accountPage.message.syncedOnFile'))
     }
@@ -187,7 +188,7 @@ function querySyncType(localMeta: BackendMeta, fileMeta: BackendMeta) {
         };
         handleSyncDialogClosed.value = () => {
             if (!resolved) {
-                reject(new Error(t('accountPage.cancelSyncing')))
+                reject(new Error('canceled'))
             }
         }
         showSyncDialog.value = true
@@ -228,7 +229,7 @@ async function handleSync() {
                 return
             }
             await sync(type)
-            return
+            break
         case 'synced':
             ElMessage.success(t('accountPage.message.syncedAlready'))
             break

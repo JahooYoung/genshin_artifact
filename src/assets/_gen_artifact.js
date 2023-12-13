@@ -168,7 +168,7 @@ export default {
         minStar: 4,
         maxStar: 5,
     
-    effect2: 1689,
+    effect2: 1690,
     
     effect4: 307,
     
@@ -287,7 +287,7 @@ export default {
     
     effect2: 1510,
     
-    effect4: 222,
+    effect4: 223,
     
 
         flower: {
@@ -918,7 +918,7 @@ export default {
             url: getHash("1f3958293c20e8a29f51b9f3ed259e12")},
         config4: [
             
-            {"default":0.0,"max":3.0,"min":0.0,"name":"stack","title":614,"type":"float"},
+            {"default":0.0,"max":3.0,"min":0.0,"name":"stack","title":615,"type":"float"},
             
         ],
     },
@@ -1090,7 +1090,7 @@ export default {
         minStar: 4,
         maxStar: 5,
     
-    effect2: 1690,
+    effect2: 1689,
     
     effect4: 218,
     
@@ -1638,7 +1638,7 @@ export default {
             
             {"default":0.0,"max":1.0,"min":0.0,"name":"rate_q","title":238,"type":"float"},
             
-            {"default":0.0,"max":4.0,"min":0.0,"name":"stack","title":614,"type":"float"},
+            {"default":0.0,"max":4.0,"min":0.0,"name":"stack","title":615,"type":"float"},
             
         ],
     },
@@ -1714,7 +1714,7 @@ export default {
             },
         config4: [
             
-            {"default":4.0,"max":5.0,"min":0.0,"name":"stack","title":615,"type":"float"},
+            {"default":4.0,"max":5.0,"min":0.0,"name":"stack","title":614,"type":"float"},
             
         ],
     },

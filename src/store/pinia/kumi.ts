@@ -40,7 +40,7 @@ function loadKumiOrDefault(payload: any): KumiItem[] {
     }
 
     let result: KumiItem[] = [...Object.values(kumi)]
-    result.sort((a, b) => a.id - b.id)
+    // result.sort((a, b) => a.id - b.id)  // ! why sort? make no sense!
 
     return result
 }

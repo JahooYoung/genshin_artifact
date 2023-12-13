@@ -1068,9 +1068,9 @@ export default {
         
         configs: [
             
-            {"default":0.5,"max":1.0,"min":0.0,"name":"rate1","title":761,"type":"float"},
+            {"default":0.5,"max":1.0,"min":0.0,"name":"rate1","title":762,"type":"float"},
             
-            {"default":0.5,"max":1.0,"min":0.0,"name":"rate2","title":764,"type":"float"},
+            {"default":0.5,"max":1.0,"min":0.0,"name":"rate2","title":763,"type":"float"},
             
         ],
         
@@ -2991,9 +2991,9 @@ export default {
         
         configs: [
             
-            {"default":0.5,"max":1.0,"min":0.0,"name":"rate1","title":761,"type":"float"},
+            {"default":0.5,"max":1.0,"min":0.0,"name":"rate1","title":762,"type":"float"},
             
-            {"default":0.5,"max":1.0,"min":0.0,"name":"rate2","title":764,"type":"float"},
+            {"default":0.5,"max":1.0,"min":0.0,"name":"rate2","title":763,"type":"float"},
             
         ],
         

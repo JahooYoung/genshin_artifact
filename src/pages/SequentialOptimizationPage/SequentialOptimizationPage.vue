@@ -504,12 +504,17 @@ function getArtifactsFromDirectory(dirId: number | null) {
 }
 
 async function handleClickSaveToDirectory() {
-    const dirName = (await ElMessageBox.prompt("输入名称", "存至收藏夹", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        inputPattern: /[^\s]+$/,
-        inputValue: new Date().toLocaleString()
-    })).value
+    let dirName: string
+    try {
+        dirName = (await ElMessageBox.prompt("输入名称", "存至收藏夹", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            inputPattern: /[^\s]+$/,
+            inputValue: new Date().toLocaleString()
+        })).value
+    } catch (e: any) {
+        return
+    }
     const dirId = kumiStore.createDir(dirName)
     for (const item of sequenceData) {
         const kumiId = kumiStore.createKumi(dirId, item.name)!

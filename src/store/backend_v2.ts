@@ -97,7 +97,16 @@ class FileBackend {
 
     async prompt() {
         if (this.dirHandle !== null) {
-            return true
+            try {
+                await this.dirHandle.getFileHandle('anything')
+                return true
+            } catch (err: any) {
+                if (err.name !== 'NotFoundError') {
+                    this.dirHandle = null
+                } else {
+                    return true
+                }
+            }
         }
         try {
             this.dirHandle = await (window as any).showDirectoryPicker({
