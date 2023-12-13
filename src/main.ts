@@ -2,6 +2,7 @@ import "./styles/global.scss";
 import "./styles/select.css";
 import 'element-plus/theme-chalk/display.css'
 import 'element-plus/theme-chalk/el-message.css'
+import 'element-plus/theme-chalk/el-loading.css'
 
 import router from "./router/router"
 

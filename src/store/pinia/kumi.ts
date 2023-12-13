@@ -149,7 +149,7 @@ function store() {
             if(!children?.length) return
             item.children = []
             let deleteSet = new Set(children)
-            
+
             let i = 0
             while (i < kumi.value.length) {
                 const temp: KumiItem = kumi.value[i]
@@ -333,6 +333,8 @@ const s = store()
 export function watchContent() {
     return s.kumi.value
 }
+
+export const defaultWatchContent = loadKumiOrDefault(null)
 
 // watch(() => s.kumi.value, newValue => {
 //     localStorage.setItem("kumi2", JSON.stringify(newValue))

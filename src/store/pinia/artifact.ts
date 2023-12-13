@@ -238,6 +238,14 @@ export function watchContent() {
     }
 }
 
+export const defaultWatchContent = {
+    flower: [],
+    feather: [],
+    sand: [],
+    cup: [],
+    head: [],
+}
+
 export const useArtifactStore = () => {
     return s
 }

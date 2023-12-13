@@ -80,6 +80,8 @@ export function watchContent() {
     return s.presets.value
 }
 
+export const defaultWatchContent = loadPresetOrDefault(null)
+
 // watch(() => {
 //     return s.presets.value
 // }, newValue => {

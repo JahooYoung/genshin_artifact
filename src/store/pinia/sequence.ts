@@ -27,6 +27,8 @@ export function watchContent() {
     }
 }
 
+export const defaultWatchContent = {}
+
 // watch(() => {
 //     return s.sequence.value
 // }, newValue => {

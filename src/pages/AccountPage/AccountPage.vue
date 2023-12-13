@@ -4,18 +4,18 @@
             :title="t('accountPage.chooseSyncBase')"
             width="30%"
             v-model="showSyncDialog"
-            @closed="handleSyncDialogClosed"
+            @closed="handleSyncDialogClosed!"
         >
             <div>
                 <el-button
-                    @click="selectSyncType('local')"
+                    @click="selectSyncType!('local')"
                 >
                     {{ t('accountPage.browserBase') }} ( {{ t('accountPage.lastModifiedAt') + new Date(localLastModified).toLocaleString()}} )
                 </el-button>
             </div>
             <div style="margin-top: 10px;">
                 <el-button
-                @click="selectSyncType('file')"
+                @click="selectSyncType!('file')"
                 >
                     {{ t('accountPage.fileBase') }} ( {{ t('accountPage.lastModifiedAt') + new Date(fileLastModified).toLocaleString()}} )
                 </el-button>
@@ -33,10 +33,9 @@
                             type="primary"
                             size="small"
                             :icon="IconEpSort"
-                            :disabled="accountStore.syncStatus.value !== 'no sync'"
                             @click="handleSync"
                         >
-                            {{ t('accountPage', accountStore.syncStatus.value === 'no sync' ? 'syncButton' : 'syncedButton') }}
+                            {{ t('accountPage', 'syncButton') }}
                         </el-button>
                     </div>
                 </el-col>
@@ -64,7 +63,7 @@
             >
                 <click-edit-label
                     :value="name"
-                    @input="newName => handleChangeName(id, name, newName)"
+                    @input="(newName: string) => handleChangeName(id, name, newName)"
                     fontsize="16px"
                     :editable="true"
                     style="display: inline-block;"
@@ -111,8 +110,8 @@ import IconEpSort from "~icons/ep/sort"
 import IconEpDelete from "~icons/ep/delete"
 import {useI18n} from "@/i18n/i18n"
 
-import { useAccountStore, deleteAccount, changeAccount, reload } from "@/store/pinia/account"
-import storeBackend, { BackendMeta } from "@/store/backend"
+import { useAccountStore, deleteAccount, changeAccount, reload, migrateBackend, type MonaMeta } from "@/store/pinia/account"
+import { localBackend, fileBackend, type BackendMeta } from "@/store/backend_v2"
 
 // i18n
 const { t } = useI18n()
@@ -165,31 +164,29 @@ const fileLastModified = ref(0)
 const selectSyncType = ref<((t: 'local' | 'file') => void) | null>(null)
 const handleSyncDialogClosed = ref<(() => void) | null>(null)
 
-function querySyncType(localMeta: BackendMeta | null, fileMeta: BackendMeta | null) {
-    return new Promise<string>((resolve, reject) => {
-        if (!fileMeta) {
-            resolve('local')
-            return
-        }
-        if (!localMeta) {
-            resolve('')
-            return
-        }
-        if (localMeta.lastModified === fileMeta.lastModified) {
-            resolve('')
-            return
-        }
+async function sync(type: 'local' | 'file') {
+    if (type === 'local') {
+        await fileBackend.importContent(...await localBackend.exportContent())
+        ElMessage.success(t('accountPage.message.syncedOnBrowser'))
+    } else if (type === 'file') {
+        await localBackend.importContent(...await fileBackend.exportContent())
+        await reload()
+        ElMessage.success(t('accountPage.message.syncedOnFile'))
+    }
+}
+
+function querySyncType(localMeta: BackendMeta, fileMeta: BackendMeta) {
+    return new Promise<'local' | 'file'>((resolve, reject) => {
         localLastModified.value = localMeta.lastModified
         fileLastModified.value = fileMeta.lastModified
         let resolved = false
-        selectSyncType.value = (type) => {
+        selectSyncType.value = (type: 'local' | 'file') => {
             resolved = true
             showSyncDialog.value = false
             resolve(type)
         };
         handleSyncDialogClosed.value = () => {
             if (!resolved) {
-                storeBackend.disconnectFileBackend()
                 reject(new Error(t('accountPage.cancelSyncing')))
             }
         }
@@ -197,25 +194,51 @@ function querySyncType(localMeta: BackendMeta | null, fileMeta: BackendMeta | nu
     })
 }
 
+function compareVersions(local: string[], file: string[]) {
+    const n = Math.min(local.length, file.length)
+    for (let i = 0; i < n; i++) {
+        if (local[i] !== file[i]) {
+            return 'conflicted'
+        }
+    }
+    if (local.length === file.length) {
+        return 'synced'
+    }
+    return local.length > file.length ? 'local-new' : 'file-new'
+}
+
 async function handleSync() {
-    const metas = await storeBackend.prompt()
-    if (!metas) {
+    if (!await fileBackend.prompt()) {
         // alert(t('accountPage.cancelSyncing'))
         ElMessage.error(t('accountPage.cancelSyncing'))  // TODO: not work
         return
     }
-    let type: string
-    try {
-        type = await querySyncType(metas[0], metas[1])
-    } catch (err) {
-        storeBackend.disconnectFileBackend()
-        // alert(t('accountPage.cancelSyncing'))
-        ElMessage.error(t('accountPage.cancelSyncing'))
-        return
+    // localBackend is always migrated
+    await migrateBackend(fileBackend)
+    const localMonaMeta = await localBackend.getItem('mona_meta') as MonaMeta
+    const fileMonaMeta = await fileBackend.getItem('mona_meta') as MonaMeta | null
+    switch (compareVersions(localMonaMeta.versionHashes, fileMonaMeta?.versionHashes ?? [])) {
+        case 'conflicted':
+            const metas = await Promise.all([localBackend.getMeta(), fileBackend.getMeta()])
+            let type: 'local' | 'file'
+            try {
+                type = await querySyncType(metas[0], metas[1])
+            } catch (err) {
+                ElMessage.error(t('accountPage.cancelSyncing'))
+                return
+            }
+            await sync(type)
+            return
+        case 'synced':
+            ElMessage.success(t('accountPage.message.syncedAlready'))
+            break
+        case 'local-new':
+            await sync('local')
+            break
+        case 'file-new':
+            await sync('file')
+            break
     }
-    await storeBackend.sync(type)
-    await reload()
-    accountStore.syncStatus.value = 'synced'
 }
 
 </script>

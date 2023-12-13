@@ -145,7 +145,11 @@ export default {
     accountPage: {
         title: "账号与同步",
         syncButton: "同步本地目录",
-        syncedButton: "已同步本地目录",
+        message: {
+            syncedOnBrowser: "同步完成（以浏览器为准）",
+            syncedOnFile: "同步完成（以文件为准）",
+            syncedAlready: "浏览器和文件是一致的，无需同步",
+        },
         addAccount: "添加账号",
         chooseSyncBase: "选择同步基准",
         browserBase: "以浏览器存储为准",

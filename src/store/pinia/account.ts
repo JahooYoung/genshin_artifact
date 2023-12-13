@@ -1,10 +1,12 @@
 import { computed, reactive, ref, watch, toRaw } from "vue"
 import { deepCopy } from "@/utils/common"
-import backend from "../backend"
-import { useArtifactStore, watchContent as artifactWatchContent } from "./artifact"
-import { useKumiStore, watchContent as kumiWatchContent } from "./kumi"
-import { usePresetStore, watchContent as presetWatchContent } from "./preset"
-import { useSequenceStore, watchContent as sequenceWatchContent } from "./sequence"
+import { localBackend as backend, type Backend, type BackendMeta } from "../backend_v2"
+import { useArtifactStore, watchContent as artifactWatchContent, defaultWatchContent as artifactDefaultWatchContent } from "./artifact"
+import { useKumiStore, watchContent as kumiWatchContent, defaultWatchContent as kumiDefaultWatchContent } from "./kumi"
+import { usePresetStore, watchContent as presetWatchContent, defaultWatchContent as presetDefaultWatchContent } from "./preset"
+import { useSequenceStore, watchContent as sequenceWatchContent, defaultWatchContent as sequenceDefaultWatchContent } from "./sequence"
+import objectHash from "object-hash"
+import { useDebounceFn } from "@vueuse/core"
 
 interface Account {
     id: number;
@@ -14,33 +16,81 @@ interface Account {
 /**
  * localStorage scheme (version 1):
  * mona_meta: { version: 1 }
- * mona_accounts: { currentAccountId: Number, allAccounts: [{ id: Number, name: String }, ...] }
+ * mona_accounts: { currentAccountId: number, allAccounts: [{ id: number, name: string }, ...] }
  * mona_account_artifacts_<id>: { flower: {...}, ... }
  * mona_account_presets_<id>: { ... }
  * mona_account_kumi_<id>: { ... }
+ *
+ * localStorage scheme (version 2):
+ * mona_meta: { version: 2, versionHashes: string[] }
+ * mona_account_version_hash_<id>: string
+ * other keys are the same as version 1
  */
-const VERSION_STORAGE = 1
+const VERSION_STORAGE = 2
 
-interface MonaMeta {
+interface MonaMetaV1 {
     version: number
 }
 
-// async function loadAccountFromLocal(): Promise<{ currentAccountId: number, allAccounts: Account[] } | null> {
-//     let metaData = await backend.getItem('mona_meta') as MonaMeta
-//     if (!metaData) {
-//         return null
-//     } else {
-//         if (metaData.version !== VERSION_STORAGE) {
-//             return null
-//         } else {
-//             return await backend.getItem("mona_accounts") as any
-//         }
-//     }
-// }
+interface MonaMetaV2 {
+    version: number
+    versionHashes: string[]
+}
+
+export type MonaMeta = MonaMetaV2
+
+function migrateBackendToV2(data: [Record<string, any>, BackendMeta]): [Record<string, any>, BackendMeta] {
+    const [record, meta] = data
+    if (record['mona_meta'].version >= 2) {
+        return data
+    }
+    if (record['mona_meta'].version !== 1) {
+        throw new Error('migrateBackendToV2 only accepts version 1')
+    }
+    const accountHashDict: Record<number, string> = {}
+    for (const account of record['mona_accounts'].allAccounts as Account[]) {
+        const accountContentHashes = [
+            objectHash(record[`mona_account_artifacts_${account.id}`] ?? artifactDefaultWatchContent),
+            objectHash(record[`mona_account_kumi_${account.id}`] ?? kumiDefaultWatchContent),
+            objectHash(record[`mona_account_presets_${account.id}`] ?? presetDefaultWatchContent),
+            objectHash(record[`mona_account_sequence_${account.id}`] ?? sequenceDefaultWatchContent),
+        ]
+        const accountHash = objectHash(accountContentHashes)
+        accountHashDict[account.id] = accountHash
+        record[`mona_account_version_hash_${account.id}`] = accountHash
+    }
+
+    const accountListHash = objectHash(accountWatchContent())
+    const overallHash = objectHash([accountListHash, accountHashDict])
+    record['mona_meta'] = {
+        version: 2,
+        versionHashes: [overallHash],
+    }
+    return [record, meta]
+}
+
+export async function migrateBackend(backend: Backend) {
+    const metaData = await backend.getItem('mona_meta') as MonaMetaV1 | MonaMetaV2 | null
+    if (!metaData) {
+        return
+    }
+    if (metaData.version === VERSION_STORAGE) {
+        return
+    }
+    const exportData = await backend.exportContent()
+    const record: Record<string, any> = {}
+    for (const [key, value] of exportData[0]) {
+        record[key] = value
+    }
+    let data: [Record<string, any>, BackendMeta] = [record, exportData[1]]
+
+    data = migrateBackendToV2(data)
+    // future migrations here
+
+    await backend.importContent(Object.entries(data[0]), data[1])
+}
 
 function createAccountStore() {
-    const syncStatus = ref<'no sync' | 'syncing' | 'synced'>('no sync')
-
     const currentAccountId = ref<number>(1)
     const allAccounts = reactive<Account[]>([{
         id: 1,
@@ -100,8 +150,6 @@ function createAccountStore() {
     })
 
     return {
-        syncStatus,
-
         currentAccountId,
         allAccounts,
         currentAccountName,
@@ -143,13 +191,14 @@ async function loadAccountData() {
     kumiStore.init(await backend.getItem(kumiKey))
     const seqKey = `mona_account_sequence_${id}`
     sequenceStore.init(await backend.getItem(seqKey))
+    // no need to load version hash, it will be loaded by the watch function
     await nextTick()
     loadingAccountData = false
     // console.log('loaded')
 }
 
 export async function changeAccount(id: number) {
-    await backend.allReady()
+    // await backend.allReady()
     accountStore.currentAccountId.value = id
     await nextTick()
     await loadAccountData()
@@ -161,14 +210,16 @@ export async function deleteAccount(id: number) {
         return
     }
     accountStore.deleteAccount(id)
-    const artKey = `mona_account_artifacts_${id}`
-    await backend.removeItem(artKey)
-    const presetKey = `mona_account_presets_${id}`
-    await backend.removeItem(presetKey)
-    const kumiKey = `mona_account_kumi_${id}`
-    await backend.removeItem(kumiKey)
-    const seqKey = `mona_account_sequence_${id}`
-    await backend.removeItem(seqKey)
+    const keysToRemove = [
+        `mona_account_artifacts_${id}`,
+        `mona_account_presets_${id}`,
+        `mona_account_kumi_${id}`,
+        `mona_account_sequence_${id}`,
+        `mona_account_version_hash_${id}`,
+    ]
+    for (const key of keysToRemove) {
+        await backend.removeItem(key)
+    }
 }
 
 export async function reload() {
@@ -188,35 +239,22 @@ async function initBackendFromLocalStorage() {
 }
 
 async function init_store() {
-    let metaData = await backend.getItem('mona_meta') as MonaMeta
+    let metaData = await backend.getItem('mona_meta')
     if (!metaData) {
-        // load old data
-        // _store.commit('artifacts/oldInit');
-        // _store.commit('presets/oldInit');
-        // _store.commit('kumi/oldInit');
-
         metaData = {
-            version: VERSION_STORAGE,
+            version: 1,
         }
         await backend.setItem('mona_meta', metaData)
 
         // copy data from localStorage to backend
         await initBackendFromLocalStorage()
-        await reload()
-    } else {
-        if (metaData.version !== VERSION_STORAGE) {
-            // update local storage here
-        } else {
-            await reload()
-        }
     }
+    await backend.setItem('mona_meta', { version: 1 })
+    await migrateBackend(backend)
+    await reload()
 }
 
 init_store()
-
-backend.on('cancelFileBackend', () => {
-    accountStore.syncStatus.value = 'no sync'
-})
 
 function updateCurrentAccount(type: string, value: any) {
     if (loadingAccountData) {
@@ -225,16 +263,20 @@ function updateCurrentAccount(type: string, value: any) {
     // console.log('update', type, loadingAccountData)
     const key = `mona_account_${type}_${accountStore.currentAccountId.value}`
     backend.setItem(key, deepCopy(value))
-    if (accountStore.syncStatus.value === 'synced') {
-        accountStore.syncStatus.value = 'syncing'
-        backend.allReady().then(() => accountStore.syncStatus.value = 'synced')
-    }
 }
 
 watch(artifactWatchContent, value => updateCurrentAccount('artifacts', value), { deep: true })
 watch(kumiWatchContent, value => updateCurrentAccount('kumi', value), { deep: true })
 watch(presetWatchContent, value => updateCurrentAccount('presets', value), { deep: true })
 watch(sequenceWatchContent, value => updateCurrentAccount('sequence', value), { deep: true })
+
+const artifactHash = computed(() => objectHash(artifactWatchContent()))
+const kumiHash = computed(() => objectHash(kumiWatchContent()))
+const presetHash = computed(() => objectHash(presetWatchContent()))
+const sequenceHash = computed(() => objectHash(sequenceWatchContent()))
+const currentAccountHash = computed(() => objectHash([artifactHash.value, kumiHash.value, presetHash.value, sequenceHash.value]))
+
+watch(currentAccountHash, value => updateCurrentAccount('version_hash', value), { deep: true })
 
 function accountWatchContent() {
     return {
@@ -243,9 +285,39 @@ function accountWatchContent() {
     }
 }
 
-watch(accountWatchContent, value => {
+const cachedHashDict = ref<Record<number, string>>({})
+
+watch(accountWatchContent, async value => {
     if (loadingAccountData) {
         return
     }
-    backend.setItem('mona_accounts', deepCopy(value))
+    await backend.setItem('mona_accounts', deepCopy(value))
+    const dict: Record<number, string> = {}
+    for (const account of value.allAccounts) {
+        dict[account.id] = await backend.getItem(`mona_account_version_hash_${account.id}`) as string
+    }
+    cachedHashDict.value = dict
 }, { deep: true })
+
+const accountListHash = computed(() => objectHash(accountWatchContent()))
+const overallHash = computed(() => {
+    const accountHashDict = {
+        ...cachedHashDict.value,
+        [accountStore.currentAccountId.value]: currentAccountHash.value,
+    }
+    return objectHash([accountListHash.value, accountHashDict])
+})
+
+
+const debouncedCommitVersion = useDebounceFn(async (hash: string) => {
+    let metaData = await backend.getItem('mona_meta') as MonaMeta
+    if (metaData.version !== VERSION_STORAGE) {
+        return
+    }
+    if (metaData.versionHashes.length === 0 || metaData.versionHashes[metaData.versionHashes.length - 1] !== hash) {
+        metaData.versionHashes.push(hash)
+        await backend.setItem('mona_meta', metaData)
+    }
+}, 1000)
+
+watch(overallHash, debouncedCommitVersion, { deep: true })

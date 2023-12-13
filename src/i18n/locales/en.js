@@ -145,7 +145,11 @@ export default {
     accountPage: {
         title: "Accounts and Syncing",
         syncButton: "Sync with a local directory",
-        syncedButton: "Synced with the local directory",
+        message: {
+            syncedOnBrowser: "Synced (based on browser storage)",
+            syncedOnFile: "Synced (based on local directory)",
+            syncedAlready: "Browser and local directory are the same, no need to sync",
+        },
         addAccount: "Add an account",
         chooseSyncBase: "Choose sync target",
         browserBase: "Based on the browser storage",
