@@ -200,7 +200,7 @@ function querySyncType(localMeta: BackendMeta | null, fileMeta: BackendMeta | nu
 async function handleSync() {
     const metas = await storeBackend.prompt()
     if (!metas) {
-        alert(t('accountPage.cancelSyncing'))
+        // alert(t('accountPage.cancelSyncing'))
         ElMessage.error(t('accountPage.cancelSyncing'))  // TODO: not work
         return
     }
@@ -209,8 +209,8 @@ async function handleSync() {
         type = await querySyncType(metas[0], metas[1])
     } catch (err) {
         storeBackend.disconnectFileBackend()
-        alert(t('accountPage.cancelSyncing'))
-        ElMessage.error({ message: t('accountPage.cancelSyncing') })
+        // alert(t('accountPage.cancelSyncing'))
+        ElMessage.error(t('accountPage.cancelSyncing'))
         return
     }
     await storeBackend.sync(type)
