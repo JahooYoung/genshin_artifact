@@ -1,6 +1,6 @@
 <template>
     <div>
-        <apply-preset-dialog ref="applyPresetDialog" @selected="addPreset"></apply-preset-dialog>
+        <apply-preset-dialog ref="applyPresetDialog" @selected="handlePresetSelected"></apply-preset-dialog>
 
         <el-dialog title="选择圣遗物" :width="deviceIsPC ? '80%' : '90%'" v-model="showSelectArtifactDialog">
             <select-artifact :position="selectArtifactSlot" @select="handleSelectArtifact"></select-artifact>
@@ -102,6 +102,8 @@
                             class="member-header">
                             <p class="team-title">成员{{ index + 1 }}</p>
                             <div>
+                                <el-button circle size="small" link :icon="IconEpPlus"
+                                    @click="handleInsertMember(index)" style="color: white"></el-button>
                                 <el-button circle size="small" link :icon="IconEpArrowUp" :disabled="index === 0"
                                     @click="handleUpMember(index)" style="color: white"></el-button>
                                 <el-button circle size="small" link :icon="IconEpArrowDown"
@@ -150,7 +152,7 @@
         </draggable>
         <el-row :key="'this-is-a-unique-key-for-add-button!!!!'" :gutter="16">
             <el-col :md="6" :sm="24" class="mona-scroll-hidden left member-item">
-                <add-button msg="添加成员" @click="applyPresetDialog!.open()" style="height: 7vw; width: 100%">
+                <add-button msg="添加成员" @click="handleAppendMember()" style="height: 7vw; width: 100%">
                 </add-button>
             </el-col>
         </el-row>
@@ -167,6 +169,7 @@ import IconEpWarningOutline from "~icons/ep/warning"
 import IconEpStarOn from "~icons/ep/star"
 import IconEpDownload from "~icons/ep/download"
 import IconEpDocumentCopy from "~icons/ep/document-copy"
+import IconEpPlus from "~icons/ep/plus"
 import IconEpArrowUp from "~icons/ep/arrow-up"
 import IconEpArrowDown from "~icons/ep/arrow-down"
 import IconEpDelete from "~icons/ep/delete"
@@ -227,14 +230,19 @@ function defaultSeqItem(name: string) {
     }
 }
 
-function addPreset(name: string) {
-    sequenceData.push(defaultSeqItem(name))
-}
-
 function swap(arr: any[], i: number, j: number) {
     const temp = arr[i]
     arr[i] = arr[j]
     arr[j] = temp
+}
+
+const handlePresetSelected = ref((name: string) => { })
+
+function handleInsertMember(index: number) {
+    handlePresetSelected.value = (name: string) => {
+        sequenceData.splice(index, 0, defaultSeqItem(name))
+    }
+    applyPresetDialog.value!.open()
 }
 
 function handleUpMember(index: number) {
@@ -247,6 +255,13 @@ function handleDownMember(index: number) {
 
 function handleDeleteMember(index: number) {
     sequenceData.splice(index, 1)
+}
+
+function handleAppendMember() {
+    handlePresetSelected.value = (name: string) => {
+        sequenceData.push(defaultSeqItem(name))
+    }
+    applyPresetDialog.value!.open()
 }
 
 const presetNames = computed(() => sequenceData.map(item => item.name))
