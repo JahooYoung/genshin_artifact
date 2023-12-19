@@ -13,6 +13,8 @@ use mona::weapon::Weapon;
 use rustc_hash::FxHashSet;
 use crate::applications::optimize_artifacts::inter::{ConstraintConfig, OptimizationResult};
 
+type SimpleSlotName = usize;
+
 #[derive(Clone)]
 pub struct OptimizationIntermediateResult {
     // arts must have same slot order
@@ -235,6 +237,60 @@ pub fn get_super_artifacts_without_set(arts: &[&Artifact]) -> HashMap<(usize, St
                 entry.sub_stats.push((sub_slot.0, sub_slot.1));
             }
         }
+    }
+
+    result
+}
+
+pub fn get_super_artifact_vec(arts_map: &HashMap<(ArtifactSetName, SimpleSlotName, StatName), Vec<&Artifact>>) -> HashMap<(ArtifactSetName, usize, StatName), Vec<Artifact>> {
+    let mut result = HashMap::new();
+
+    for (key, art_vec) in arts_map.iter() {
+        let mut scope_result: Vec<Artifact> = art_vec.iter().map(|x| (*x).clone()).collect();
+        for i in (art_vec.len()-1)..0 {
+            // merge sub stats of scope_result[i] to scope_result[i-1]
+            for sub_slot in scope_result[i].sub_stats.iter() {
+                let mut flag = false;
+                for j in scope_result[i-1].sub_stats.iter_mut() {
+                    if j.0 == sub_slot.0 {
+                        j.1 = j.1.max(sub_slot.1);
+                        flag = true;
+                        break;
+                    }
+                }
+                if !flag {
+                    scope_result[i-1].sub_stats.push((sub_slot.0, sub_slot.1));
+                }
+            }
+        }
+        result.insert(key.clone(), scope_result);
+    }
+
+    result
+}
+
+pub fn get_super_artifact_vec_without_set(arts_map: &HashMap<(SimpleSlotName, StatName), Vec<&Artifact>>) -> HashMap<(usize, StatName), Vec<Artifact>> {
+    let mut result = HashMap::new();
+
+    for (key, art_vec) in arts_map.iter() {
+        let mut scope_result: Vec<Artifact> = art_vec.iter().map(|x| (*x).clone()).collect();
+        for i in (art_vec.len()-1)..0 {
+            // merge sub stats of scope_result[i] to scope_result[i-1]
+            for sub_slot in scope_result[i].sub_stats.iter() {
+                let mut flag = false;
+                for j in scope_result[i-1].sub_stats.iter_mut() {
+                    if j.0 == sub_slot.0 {
+                        j.1 = j.1.max(sub_slot.1);
+                        flag = true;
+                        break;
+                    }
+                }
+                if !flag {
+                    scope_result[i-1].sub_stats.push((sub_slot.0, sub_slot.1));
+                }
+            }
+        }
+        result.insert(key.clone(), scope_result);
     }
 
     result

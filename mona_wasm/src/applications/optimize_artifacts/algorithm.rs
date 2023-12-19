@@ -12,6 +12,7 @@ use mona::enemies::Enemy;
 use mona::target_functions::TargetFunction;
 use mona::weapon::Weapon;
 use crate::applications::optimize_artifacts::algorithms::cutoff_algo2::CutoffAlgo2;
+use crate::applications::optimize_artifacts::algorithms::cutoff_algo3::CutoffAlgo3;
 
 pub trait SingleOptimizeAlgorithm {
     fn optimize(
@@ -50,8 +51,9 @@ impl SingleOptimizeAlgorithmName {
         match *self {
             // SingleOptimizeAlgorithmName::AStar => Box::new(AStarCutoff),
             SingleOptimizeAlgorithmName::AStar => Box::new(CutoffAlgo2 { accuracy_factor: 1.0 }),
+            SingleOptimizeAlgorithmName::Naive => Box::new(CutoffAlgo3 { accuracy_factor: 1.0 }),
             // SingleOptimizeAlgorithmName::Naive => Box::new(CutoffAlgorithmHeuristic { use_heuristic: false }),
-            SingleOptimizeAlgorithmName::Naive => Box::new(AStarCutoff),
+            // SingleOptimizeAlgorithmName::Naive => Box::new(AStarCutoff),
             SingleOptimizeAlgorithmName::Heuristic => Box::new(CutoffHeuristicPlusAStar),
             // SingleOptimizeAlgorithmName::ExtendBound80 => Box::new(CutoffAlgo2 { accuracy_factor: 0.8 }),
             // SingleOptimizeAlgorithmName::ExtendBound70 => Box::new(CutoffAlgo2 { accuracy_factor: 0.7 }),
