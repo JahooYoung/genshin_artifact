@@ -370,6 +370,7 @@ async function handleStartCompute(start: number, end?: number) {
         return
     }
 
+    console.time("compute")
     for (let i = start; i < end; i++) {
         const item = sequenceData[i]
         item.arts = [-1, -1, -1, -1, -1]
@@ -377,6 +378,7 @@ async function handleStartCompute(start: number, end?: number) {
             ...convertPresetToWasmInterface(presets.value[i].item),
             // max_result_num: 1,
         })
+        singleInterface.algorithm = "Naive"
         const loading = ElLoading.service({
             target: '#' + item.id,
             lock: true,
@@ -403,6 +405,7 @@ async function handleStartCompute(start: number, end?: number) {
         }
         item.arts = artifactObjectToArray(results[0])
     }
+    console.timeEnd("compute")
 }
 
 async function handleClickStart() {

@@ -246,23 +246,29 @@ pub fn get_super_artifact_vec(arts_map: &HashMap<(ArtifactSetName, SimpleSlotNam
     let mut result = HashMap::new();
 
     for (key, art_vec) in arts_map.iter() {
-        let mut scope_result: Vec<Artifact> = art_vec.iter().map(|x| (*x).clone()).collect();
-        for i in (art_vec.len()-1)..0 {
-            // merge sub stats of scope_result[i] to scope_result[i-1]
-            for sub_slot in scope_result[i].sub_stats.iter() {
-                let mut flag = false;
-                for j in scope_result[i-1].sub_stats.iter_mut() {
-                    if j.0 == sub_slot.0 {
-                        j.1 = j.1.max(sub_slot.1);
-                        flag = true;
-                        break;
+        let mut scope_result: Vec<Artifact> = Vec::new();
+        for art in art_vec.iter().rev() {
+            let mut super_art = (*art).clone();
+            // super_art.set_name = ArtifactSetName::Empty;
+            if let Some(last_super_art) = scope_result.last() {
+                // merge sub stats of last_super_art to super_art
+                for sub_slot in last_super_art.sub_stats.iter() {
+                    let mut flag = false;
+                    for j in super_art.sub_stats.iter_mut() {
+                        if j.0 == sub_slot.0 {
+                            j.1 = j.1.max(sub_slot.1);
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if !flag {
+                        super_art.sub_stats.push((sub_slot.0, sub_slot.1));
                     }
                 }
-                if !flag {
-                    scope_result[i-1].sub_stats.push((sub_slot.0, sub_slot.1));
-                }
             }
+            scope_result.push(super_art);
         }
+        scope_result.reverse();
         result.insert(key.clone(), scope_result);
     }
 
@@ -273,23 +279,29 @@ pub fn get_super_artifact_vec_without_set(arts_map: &HashMap<(SimpleSlotName, St
     let mut result = HashMap::new();
 
     for (key, art_vec) in arts_map.iter() {
-        let mut scope_result: Vec<Artifact> = art_vec.iter().map(|x| (*x).clone()).collect();
-        for i in (art_vec.len()-1)..0 {
-            // merge sub stats of scope_result[i] to scope_result[i-1]
-            for sub_slot in scope_result[i].sub_stats.iter() {
-                let mut flag = false;
-                for j in scope_result[i-1].sub_stats.iter_mut() {
-                    if j.0 == sub_slot.0 {
-                        j.1 = j.1.max(sub_slot.1);
-                        flag = true;
-                        break;
+        let mut scope_result: Vec<Artifact> = Vec::new();
+        for art in art_vec.iter().rev() {
+            let mut super_art = (*art).clone();
+            super_art.set_name = ArtifactSetName::Empty;
+            if let Some(last_super_art) = scope_result.last() {
+                // merge sub stats of last_super_art to super_art
+                for sub_slot in last_super_art.sub_stats.iter() {
+                    let mut flag = false;
+                    for j in super_art.sub_stats.iter_mut() {
+                        if j.0 == sub_slot.0 {
+                            j.1 = j.1.max(sub_slot.1);
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if !flag {
+                        super_art.sub_stats.push((sub_slot.0, sub_slot.1));
                     }
                 }
-                if !flag {
-                    scope_result[i-1].sub_stats.push((sub_slot.0, sub_slot.1));
-                }
             }
+            scope_result.push(super_art);
         }
+        scope_result.reverse();
         result.insert(key.clone(), scope_result);
     }
 

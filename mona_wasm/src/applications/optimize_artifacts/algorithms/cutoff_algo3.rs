@@ -9,6 +9,7 @@ use mona::character::Character;
 use mona::common::StatName;
 use mona::enemies::Enemy;
 use mona::target_functions::TargetFunction;
+use mona::log;
 use mona::utils::artifact::get_per_slot_artifacts;
 use mona::weapon::Weapon;
 use smallvec::{SmallVec, smallvec};
@@ -44,8 +45,18 @@ pub enum SlotSetName {
     Any,
 }
 
+static EMPTY_ARTIFACT: Artifact = Artifact {
+    id: 0,
+    slot: ArtifactSlotName::Flower,
+    main_stat: (StatName::HPFixed, 0.0),
+    sub_stats: Vec::new(),
+    set_name: ArtifactSetName::Empty,
+    level: 20,
+    star: 5
+};
+
 impl<'a> CutoffAlgo3Helper<'a> {
-    pub fn new(artifacts: &'a [&'a Artifact], weight_heuristic: Option<HashMap<StatName, f64>>, set_heuristics: Option<HashMap<ArtifactSetName, f64>>, factor_a: f64) -> CutoffAlgo3Helper<'a> {
+    pub fn new(artifacts: &'a [&'a Artifact], weight_heuristic: HashMap<StatName, f64>, set_heuristics: HashMap<ArtifactSetName, f64>, factor_a: f64) -> CutoffAlgo3Helper<'a> {
         let mut sand_stats = HashSet::new();
         let mut goblet_stats = HashSet::new();
         let mut head_stats = HashSet::new();
@@ -70,61 +81,61 @@ impl<'a> CutoffAlgo3Helper<'a> {
         artifacts.sort_by_cached_key(|x| {
             // we want first to handle artifacts with extremely large sub stats,
             // to make the super artifact more effective
-            let mut normalized_score: [usize; 4] = [0; 4];
+            let mut normalized_score: [i32; 4] = [0; 4];
             for (i, &(stat_name, value)) in x.sub_stats.iter().enumerate() {
+                let weight = weight_heuristic.get(&stat_name).cloned().unwrap_or(0.1);
                 let eff = value / ARTIFACT_EFF5.get_value(stat_name, 3);
-                normalized_score[i] = -(eff * 100.0) as usize;
+                normalized_score[i] = -(weight * eff * 100.0) as i32;
             }
             normalized_score.sort();
-            (normalized_score[0], normalized_score[1], normalized_score[2], normalized_score[3])
+            let main_stat_eff = -(x.main_stat.1 / ARTIFACT_EFF5.get_value(x.main_stat.0, 3) * 100.0) as i32;
+            (main_stat_eff, normalized_score[0], normalized_score[1], normalized_score[2], normalized_score[3])
         });
 
         let mut artifacts_group = get_artifacts_group(artifacts.as_slice());
         let mut artifacts_group_without_set = get_artifacts_group_without_set(artifacts.as_slice());
 
-        if let Some(ref weights) = weight_heuristic {
-            sand_stats.sort_by_cached_key(|x| {
-                -(weights.get(x).cloned().unwrap_or(0.0) * 100.0) as usize
-            });
-            goblet_stats.sort_by_cached_key(|x| {
-                -(weights.get(x).cloned().unwrap_or(0.0) * 100.0) as usize
-            });
-            head_stats.sort_by_cached_key(|x| {
-                -(weights.get(x).cloned().unwrap_or(0.0) * 100.0) as usize
-            });
-            // println!("{:?}", sand_stats);
+        // if let Some(ref weights) = weight_heuristic {
+        //     sand_stats.sort_by_cached_key(|x| {
+        //         -(weights.get(x).cloned().unwrap_or(0.0) * 100.0) as i32
+        //     });
+        //     goblet_stats.sort_by_cached_key(|x| {
+        //         -(weights.get(x).cloned().unwrap_or(0.0) * 100.0) as i32
+        //     });
+        //     head_stats.sort_by_cached_key(|x| {
+        //         -(weights.get(x).cloned().unwrap_or(0.0) * 100.0) as i32
+        //     });
+        //     // println!("{:?}", sand_stats);
 
-            for (_, arts) in artifacts_group.iter_mut() {
-                arts.sort_by_cached_key(|x| {
-                    let mut score = 0.0;
-                    for &(stat_name, value) in x.sub_stats.iter() {
-                        let weight = weights.get(&stat_name).cloned().unwrap_or(0.0);
-                        let eff = value / ARTIFACT_EFF5.get_value(stat_name, 3);
-                        score += weight * eff;
-                    }
-                    -(score * 100.0) as usize
-                })
-            }
-            for (_, arts) in artifacts_group_without_set.iter_mut() {
-                arts.sort_by_cached_key(|x| {
-                    let mut score = 0.0;
-                    for &(stat_name, value) in x.sub_stats.iter() {
-                        let weight = weights.get(&stat_name).cloned().unwrap_or(0.0);
-                        let eff = value / ARTIFACT_EFF5.get_value(stat_name, 3);
-                        score += weight * eff;
-                    }
-                    -(score * 100.0) as usize
-                })
-            }
-        }
+        //     for (_, arts) in artifacts_group.iter_mut() {
+        //         arts.sort_by_cached_key(|x| {
+        //             let mut score = 0.0;
+        //             for &(stat_name, value) in x.sub_stats.iter() {
+        //                 let weight = weights.get(&stat_name).cloned().unwrap_or(0.0);
+        //                 let eff = value / ARTIFACT_EFF5.get_value(stat_name, 3);
+        //                 score += weight * eff;
+        //             }
+        //             -(score * 100.0) as i32
+        //         })
+        //     }
+        //     for (_, arts) in artifacts_group_without_set.iter_mut() {
+        //         arts.sort_by_cached_key(|x| {
+        //             let mut score = 0.0;
+        //             for &(stat_name, value) in x.sub_stats.iter() {
+        //                 let weight = weights.get(&stat_name).cloned().unwrap_or(0.0);
+        //                 let eff = value / ARTIFACT_EFF5.get_value(stat_name, 3);
+        //                 score += weight * eff;
+        //             }
+        //             -(score * 100.0) as i32
+        //         })
+        //     }
+        // }
 
         let mut sets = get_set_names(artifacts.as_slice());
-        if let Some(ref h) = set_heuristics {
-            sets.sort_by_key(|x| {
-                let v = h.get(x).cloned().unwrap_or(0.0);
-                -(v * 100.0) as usize
-            })
-        }
+        sets.sort_by_key(|x| {
+            let v = set_heuristics.get(x).cloned().unwrap_or(0.0);
+            -(v * 100.0) as i32
+        });
 
         CutoffAlgo3Helper {
             super_artifacts: get_super_artifact_vec(&artifacts_group),
@@ -214,12 +225,12 @@ impl<'a> CutoffAlgo3Helper<'a> {
             temp
         };
 
-        for i0 in 0..arts[0].len() {
+        for i0 in 0..arts[4].len() {
             {
                 let mut super_arts: SmallVec<[&Artifact; 5]> = SmallVec::new();
-                super_arts.push(arts[0][i0]);
+                super_arts.push(arts[4][i0]);
 
-                for i in 1..5 {
+                for i in 0..4 {
                     if let Some(super_art) = self.get_super_art(set_names[i], main_stats[i], i, 0) {
                         super_arts.push(super_art);
                     } else {
@@ -232,13 +243,13 @@ impl<'a> CutoffAlgo3Helper<'a> {
                 }
             }
 
-            for i1 in 0..arts[1].len() {
+            for i1 in 0..arts[3].len() {
                 {
                     let mut super_arts: SmallVec<[&Artifact; 5]> = SmallVec::new();
-                    super_arts.push(arts[0][i0]);
-                    super_arts.push(arts[1][i1]);
+                    super_arts.push(arts[4][i0]);
+                    super_arts.push(arts[3][i1]);
 
-                    for i in 2..5 {
+                    for i in 0..3 {
                         if let Some(super_art) = self.get_super_art(set_names[i], main_stats[i], i, 0) {
                             super_arts.push(super_art);
                         } else {
@@ -252,37 +263,37 @@ impl<'a> CutoffAlgo3Helper<'a> {
                 }
 
                 for i2 in 0..arts[2].len() {
-                    {
-                        let mut super_arts: SmallVec<[&Artifact; 5]> = smallvec![
-                            arts[0][i0],
-                            arts[1][i1],
-                            arts[2][i2],
-                        ];
+                    // {
+                    //     let mut super_arts: SmallVec<[&Artifact; 5]> = smallvec![
+                    //         arts[4][i0],
+                    //         arts[3][i1],
+                    //         arts[2][i2],
+                    //     ];
 
-                        for i in 3..5 {
-                            if let Some(super_art) = self.get_super_art(set_names[i], main_stats[i], i, 0) {
-                                super_arts.push(super_art);
-                            } else {
-                                return;
-                            }
-                        }
+                    //     for i in 0..2 {
+                    //         if let Some(super_art) = self.get_super_art(set_names[i], main_stats[i], i, 0) {
+                    //             super_arts.push(super_art);
+                    //         } else {
+                    //             return;
+                    //         }
+                    //     }
 
-                        if !self.is_better_than_current_least(&super_arts, value_fn, rc) {
-                            continue;
-                        }
-                    }
+                    //     if !self.is_better_than_current_least(&super_arts, value_fn, rc) {
+                    //         continue;
+                    //     }
+                    // }
 
-                    for i3 in 0..arts[3].len() {
-                        {
+                    for i3 in 0..arts[1].len() {
+                        if i3 % 3 == 0 {
                             let mut super_arts: SmallVec<[&Artifact; 5]> = smallvec![
-                                arts[0][i0],
-                                arts[1][i1],
+                                arts[4][i0],
+                                arts[3][i1],
                                 arts[2][i2],
-                                arts[3][i3],
                             ];
 
-                            for i in 4..5 {
-                                if let Some(super_art) = self.get_super_art(set_names[i], main_stats[i], i, 0) {
+                            for i in 0..2 {
+                                let idx = if i == 1 { i3 } else { 0 };
+                                if let Some(super_art) = self.get_super_art(set_names[i], main_stats[i], i, idx) {
                                     super_arts.push(super_art);
                                 } else {
                                     return;
@@ -290,17 +301,38 @@ impl<'a> CutoffAlgo3Helper<'a> {
                             }
 
                             if !self.is_better_than_current_least(&super_arts, value_fn, rc) {
-                                continue;
+                                break;
                             }
                         }
 
-                        for i4 in 0..arts[4].len() {
+                        let mut super_arts: SmallVec<[&Artifact; 5]> = smallvec![
+                            arts[4][i0],
+                            arts[3][i1],
+                            arts[2][i2],
+                            arts[1][i3],
+                            &EMPTY_ARTIFACT,
+                        ];
+                        for i4 in 0..arts[0].len() {
+                            if i4 % 3 == 0 {
+                                for i in 0..1 {
+                                    if let Some(super_art) = self.get_super_art(set_names[i], main_stats[i], i, i4) {
+                                        super_arts[4] = super_art;
+                                    } else {
+                                        return;
+                                    }
+                                }
+
+                                if !self.is_better_than_current_least(&super_arts, value_fn, rc) {
+                                    break;
+                                }
+                            }
+
                             let artifacts: SmallVec<[&Artifact; 5]> = smallvec![
-                                arts[0][i0],
-                                arts[1][i1],
+                                arts[0][i4],
+                                arts[1][i3],
                                 arts[2][i2],
-                                arts[3][i3],
-                                arts[4][i4],
+                                arts[3][i1],
+                                arts[4][i0],
                             ];
 
                             self.update_artifacts(&artifacts, value_fn, rc);
@@ -442,11 +474,45 @@ impl<'a> CutoffAlgo3Helper<'a> {
         };
 
         let do_no_constraint = |recorder: &mut ResultRecorder| {
+            log!("start algo3");
             do_set4(recorder);
+            log!("finish 44");
             do_set22(recorder);
+            log!("finish 22");
             do_set2(recorder);
+            log!("finish 2");
             do_any(recorder);
+            log!("finish any");
         };
+
+        // log!("\n\nsuper_arts:");
+        // self.super_artifacts.iter().for_each(|(k, v)| {
+        //     log!("\n\t{:?}:", k);
+        //     v.iter().for_each(|x| {
+        //         log!("\t\t{:?}", x);
+        //     })
+        // });
+        // log!("\n\nartifacts:");
+        // self.artifacts.iter().for_each(|(k, v)| {
+        //     log!("\n\t{:?}:", k);
+        //     v.iter().for_each(|x| {
+        //         log!("\t\t{:?}", x);
+        //     })
+        // });
+        // log!("\n\nsuper_arts_without_set:");
+        // self.super_artifacts_without_set.iter().for_each(|(k, v)| {
+        //     log!("\n\t{:?}:", k);
+        //     v.iter().for_each(|x| {
+        //         log!("\t\t{:?}", x);
+        //     })
+        // });
+        // log!("\n\nartifacts_without_set:");
+        // self.artifacts_without_set.iter().for_each(|(k, v)| {
+        //     log!("\n\t{:?}:", k);
+        //     v.iter().for_each(|x| {
+        //         log!("\t\t{:?}", x);
+        //     })
+        // });
 
         match &value_fn.constraint.set_mode {
             Some(set_mode) => {
@@ -509,8 +575,8 @@ impl SingleOptimizeAlgorithm for CutoffAlgo3 {
 
         let mut algo = CutoffAlgo3Helper::new(
             artifacts,
-            Some(weight_heuristic),
-            Some(set_heuristic),
+            weight_heuristic,
+            set_heuristic,
             // None,
             // None,
             self.accuracy_factor

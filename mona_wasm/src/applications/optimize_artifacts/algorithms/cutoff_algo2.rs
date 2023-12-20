@@ -9,6 +9,7 @@ use mona::character::Character;
 use mona::common::StatName;
 use mona::enemies::Enemy;
 use mona::target_functions::TargetFunction;
+use mona::log;
 use mona::utils::artifact::get_per_slot_artifacts;
 use mona::weapon::Weapon;
 use smallvec::{SmallVec, smallvec};
@@ -71,13 +72,13 @@ impl<'a> CutoffAlgo2Helper<'a> {
 
         if let Some(ref weights) = weight_heuristic {
             sand_stats.sort_by_cached_key(|x| {
-                -(weights.get(x).cloned().unwrap_or(0.0) * 100.0) as usize
+                -(weights.get(x).cloned().unwrap_or(0.0) * 100.0) as i32
             });
             goblet_stats.sort_by_cached_key(|x| {
-                -(weights.get(x).cloned().unwrap_or(0.0) * 100.0) as usize
+                -(weights.get(x).cloned().unwrap_or(0.0) * 100.0) as i32
             });
             head_stats.sort_by_cached_key(|x| {
-                -(weights.get(x).cloned().unwrap_or(0.0) * 100.0) as usize
+                -(weights.get(x).cloned().unwrap_or(0.0) * 100.0) as i32
             });
             // println!("{:?}", sand_stats);
 
@@ -89,7 +90,7 @@ impl<'a> CutoffAlgo2Helper<'a> {
                         let eff = value / ARTIFACT_EFF5.get_value(stat_name, 3);
                         score += weight * eff;
                     }
-                    -(score * 100.0) as usize
+                    -(score * 100.0) as i32
                 })
             }
             for (_, arts) in artifacts_group_without_set.iter_mut() {
@@ -100,7 +101,7 @@ impl<'a> CutoffAlgo2Helper<'a> {
                         let eff = value / ARTIFACT_EFF5.get_value(stat_name, 3);
                         score += weight * eff;
                     }
-                    -(score * 100.0) as usize
+                    -(score * 100.0) as i32
                 })
             }
         }
@@ -109,7 +110,7 @@ impl<'a> CutoffAlgo2Helper<'a> {
         if let Some(ref h) = set_heuristics {
             sets.sort_by_key(|x| {
                 let v = h.get(x).cloned().unwrap_or(0.0);
-                -(v * 100.0) as usize
+                -(v * 100.0) as i32
             })
         }
 
@@ -428,10 +429,16 @@ impl<'a> CutoffAlgo2Helper<'a> {
         };
 
         let do_no_constraint = |recorder: &mut ResultRecorder| {
+            // let mut current_time = time();
+            log!("start algo2");
             do_set4(recorder);
+            log!("finish 44");
             do_set22(recorder);
+            log!("finish 22");
             do_set2(recorder);
+            log!("finish 2");
             do_any(recorder);
+            log!("finish any");
         };
 
         match &value_fn.constraint.set_mode {
