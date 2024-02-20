@@ -10,6 +10,8 @@ pub mod yanfei;
 pub mod yoimiya;
 pub mod dehya;
 pub mod lyney;
+pub mod chevreuse;
+pub mod gaming;
 
 pub use amber::Amber;
 pub use bennett::Bennett;
@@ -23,3 +25,5 @@ pub use yanfei::Yanfei;
 pub use yoimiya::Yoimiya;
 pub use dehya::Dehya;
 pub use lyney::Lyney;
+pub use chevreuse::Chevreuse;
+pub use gaming::Gaming;

@@ -89,6 +89,8 @@ pub enum WeaponName {
     TalkingStick,
     TidalShadow,
     PortablePowerSaw,
+    UltimateOverlordsMegaMagicSword,
+    Verdict,
 
     // polearm
     EngulfingLightning,
@@ -158,6 +160,7 @@ pub enum WeaponName {
     BalladOfTheBoundlessBlue,
     CashflowSupervision,
     TomeOfTheEternalFlow,
+    CranesEchoingCall,
 
     // bows
     PolarStar,

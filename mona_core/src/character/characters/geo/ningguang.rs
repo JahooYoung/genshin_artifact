@@ -117,7 +117,8 @@ impl NingguangDamageEnum {
         match *self {
             Normal => SkillType::NormalAttack,
             Charged1 | Charged2 => SkillType::ChargedAttack,
-            Plunging1 | Plunging2 | Plunging3 => SkillType::PlungingAttack,
+                        Plunging1 => SkillType::PlungingAttackInAction,
+            Plunging2 | Plunging3 => SkillType::PlungingAttackOnGround,
             E1 => SkillType::ElementalSkill,
             Q1 => SkillType::ElementalBurst
         }

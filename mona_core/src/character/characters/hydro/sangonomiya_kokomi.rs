@@ -131,7 +131,8 @@ impl SangonomiyaKokomiDamageEnum {
         match *self {
             Normal1 | Normal2 | Normal3 => SkillType::NormalAttack,
             Charged => SkillType::ChargedAttack,
-            Plunging1 | Plunging2 | Plunging3 => SkillType::PlungingAttack,
+            Plunging1 => SkillType::PlungingAttackInAction,
+            Plunging2 | Plunging3 => SkillType::PlungingAttackOnGround,
             EHeal1 | E1 => SkillType::ElementalSkill,
             Q1 | QHeal1 => SkillType::ElementalBurst
         }

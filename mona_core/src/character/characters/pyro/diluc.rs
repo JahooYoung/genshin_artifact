@@ -124,7 +124,8 @@ impl DilucDamageEnum {
         match *self {
             Normal1 | Normal2 | Normal3 | Normal4 => SkillType::NormalAttack,
             Charged1 | Charged2 => SkillType::ChargedAttack,
-            Plunging1 | Plunging2 | Plunging3 => SkillType::PlungingAttack,
+            Plunging1 => SkillType::PlungingAttackInAction,
+            Plunging2 | Plunging3 => SkillType::PlungingAttackOnGround,
             E1 | E2 | E3 => SkillType::ElementalSkill,
             Q1 | Q2 | Q3 => SkillType::ElementalBurst
         }

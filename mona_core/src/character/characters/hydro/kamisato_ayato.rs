@@ -136,7 +136,8 @@ impl KamisatoAyatoDamageEnum {
         match *self {
             Normal1 | Normal2 | Normal3 | Normal4Div2 | Normal5 | ENormal1 | ENormal2 | ENormal3 => SkillType::NormalAttack,
             Charged1 => SkillType::ChargedAttack,
-            Plunging1 | Plunging2 | Plunging3 => SkillType::PlungingAttack,
+            Plunging1 => SkillType::PlungingAttackInAction,
+            Plunging2 | Plunging3 => SkillType::PlungingAttackOnGround,
             E4 => SkillType::ElementalSkill,
             Q1 => SkillType::ElementalBurst
         }

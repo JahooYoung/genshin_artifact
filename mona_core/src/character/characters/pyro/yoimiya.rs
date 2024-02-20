@@ -147,7 +147,8 @@ impl YoimiyaDamageEnum {
         match *self {
             Normal1 | Normal2 | Normal3 | Normal4 | Normal5 => SkillType::NormalAttack,
             Charged1 | Charged2 | Charged3 => SkillType::ChargedAttack,
-            Plunging1 | Plunging2 | Plunging3 => SkillType::PlungingAttack,
+            Plunging1 => SkillType::PlungingAttackInAction,
+            Plunging2 | Plunging3 => SkillType::PlungingAttackOnGround,
             Q1 | Q2 => SkillType::ElementalBurst
         }
     }

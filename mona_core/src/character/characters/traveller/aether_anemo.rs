@@ -119,7 +119,8 @@ impl AetherAnemoDamageEnum {
         match *self {
             Normal1 | Normal2 | Normal3 | Normal4 | Normal5 => SkillType::NormalAttack,
             Charged11 | Charged12 => SkillType::ChargedAttack,
-            Plunging1 | Plunging2 | Plunging3 => SkillType::PlungingAttack,
+            Plunging1 => SkillType::PlungingAttackInAction,
+            Plunging2 | Plunging3 => SkillType::PlungingAttackOnGround,
             E1 | E2 | E3 | E4 => SkillType::ElementalSkill,
             Q1 | Q2Hydro | Q2Cryo | Q2Electro | Q2Pyro => SkillType::ElementalBurst
         }

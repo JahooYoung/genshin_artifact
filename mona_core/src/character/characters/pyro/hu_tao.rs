@@ -162,7 +162,8 @@ impl HuTaoDamageEnum {
         match *self {
             Normal1 | Normal2 | Normal3 | Normal4 | Normal51 | Normal52 | Normal6 => SkillType::NormalAttack,
             Charged => SkillType::ChargedAttack,
-            Plunging1 | Plunging2 | Plunging3 => SkillType::PlungingAttack,
+            Plunging1 => SkillType::PlungingAttackInAction,
+            Plunging2 | Plunging3 => SkillType::PlungingAttackOnGround,
             ElementalSkillBloodBlossom => SkillType::ElementalSkill,
             ElementalBurst1 | ElementalBurstLow1 => SkillType::ElementalBurst
         }

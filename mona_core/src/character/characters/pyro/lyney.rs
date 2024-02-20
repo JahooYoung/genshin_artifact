@@ -89,7 +89,8 @@ impl LyneyDamageEnum {
         use LyneyDamageEnum::*;
         match *self {
             Normal1 | Normal2 | Normal3 | Normal4 => SkillType::NormalAttack,
-            Plunging1 | Plunging2 | Plunging3 => SkillType::PlungingAttack,
+            Plunging1 => SkillType::PlungingAttackInAction,
+            Plunging2 | Plunging3 => SkillType::PlungingAttackOnGround,
             Charged1 | Charged2 | Charged3 | A1 | A2 => SkillType::ChargedAttack,
             E1 => SkillType::ElementalSkill,
             Q1 | Q2 => SkillType::ElementalBurst,
@@ -121,7 +122,7 @@ pub struct Lyney;
 impl CharacterTrait for Lyney {
     const STATIC_DATA: CharacterStaticData = CharacterStaticData {
         name: CharacterName::Lyney,
-        internal_name: "Lyney", // todo
+        internal_name: "Lyney",
         name_locale: locale!(
             zh_cn: "林尼",
             en: "Lyney"

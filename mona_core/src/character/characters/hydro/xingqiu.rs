@@ -142,7 +142,8 @@ impl XingqiuDamageEnum {
         use XingqiuDamageEnum::*;
         match *self {
             Charged11 | Charged12 | Charged => SkillType::ChargedAttack,
-            Plunging1 | Plunging2 | Plunging3 => SkillType::PlungingAttack,
+            Plunging1 => SkillType::PlungingAttackInAction,
+            Plunging2 | Plunging3 => SkillType::PlungingAttackOnGround,
             E11 | E12 => SkillType::ElementalSkill,
             Q1 => SkillType::ElementalBurst,
             _ => SkillType::NormalAttack

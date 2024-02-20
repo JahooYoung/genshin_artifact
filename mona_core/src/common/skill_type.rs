@@ -5,7 +5,17 @@ use serde::{Serialize, Deserialize};
 pub enum SkillType {
     NormalAttack,
     ChargedAttack,
-    PlungingAttack,
+    PlungingAttackInAction,
+    PlungingAttackOnGround,
     ElementalSkill,
     ElementalBurst,
+}
+
+impl SkillType {
+    pub fn is_plunging(&self) -> bool {
+        match *self {
+            SkillType::PlungingAttackInAction | SkillType::PlungingAttackOnGround => true,
+            _ => false
+        }
+    }
 }

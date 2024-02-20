@@ -91,7 +91,8 @@ impl CandaceDamageEnum {
         match *self {
             Normal1 | Normal2 | Normal31 | Normal32 | Normal4 => SkillType::NormalAttack,
             Charged => SkillType::ChargedAttack,
-            Plunging1 | Plunging2 | Plunging3 => SkillType::PlungingAttack,
+            Plunging1 => SkillType::PlungingAttackInAction,
+            Plunging2 | Plunging3 => SkillType::PlungingAttackOnGround,
             E1 | E2 => SkillType::ElementalSkill,
             Q1 | Q2 => SkillType::ElementalBurst,
         }

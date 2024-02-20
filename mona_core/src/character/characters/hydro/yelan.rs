@@ -116,7 +116,8 @@ impl YelanDamageEnum {
         match *self {
             Normal1 | Normal2 | Normal3 | Normal4Div2 => SkillType::NormalAttack,
             Charged1 | Charged2 | Charged3 | Charged3C6 => SkillType::ChargedAttack,
-            Plunging1 | Plunging2 | Plunging3 => SkillType::PlungingAttack,
+            Plunging1 => SkillType::PlungingAttackInAction,
+            Plunging2 | Plunging3 => SkillType::PlungingAttackOnGround,
             E1 => SkillType::ElementalSkill,
             Q1 | Q2 => SkillType::ElementalBurst
         }

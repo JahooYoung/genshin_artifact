@@ -52,6 +52,8 @@ pub enum WeaponConfig {
     TalkingStick { rate1: f64, rate2: f64 },
     TidalShadow { rate: f64 },
     PortablePowerSaw { stack: f64 },
+    UltimateOverlordsMegaMagicSword { rate: f64 },
+    Verdict { stack: f64 },
 
     // Polearm
     EngulfingLightning { rate: f64 },
@@ -96,6 +98,7 @@ pub enum WeaponConfig {
     BalladOfTheBoundlessBlue { stack: f64 },
     CashflowSupervision { stack: f64 },
     TomeOfTheEternalFlow { stack: f64 },
+    CranesEchoingCall { rate: f64 },
 
     // Bow
     PolarStar { stack: usize },
